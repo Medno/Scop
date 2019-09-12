@@ -1,6 +1,15 @@
 #ifndef MAT4_H
 # define MAT4_H
 
+# define IDENTITY 1
+# define  2
+
+enum	e_mat
+{
+	IDENTITY,
+	ZERO
+};
+
 typedef struct	s_mat4
 {
 	float	matrix[4][4];
