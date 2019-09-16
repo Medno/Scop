@@ -40,7 +40,7 @@ t_mat4	mul_mat4(t_mat4 first, t_mat4 second)
 	return (res);
 }
 
-t_mat4	new_mat4(e_mat type)
+t_mat4	new_mat4(enum e_mat type)
 {
 	t_mat4	result;
 	int		i;
@@ -52,7 +52,7 @@ t_mat4	new_mat4(e_mat type)
 		j = 0;
 		while (j < 4)
 		{
-			result[i][j] = (type == IDENTITY && i == j) ? 1 : 0;
+			result.matrix[i][j] = (type == IDENTITY && i == j) ? 1 : 0;
 			j++;
 		}
 		i++;
@@ -65,13 +65,13 @@ t_mat4	projection_mat4(float angle, float ratio, float near, float far)
 	t_mat4	result;
 	float	tan_half_angle;
 
-	result = new_mat4();
+	result = new_mat4(ZEROS);
 	tan_half_angle = tan(angle / 2);
-	result[1][1] = 1 / (ratio * tan_half_angle);
-	result[2][2] = 1 / (tan_half_angle);
-	result[3][3] = -(far + near) / (far - near);
-	result[4][3] = -1;
-	result[3][4] = -(2 * far * near) / (far - near);
+	result.matrix[0][0] = 1 / (ratio * tan_half_angle);
+	result.matrix[1][1] = 1 / (tan_half_angle);
+	result.matrix[2][2] = -(far + near) / (far - near);
+	result.matrix[3][2] = -1;
+	result.matrix[2][3] = -(2 * far * near) / (far - near);
 	return (result);
 }
 
@@ -100,11 +100,30 @@ t_mat4	translate(t_mat4 mat4, t_vec3 vec3)
 	t_mat4	result;
 
 	result = copy_mat4(mat4);	
-	result[3][0] = (mat4.matrix[0][0] + mat4.matrix[0][1] + mat4.matrix[0][2])
-		* vec3[0];
-	result[3][1] = (mat4.matrix[1][0] + mat4.matrix[1][1] + mat4.matrix[1][2])
-		* vec3[0];
-	result[3][2] = (mat4.matrix[2][0] + mat4.matrix[2][1] + mat4.matrix[2][2])
-		* vec3[0];
+	result.matrix[0][3] = (mat4.matrix[0][0] + mat4.matrix[0][1] + mat4.matrix[0][2])
+		* vec3.x;
+	result.matrix[1][3] = (mat4.matrix[1][0] + mat4.matrix[1][1] + mat4.matrix[1][2])
+		* vec3.y;
+	result.matrix[2][3] = (mat4.matrix[2][0] + mat4.matrix[2][1] + mat4.matrix[2][2])
+		* vec3.z;
 	return (result);
+}
+
+void	print_mat4(t_mat4 m)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	while (i < 4)
+	{
+		j = 0;
+		while (j < 4)
+		{
+			dprintf(2, "%f ", m.matrix[i][j]);
+			j++;
+		}
+		dprintf(2, "\n");
+		i++;
+	}
 }
