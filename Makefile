@@ -16,8 +16,16 @@ NAME = scop
 
 #------All sources------#
 
-MAIN_SRCS = monitor.c	\
-			main.c
+MAIN_SRCS = main.c		\
+			monitor.c	\
+			mat4.c		\
+			vec3.c		\
+			read_files.c\
+			update.c	\
+			mesh.c	\
+			transform.c	\
+			shaders.c
+			
 
 OBJ += $(addprefix ./$(OBJ_PATH)/, $(MAIN_SRCS:.c=.o))
 
@@ -28,14 +36,19 @@ CFLAGS += -I$(INCLUDES)
 CFLAGS += -I$(LIB_PATH)/$(INCLUDES)
 CFLAGS += $(shell sdl2-config --cflags)
 
-HEAD = $(INCLUDES)/monitor.h
+HEAD = $(INCLUDES)/monitor.h	\
+	   $(INCLUDES)/mat4.h		\
+	   $(INCLUDES)/vec3.h		\
+	   $(INCLUDES)/shaders.h	\
+	   $(INCLUDES)/transform.h	\
+	   $(INCLUDES)/mesh.h
 
 #------Libraries------#
 
 LDFLAGS += -Llibft -lft
 LDFLAGS += $(shell sdl2-config --libs)
 
-GLFLAGS = -framework GLUT -framework OpenGL -Wno-deprecated
+GLFLAGS = -framework OpenGL -lglew -Wno-deprecated
 
 LIB = $(LIB_PATH)/libft.a
 
@@ -62,7 +75,7 @@ $(OBJ_PATH)/%.o: $(SRCS_PATH)/%.c $(HEAD)
 makelib:
 	@make -C $(LIB_PATH) NOERR=$(NOERR) DEV=$(DEV) SAN=$(SAN)
 
-clean: cleanlib
+clean:
 	@rm -Rf $(OBJ_PATH)
 	@rm -Rf $(TEST_OBJ)
 	@echo "$(BOLD_GREEN)$(NAME)$(EOC) clean $(BOLD_GREEN)✓$(EOC)"
@@ -70,7 +83,7 @@ clean: cleanlib
 cleanlib:
 	@make clean -C $(LIB_PATH)
 
-fclean: fcleanlib clean
+fclean: clean
 	@rm -Rf $(NAME) $(LINK)
 	@echo "$(BOLD_GREEN)$(NAME) $(EOC) fclean $(BOLD_GREEN)✓$(EOC)"
 
@@ -88,7 +101,7 @@ $(OBJ_PATH):
 CC = gcc
 
 # flags
-CFLAGS += -Wall -Wextra
+CFLAGS += -Wall -Wextra -Werror
 
 ifneq ($(NOERR),yes)
 CFLAGS += -Werror
