@@ -14,7 +14,8 @@
 # define MONITOR_H
 
 #include <SDL.h>
-#include "libft.h"
+#include <GL/glew.h>
+#include <OpenGL/gl.h>
 
 typedef struct	s_monitor {
 	SDL_Window*		win;
@@ -24,4 +25,8 @@ typedef struct	s_monitor {
 
 uint8_t	init_monitor(t_monitor *monitor);
 void	destroy_monitor(t_monitor *monitor);
+void	clear_window(float r, float g, float b, float a);
+
+uint8_t	update_monitor(t_monitor monitor);
+
 #endif

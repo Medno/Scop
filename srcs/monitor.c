@@ -19,33 +19,43 @@
 ** Creation of a OpenGL context
 */
 
+static void	set_attributes_sdl(void)
+{
+	SDL_GL_SetAttribute(SDL_GL_RED_SIZE, 8);
+	SDL_GL_SetAttribute(SDL_GL_GREEN_SIZE, 8);
+	SDL_GL_SetAttribute(SDL_GL_BLUE_SIZE, 8);
+	SDL_GL_SetAttribute(SDL_GL_ALPHA_SIZE, 8);
+	SDL_GL_SetAttribute(SDL_GL_BUFFER_SIZE, 32);
+	SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
+	//SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 24);
+}
+
+static uint8_t	error_sdl(t_monitor *m, const char *err, uint8_t destr)
+{
+	dprintf(2, "%s%s\n", err, SDL_GetError());
+	if (destr)
+		SDL_DestroyWindow(m->win);
+	SDL_Quit();
+	return (0);
+}
+
 uint8_t	init_monitor(t_monitor *monitor)
 {
 	if (SDL_Init(SDL_INIT_VIDEO) < 0)
-	{
-		ft_printf("Error during initialization of SDL : %s\n", SDL_GetError());
-		SDL_Quit();
-		return (0);
-	}
-	SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
-	SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 24);
+		return error_sdl(monitor, "Error during initialization of SDL : ", 0);
+	set_attributes_sdl();
 	monitor->win = SDL_CreateWindow("Scop", SDL_WINDOWPOS_CENTERED,
-		SDL_WINDOWPOS_CENTERED, 800, 600, SDL_WINDOW_SHOWN | SDL_WINDOW_OPENGL);
+		SDL_WINDOWPOS_CENTERED, 800, 600, SDL_WINDOW_OPENGL);
 	if (!monitor->win)
-	{
-		ft_printf("Error while creating a window : %s\n", SDL_GetError());
-		SDL_Quit();
-		return (0);
-	}
+		return error_sdl(monitor, "Error while creating a window : ", 0);
 	monitor->context = SDL_GL_CreateContext(monitor->win);
 	if (!monitor->context)
-	{
-		ft_printf("%s\n", SDL_GetError());
-		SDL_DestroyWindow(monitor->win);
-		SDL_Quit();
-		return (0);
-	}
-	return (1);
+		return error_sdl(monitor, "", 1);
+	glewExperimental = GL_TRUE;
+	GLenum status = glewInit();
+	if (status != GLEW_OK)
+		dprintf(2, "Glew failed to initialize\n");
+	return (status == GLEW_OK ? 1 : 0);
 }
 
 /*
@@ -59,4 +69,10 @@ void	destroy_monitor(t_monitor *monitor)
 	SDL_GL_DeleteContext(monitor->context);
 	SDL_DestroyWindow(monitor->win);
 	SDL_Quit();
+}
+
+void	clear_window(float r, float g, float b, float a)
+{
+	glClearColor(r, g, b, a);
+	glClear(GL_COLOR_BUFFER_BIT);
 }
