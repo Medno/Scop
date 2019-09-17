@@ -6,7 +6,7 @@
 #    By: pchadeni <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/01/08 14:57:58 by pchadeni          #+#    #+#              #
-#    Updated: 2019/09/10 18:17:46 by pchadeni         ###   ########.fr        #
+#    Updated: 2019/09/17 16:05:26 by pchadeni         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,8 +21,8 @@ MAIN_SRCS = main.c		\
 			mat4.c		\
 			vec3.c		\
 			read_files.c\
-			update.c	\
 			mesh.c	\
+			handle_error.c	\
 			transform.c	\
 			shaders.c
 			
@@ -34,21 +34,21 @@ OBJ += $(addprefix ./$(OBJ_PATH)/, $(MAIN_SRCS:.c=.o))
 INCLUDES = ./inc/
 CFLAGS += -I$(INCLUDES)
 CFLAGS += -I$(LIB_PATH)/$(INCLUDES)
-CFLAGS += $(shell sdl2-config --cflags)
+CFLAGS += -I$(HOME)/.brew/include
 
 HEAD = $(INCLUDES)/monitor.h	\
 	   $(INCLUDES)/mat4.h		\
 	   $(INCLUDES)/vec3.h		\
 	   $(INCLUDES)/shaders.h	\
 	   $(INCLUDES)/transform.h	\
+	   $(INCLUDES)/handle_error.h	\
 	   $(INCLUDES)/mesh.h
 
 #------Libraries------#
 
 LDFLAGS += -Llibft -lft
-LDFLAGS += $(shell sdl2-config --libs)
+LDFLAGS += -L$(HOME)/.brew/lib -framework OpenGL -lglfw3
 
-GLFLAGS = -framework OpenGL -lglew -Wno-deprecated
 
 LIB = $(LIB_PATH)/libft.a
 

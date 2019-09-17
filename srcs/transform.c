@@ -68,6 +68,6 @@ t_mat4	get_model(t_transform t)
 	rot_matrix = rotate(t);
 	scale_matrix = scale(t);
 	final_matrix = mul_mat4(pos_matrix, mul_mat4(rot_matrix, scale_matrix));
-print_mat4(final_matrix);
+//print_mat4(final_matrix);
 	return (final_matrix);
 }

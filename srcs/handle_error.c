@@ -1,30 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   monitor.h                                          :+:      :+:    :+:   */
+/*   handle_error.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pchadeni <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/09/10 16:52:33 by pchadeni          #+#    #+#             */
-/*   Updated: 2019/09/17 15:51:08 by pchadeni         ###   ########.fr       */
+/*   Created: 2019/09/17 10:42:32 by pchadeni          #+#    #+#             */
+/*   Updated: 2019/09/17 15:47:12 by pchadeni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MONITOR_H
-# define MONITOR_H
+#include "handle_error.h"
 
-# define GLFW_INCLUDE_GLCOREARB
-#include <GLFW/glfw3.h>
-#include <stdio.h>
-
-typedef struct	s_monitor {
-	GLFWwindow		*win;
-}				t_monitor;
-
-uint8_t	init_monitor(t_monitor *monitor);
-void	destroy_monitor(t_monitor *monitor);
-void	clear_window(float r, float g, float b, float a);
-
-uint8_t	update_monitor(t_monitor monitor);
-
-#endif
+uint8_t	handle_gl_err(const char *fn)
+{
+//	GLenum			err_code;
+//
+//	if ((err_code = glGetError()) != GL_NO_ERROR)
+//	{
+		dprintf(2, "OpenGL Error in function %s\n", fn);
+//		return (1);
+//	}
+	return (0);
+}

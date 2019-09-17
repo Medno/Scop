@@ -1,8 +1,23 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   mesh.h                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: pchadeni <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/09/17 15:43:20 by pchadeni          #+#    #+#             */
+/*   Updated: 2019/09/17 15:51:57 by pchadeni         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef MESH_H
 # define MESH_H
 
-#include <GL/glew.h>
+# define GLFW_INCLUDE_GLCOREARB
+#include <GLFW/glfw3.h>
+
 #include "vec3.h"
+#include "handle_error.h"
 
 enum
 {

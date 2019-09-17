@@ -1,4 +1,4 @@
-#version 120
+#version 410
 
 attribute vec3 position;
 uniform mat4 transform;
