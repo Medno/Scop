@@ -6,7 +6,7 @@
 /*   By: pchadeni <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/10 17:03:00 by pchadeni          #+#    #+#             */
-/*   Updated: 2019/09/17 17:09:24 by pchadeni         ###   ########.fr       */
+/*   Updated: 2019/09/17 19:14:12 by pchadeni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,16 +18,33 @@ static uint8_t	error_glfw(const char *err)
 	return (0);
 }
 
+void	edit_rasterization(void)
+{
+	GLint polygon_mode;
+
+	glGetIntegerv(GL_POLYGON_MODE, &polygon_mode);
+	if (polygon_mode == GL_FILL)
+		polygon_mode = GL_LINE;
+	else if (polygon_mode == GL_LINE)
+		polygon_mode = GL_POINT;
+	else
+		polygon_mode = GL_FILL;
+	glPolygonMode(GL_FRONT_AND_BACK, polygon_mode);
+}
+
 void	key_callback(GLFWwindow *w, int key, int scancode, int act, int mods)
 {
 	(void)scancode;
 	(void)mods;
 	if (key == GLFW_KEY_ESCAPE && act == GLFW_PRESS)
 		glfwSetWindowShouldClose(w, GLFW_TRUE);
+	if (key == GLFW_KEY_R && act == GLFW_PRESS)
+		edit_rasterization();
 }
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height)
 {
+	(void)window;
 	glViewport(0, 0, width, height);
 } 
 

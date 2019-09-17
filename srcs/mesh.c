@@ -6,7 +6,7 @@
 /*   By: pchadeni <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/17 15:43:12 by pchadeni          #+#    #+#             */
-/*   Updated: 2019/09/17 16:53:39 by pchadeni         ###   ########.fr       */
+/*   Updated: 2019/09/17 18:31:35 by pchadeni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,10 @@ t_mesh	create_mesh(t_vec3 *vertices, unsigned int len_vertices)
 {
 	t_mesh	mesh;
 
-	dprintf(2, "mesh : %u\n", len_vertices);
 	mesh.count_draw = len_vertices;
 	glGenVertexArrays(1, &mesh.vao);
-	glBindVertexArray(mesh.vao);
 	glGenBuffers(NUM_BUFFERS, mesh.vab);
+	glBindVertexArray(mesh.vao);
 	glBindBuffer(GL_ARRAY_BUFFER, mesh.vab[POSITION_VB]);
 	glBufferData(GL_ARRAY_BUFFER, len_vertices * sizeof(t_vec3),
 		vertices, GL_STATIC_DRAW);
@@ -34,7 +33,7 @@ t_mesh	create_mesh(t_vec3 *vertices, unsigned int len_vertices)
 void	draw_mesh(t_mesh mesh)
 {
 	glBindVertexArray(mesh.vao);
-	glDrawArrays(GL_TRIANGLES, 0, mesh.count_draw / 3);
+	glDrawArrays(GL_TRIANGLES, 0, mesh.count_draw);
 	glBindVertexArray(0);
 }
 

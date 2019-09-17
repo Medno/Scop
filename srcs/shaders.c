@@ -6,7 +6,7 @@
 /*   By: pchadeni <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/17 16:29:48 by pchadeni          #+#    #+#             */
-/*   Updated: 2019/09/17 16:30:27 by pchadeni         ###   ########.fr       */
+/*   Updated: 2019/09/17 17:55:59 by pchadeni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static uint8_t	check_shader_error(GLuint shad, GLuint f, uint8_t p, char* err)
 			glGetProgramInfoLog(shad, sizeof(error), NULL, error);
 		else
 			glGetShaderInfoLog(shad, sizeof(error), NULL, error);
-		dprintf(2, "%s'%s'\n", err, error);
+		dprintf(2, "%s%s\n", err, error);
 		return (1);
 	}
 	return (0);
@@ -79,10 +79,12 @@ uint8_t			construct_shader(const char * file, t_shader *shader)
 	if (check_shader_error(shader->program, GL_LINK_STATUS, 1,
 		"Error: Program linking failed: "))
 		return (0);
+	/*
 	glValidateProgram(shader->program);
 	if (check_shader_error(shader->program, GL_VALIDATE_STATUS, 1,
 		"Error: Program is invalid: "))
 		return (0);
+	*/
 	shader->uniforms[TRANSFORM_U] =
 		glGetUniformLocation(shader->program, "transform");
 	return (1);

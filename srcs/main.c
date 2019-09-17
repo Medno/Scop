@@ -6,7 +6,7 @@
 /*   By: pchadeni <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/10 16:37:00 by pchadeni          #+#    #+#             */
-/*   Updated: 2019/09/17 17:02:07 by pchadeni         ###   ########.fr       */
+/*   Updated: 2019/09/17 19:01:44 by pchadeni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,15 +28,15 @@ void	display_scop(t_monitor monitor)
 
 		create_vec3(-0.5, -0.5, 0.0),
 		create_vec3(0.5, -0.5, 0.0),
-		create_vec3(0.0, 0.0, -1.0),
+		create_vec3(0.0, -0.5, -1.0),
 
 		create_vec3(-0.5, -0.5 , 0.0),
 		create_vec3(0.0, 0.5, 0.0),
-		create_vec3(0.0, 0.0, -1.0),
+		create_vec3(0.0, -0.5, -1.0),
 
 		create_vec3(0.5, -0.5, 0.0),
-		create_vec3(0.0, 0.5, 0.0),
-		create_vec3(0.0, 0.0, -1.0)
+		create_vec3(0.0, -0.5, 0.0),
+		create_vec3(0.0, -0.5, -1.0)
 	};
 	t_shader	shader;
 	t_mesh		mesh;
@@ -54,15 +54,16 @@ void	display_scop(t_monitor monitor)
 		clear_window(0.91f, 0.86f, 0.79f, 1.0f);
 //		transform.position.x = sinf(count);
 //		transform.rotation.z = count;
+//		transform.rotation.y = count;
 //	dprintf(2, "Position: %f, %f, %f\n", transform.position.x, transform.position.y, transform.position.z);
-//		transform.scale = create_vec3(cosf(count), cosf(count), cosf(count));
+	transform.scale = create_vec3(cosf(count), cosf(count), cosf(count));
 
 		bind_shader(shader);
 		update_shader(shader, transform);
 
 		draw_mesh(mesh);
 		end = update_monitor(monitor);
-		count += 0.01f;
+		count += 0.005f;
 	}
 	delete_shader(shader);
 	delete_mesh(mesh);
