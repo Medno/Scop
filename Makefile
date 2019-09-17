@@ -6,7 +6,7 @@
 #    By: pchadeni <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/01/08 14:57:58 by pchadeni          #+#    #+#              #
-#    Updated: 2019/09/17 16:05:26 by pchadeni         ###   ########.fr        #
+#    Updated: 2019/09/17 16:20:39 by pchadeni         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -47,7 +47,7 @@ HEAD = $(INCLUDES)/monitor.h	\
 #------Libraries------#
 
 LDFLAGS += -Llibft -lft
-LDFLAGS += -L$(HOME)/.brew/lib -framework OpenGL -lglfw3
+LDFLAGS += -L$(HOME)/.brew/lib -framework OpenGL -lglfw
 
 
 LIB = $(LIB_PATH)/libft.a

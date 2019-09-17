@@ -6,7 +6,7 @@
 /*   By: pchadeni <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/10 16:52:33 by pchadeni          #+#    #+#             */
-/*   Updated: 2019/09/17 15:51:08 by pchadeni         ###   ########.fr       */
+/*   Updated: 2019/09/17 17:05:59 by pchadeni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,9 @@
 # define GLFW_INCLUDE_GLCOREARB
 #include <GLFW/glfw3.h>
 #include <stdio.h>
+
+# define WIDTH 800
+# define HEIGHT 600
 
 typedef struct	s_monitor {
 	GLFWwindow		*win;
