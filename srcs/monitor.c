@@ -6,7 +6,7 @@
 /*   By: pchadeni <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/10 17:03:00 by pchadeni          #+#    #+#             */
-/*   Updated: 2019/09/17 19:14:12 by pchadeni         ###   ########.fr       */
+/*   Updated: 2019/09/17 19:51:14 by pchadeni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,8 @@ uint8_t	init_monitor(t_monitor *monitor)
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 1);
 	glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+	glfwWindowHint(GLFW_SAMPLES, 4);
+
 	monitor->win = glfwCreateWindow(WIDTH, HEIGHT, "Scop", NULL, NULL);
 	if (!monitor->win)
 	{
@@ -63,6 +65,7 @@ uint8_t	init_monitor(t_monitor *monitor)
 		return error_glfw("Error while creating a window");
 	}
 	glfwSetKeyCallback(monitor->win, key_callback);
+	glEnable(GL_MULTISAMPLE);
 	glfwMakeContextCurrent(monitor->win);
 	glViewport(0, 0, WIDTH, HEIGHT);
 	glfwSetFramebufferSizeCallback(monitor->win, framebuffer_size_callback);  
