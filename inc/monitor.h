@@ -13,21 +13,24 @@
 #ifndef MONITOR_H
 # define MONITOR_H
 
+# define GL_SILENCE_DEPRECATION
 # define GLFW_INCLUDE_GLCOREARB
 #include <GLFW/glfw3.h>
 #include <stdio.h>
+#include "transform.h"
 
 # define WIDTH 800
 # define HEIGHT 600
 
 typedef struct	s_monitor {
-	GLFWwindow		*win;
+	GLFWwindow	*win;
+	t_transform	*transformation;
 }				t_monitor;
 
 uint8_t	init_monitor(t_monitor *monitor);
 void	destroy_monitor(t_monitor *monitor);
 void	clear_window(float r, float g, float b, float a);
 
-uint8_t	update_monitor(t_monitor monitor);
+uint8_t	update_monitor(t_monitor *monitor);
 
 #endif

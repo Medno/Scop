@@ -36,10 +36,25 @@ void	key_callback(GLFWwindow *w, int key, int scancode, int act, int mods)
 {
 	(void)scancode;
 	(void)mods;
+	t_monitor	*mon;
+
+	mon = (t_monitor *)glfwGetWindowUserPointer(w);
 	if (key == GLFW_KEY_ESCAPE && act == GLFW_PRESS)
 		glfwSetWindowShouldClose(w, GLFW_TRUE);
-	if (key == GLFW_KEY_R && act == GLFW_PRESS)
+	else if (key == GLFW_KEY_R && act == GLFW_PRESS)
 		edit_rasterization();
+	else if (key == GLFW_KEY_K && (act == GLFW_PRESS || act == GLFW_REPEAT)
+		&& mon && mon->transformation)
+		mon->transformation->rotation.y -= 0.01f;
+	else if (key == GLFW_KEY_L && (act == GLFW_PRESS || act == GLFW_REPEAT)
+		&& mon && mon->transformation)
+		mon->transformation->rotation.y += 0.01f;
+	else if (key == GLFW_KEY_O && (act == GLFW_PRESS || act == GLFW_REPEAT)
+		&& mon && mon->transformation)
+		mon->transformation->position.y += 0.01f;
+	else if (key == GLFW_KEY_PERIOD && (act == GLFW_PRESS || act == GLFW_REPEAT)
+		&& mon && mon->transformation)
+		mon->transformation->position.y -= 0.01f;
 }
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height)
@@ -57,13 +72,13 @@ uint8_t	init_monitor(t_monitor *monitor)
 	glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 	glfwWindowHint(GLFW_SAMPLES, 4);
-
 	monitor->win = glfwCreateWindow(WIDTH, HEIGHT, "Scop", NULL, NULL);
 	if (!monitor->win)
 	{
 		glfwTerminate();
 		return error_glfw("Error while creating a window");
 	}
+	glfwSetWindowUserPointer(monitor->win, (void *)monitor);
 	glfwSetKeyCallback(monitor->win, key_callback);
 	glEnable(GL_MULTISAMPLE);
 	glfwMakeContextCurrent(monitor->win);
@@ -84,9 +99,9 @@ void	clear_window(float r, float g, float b, float a)
 	glClear(GL_COLOR_BUFFER_BIT);
 }
 
-uint8_t	update_monitor(t_monitor monitor)
+uint8_t	update_monitor(t_monitor *monitor)
 {
-	glfwSwapBuffers(monitor.win);
+	glfwSwapBuffers(monitor->win);
 	glfwPollEvents();
 	return (0);
 }
