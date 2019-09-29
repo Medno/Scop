@@ -16,7 +16,7 @@ typedef struct	s_img
 	uint32_t	bit_depth;
 	uint32_t	color_type;
 	uint32_t	cur_data;
-	int			file_size;
+	uint32_t	file_size;
 	char		**data;
 }				t_img;
 

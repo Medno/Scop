@@ -19,6 +19,7 @@
 
 #include "vec3.h"
 #include "handle_error.h"
+#include "textures.h"
 
 enum
 {
@@ -32,9 +33,11 @@ typedef struct	s_mesh
 	GLuint			vao;
 	GLuint			vab[NUM_BUFFERS];
 	unsigned int	count_draw;
+	unsigned int	texture;
+	unsigned int	len_textures;
 }				t_mesh;
 
-t_mesh	create_mesh(t_vec3 *vertices, unsigned int len_vertices);
+t_mesh	create_mesh(t_vec3 *vertices, unsigned int len_vertices, float *textures, unsigned int len_textures);
 void	delete_mesh(t_mesh mesh);
 void	draw_mesh(t_mesh mesh);
 

@@ -25,6 +25,7 @@ MAIN_SRCS = main.c		\
 			handle_error.c	\
 			transform.c	\
 			read_png.c	\
+			textures.c	\
 			shaders.c
 			
 
@@ -44,6 +45,7 @@ HEAD = $(INCLUDES)/monitor.h	\
 	   $(INCLUDES)/transform.h	\
 	   $(INCLUDES)/read_png.h	\
 	   $(INCLUDES)/handle_error.h	\
+	   $(INCLUDES)/textures.h	\
 	   $(INCLUDES)/mesh.h
 
 #------Libraries------#

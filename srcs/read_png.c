@@ -21,7 +21,7 @@ t_img	*init_img(FILE *fd)
 	return (img);
 }
 
-uint8_t	check_signature(t_img *img, FILE *fd)
+uint8_t	check_signature(FILE *fd)
 {
 	char	input[8];
 
@@ -78,7 +78,7 @@ t_img	*new_img(const char *name)
 	if (!(fd = fopen(name, "r")) || !(img = init_img(fd)))
 		return (NULL);
 	printf("img initialized\n");
-	if (!check_signature(img, fd))
+	if (!check_signature(fd))
 	{
 		free(img->data);
 		free(img);

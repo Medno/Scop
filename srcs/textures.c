@@ -1,11 +1,28 @@
 #include "textures.h"
 
-void	init_texture(void)
+unsigned int	init_texture(void)
 {
+	unsigned int	texture;
+	t_img			*img;
+	uint32_t		i;
+
+	i = 0;
+	glGenTextures(1, &texture);
+	glBindTexture(GL_TEXTURE_2D, texture);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_MIRRORED_REPEAT);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_MIRRORED_REPEAT);
 //	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
-
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	img = new_img("./res/wood5.png");
+	if (img)
+	{
+		while (i < img->cur_data)
+		{
+			glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, img->width, img->height, 0, GL_RGB, GL_UNSIGNED_BYTE, img->data[i]);
+			i++;
+		}
+		glGenerateMipmap(GL_TEXTURE_2D);
+	}
+	return (texture);
 }

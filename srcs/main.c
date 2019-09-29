@@ -22,6 +22,44 @@
 void	display_scop(t_monitor *monitor)
 {
 	uint8_t		end;
+	float	textures[] = {
+		0.0f, 0.0f,
+		1.0f, 0.0f,
+		1.0f, 1.0f,
+		1.0f, 1.0f,
+		0.0f, 1.0f,
+		0.0f, 0.0f,
+		0.0f, 0.0f,
+		1.0f, 0.0f,
+		1.0f, 1.0f,
+		1.0f, 1.0f,
+		0.0f, 1.0f,
+		0.0f, 0.0f,
+		1.0f, 0.0f,
+		1.0f, 1.0f,
+		0.0f, 1.0f,
+		0.0f, 1.0f,
+		0.0f, 0.0f,
+		1.0f, 0.0f,
+		1.0f, 0.0f,
+		1.0f, 1.0f,
+		0.0f, 1.0f,
+		0.0f, 1.0f,
+		0.0f, 0.0f,
+		1.0f, 0.0f,
+		0.0f, 1.0f,
+		1.0f, 1.0f,
+		1.0f, 0.0f,
+		1.0f, 0.0f,
+		0.0f, 0.0f,
+		0.0f, 1.0f,
+		0.0f, 1.0f,
+		1.0f, 1.0f,
+		1.0f, 0.0f,
+		1.0f, 0.0f,
+		0.0f, 0.0f,
+		0.0f, 1.0f
+	};
 	t_vec3 vertices[] = {
 		create_vec3(-0.5f, -0.5f, -0.5f),
 		create_vec3( 0.5f, -0.5f, -0.5f),
@@ -63,7 +101,7 @@ void	display_scop(t_monitor *monitor)
 		create_vec3( 0.5f,  0.5f,  0.5f),
 		create_vec3( 0.5f,  0.5f,  0.5f),
 		create_vec3(-0.5f,  0.5f,  0.5f),
-		create_vec3(-0.5f,  0.5f, -0.5f),
+		create_vec3(-0.5f,  0.5f, -0.5f)
     };
 /*	t_vec3 vertices[] = {
 		create_vec3(-0.5, -0.5, 0.5), //FRONT_LEFT
@@ -90,7 +128,7 @@ void	display_scop(t_monitor *monitor)
 
 	end = 0;
 	count = 0.0f;
-	mesh = create_mesh(vertices, sizeof(vertices)/sizeof(vertices[0]));
+	mesh = create_mesh(vertices, sizeof(vertices)/sizeof(vertices[0]), textures, sizeof(textures)/sizeof(textures[0]));
 	if (!construct_shader("./res/basicShader", &shader))
 		return ;
 	transform = create_transform();
