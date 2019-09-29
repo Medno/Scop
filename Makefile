@@ -24,6 +24,7 @@ MAIN_SRCS = main.c		\
 			mesh.c	\
 			handle_error.c	\
 			transform.c	\
+			read_png.c	\
 			shaders.c
 			
 
@@ -41,6 +42,7 @@ HEAD = $(INCLUDES)/monitor.h	\
 	   $(INCLUDES)/vec3.h		\
 	   $(INCLUDES)/shaders.h	\
 	   $(INCLUDES)/transform.h	\
+	   $(INCLUDES)/read_png.h	\
 	   $(INCLUDES)/handle_error.h	\
 	   $(INCLUDES)/mesh.h
 

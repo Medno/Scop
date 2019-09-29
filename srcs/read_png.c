@@ -1,0 +1,103 @@
+#include "read_png.h"
+
+t_img	*init_img(FILE *fd)
+{
+	t_img	*img;
+
+	if (!(img = (t_img*)malloc(sizeof(t_img))))
+		return (NULL);
+	fseek(fd, 0L, SEEK_END);
+	img->file_size = ftell(fd);
+	fseek(fd, 0L, SEEK_SET);
+	img->cur_data = 0;
+	img->width = 0;
+	img->height = 0;
+	if (!(img->data =
+		(char**)malloc(sizeof(char *) * ((img->file_size / MAX_SH) + 1))))
+	{
+		free(img);
+		return (NULL);
+	}
+	return (img);
+}
+
+uint8_t	check_signature(t_img *img, FILE *fd)
+{
+	char	input[8];
+
+	if (!fread(&input, 8, 1, fd))
+		return (0);
+	return (!strncmp(input, "\x89\x50\x4e\x47\x0d\x0a\x1a\x0a", 8));
+}
+
+uint8_t	read_header(t_img *img, FILE *fd)
+{
+	char	h[25];
+
+	if (!fread(&h, 25, 1, fd))
+		return (0);
+	img->width = (h[8] << 24) | (h[9] << 16) | (h[10] << 8) | h[11];
+	img->height = (h[12] << 24) | (h[13] << 16) | (h[14] << 8) | h[15];
+	img->bit_depth = h[16];
+	img->color_type = h[17];
+	return (1);
+}
+
+uint8_t	read_shunk(FILE *fd, t_img *img)
+{
+	char		begin[8];
+	uint32_t	size_chunk;
+	
+	if (!fread(begin, 8, 1, fd))
+		return (1);
+	size_chunk =
+		((begin[0] & 0xFF) << 24) | ((begin[1] & 0xFF) << 16)
+		| ((begin[2] & 0xFF) << 8) | (begin[3] & 0xFF);
+	if (strncmp(&begin[4], "IDAT", 4))
+	{
+		fseek(fd, size_chunk + 4, SEEK_CUR);
+		return (0);
+	}
+	if (size_chunk > img->file_size)
+		return (1);
+	if (!(img->data[img->cur_data] = (char *)malloc(size_chunk + 1)))
+		return (1);
+	if (!fread(img->data[img->cur_data], size_chunk, 1, fd))
+		return (1);
+	img->data[img->cur_data][size_chunk] = '\0';
+	img->cur_data += 1;
+	fseek(fd, 4, SEEK_CUR);
+	return (0);
+}
+
+t_img	*new_img(const char *name)
+{
+	t_img	*img;
+	FILE	*fd;
+
+	if (!(fd = fopen(name, "r")) || !(img = init_img(fd)))
+		return (NULL);
+	printf("img initialized\n");
+	if (!check_signature(img, fd))
+	{
+		free(img->data);
+		free(img);
+		fclose(fd);
+		return (NULL);
+	}
+	printf("Signature checked\n");
+	read_header(img, fd);
+	printf("Header readed\n");
+	while (!read_shunk(fd, img))
+	{}
+	img->data[img->cur_data] = NULL;
+	fclose(fd);
+	printf("Current data index: %d\n", img->cur_data);
+	if (img->cur_data == 0)
+	{
+		ft_tabdel(img->data);
+		free(img);
+		return (NULL);
+	}
+	return (img);
+}
