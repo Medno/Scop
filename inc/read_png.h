@@ -15,9 +15,9 @@ typedef struct	s_img
 	uint32_t	height;
 	uint32_t	bit_depth;
 	uint32_t	color_type;
-	uint32_t	cur_data;
 	uint32_t	file_size;
-	char		**data;
+	uint64_t	cur_data;
+	char		*data;
 }				t_img;
 
 t_img	*new_img(const char *name);

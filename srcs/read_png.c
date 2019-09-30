@@ -6,7 +6,7 @@
 /*   By: pchadeni <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/30 17:05:54 by pchadeni          #+#    #+#             */
-/*   Updated: 2019/09/30 18:35:12 by pchadeni         ###   ########.fr       */
+/*   Updated: 2019/09/30 18:37:59 by pchadeni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ t_img	*init_img(FILE *fd)
 	img->width = 0;
 	img->height = 0;
 	if (!(img->data =
-		(char**)malloc(sizeof(char *) * ((img->file_size / MAX_SH) + 1))))
+		(char*)malloc(sizeof(char) * ((img->file_size * MAX_SH) + 1))))
 	{
 		free(img);
 		return (NULL);
@@ -72,12 +72,10 @@ uint8_t	read_shunk(FILE *fd, t_img *img)
 	}
 	if (size_chunk > img->file_size)
 		return (1);
-	if (!(img->data[img->cur_data] = (char *)malloc(size_chunk + 1)))
+	if (!fread(&img->data[img->cur_data], size_chunk, 1, fd))
 		return (1);
-	if (!fread(img->data[img->cur_data], size_chunk, 1, fd))
-		return (1);
-	img->data[img->cur_data][size_chunk] = '\0';
-	img->cur_data += 1;
+	img->cur_data += size_chunk;
+	img->data[img->cur_data] = '\0';
 	fseek(fd, 4, SEEK_CUR);
 	return (0);
 }
@@ -104,12 +102,11 @@ t_img	*new_img(const char *name)
 	while (!read_shunk(fd, img))
 	{
 	}
-	img->data[img->cur_data] = NULL;
 	fclose(fd);
-	printf("Current data index: %d\n", img->cur_data);
+	printf("Current data index: %llu\n", img->cur_data);
 	if (img->cur_data == 0)
 	{
-		ft_tabdel(img->data);
+		ft_strdel(&img->data);
 		free(img);
 		return (NULL);
 	}
