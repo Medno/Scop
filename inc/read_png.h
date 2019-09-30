@@ -5,6 +5,9 @@
 #include <string.h>
 #include <stdlib.h>
 #include "libft.h"
+#include <GLFW/glfw3.h>
+
+#include "logger.h"
 
 #define MAX_SH 8192
 

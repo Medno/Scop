@@ -6,7 +6,7 @@
 /*   By: pchadeni <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/30 17:05:41 by pchadeni          #+#    #+#             */
-/*   Updated: 2019/09/30 18:38:38 by pchadeni         ###   ########.fr       */
+/*   Updated: 2019/09/30 19:35:53 by pchadeni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,8 @@ unsigned int	init_texture(void)
 	img = new_img("./res/wood5.png");
 	if (img)
 	{
-		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, img->width, img->height, 0,
-			GL_RGB, GL_UNSIGNED_BYTE, img->data);
+		glTexImage2D(GL_TEXTURE_2D, 0, img->color_type, img->width, img->height, 0,
+			img->color_type, GL_BYTE, img->data);
 		glGenerateMipmap(GL_TEXTURE_2D);
 	}
 	return (texture);

@@ -6,7 +6,7 @@
 #    By: pchadeni <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/01/08 14:57:58 by pchadeni          #+#    #+#              #
-#    Updated: 2019/09/17 16:20:39 by pchadeni         ###   ########.fr        #
+#    Updated: 2019/09/30 19:26:08 by pchadeni         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,6 +17,7 @@ NAME = scop
 #------All sources------#
 
 MAIN_SRCS = main.c		\
+			logger.c	\
 			monitor.c	\
 			mat4.c		\
 			vec3.c		\
@@ -39,6 +40,7 @@ CFLAGS += -I$(LIB_PATH)/$(INCLUDES)
 CFLAGS += -I$(HOME)/.brew/include
 
 HEAD = $(INCLUDES)/monitor.h	\
+	   $(INCLUDES)/logger.h		\
 	   $(INCLUDES)/mat4.h		\
 	   $(INCLUDES)/vec3.h		\
 	   $(INCLUDES)/shaders.h	\
@@ -64,7 +66,10 @@ LIB_PATH  = libft
 
 #------Main rules------#
 
-all: $(OBJ_PATH) makelib $(NAME)
+all: delete_logger $(OBJ_PATH) makelib $(NAME)
+
+delete_logger:
+	rm -f .log
 
 $(NAME): $(LIB) $(OBJ)
 	@printf "\33[2KObjects created $(BOLD_GREEN)✓$(EOC)\n"

@@ -6,7 +6,7 @@
 /*   By: pchadeni <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/30 17:05:54 by pchadeni          #+#    #+#             */
-/*   Updated: 2019/09/30 18:37:59 by pchadeni         ###   ########.fr       */
+/*   Updated: 2019/09/30 19:39:04 by pchadeni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ uint8_t	read_header(t_img *img, FILE *fd)
 	img->width = (h[8] << 24) | (h[9] << 16) | (h[10] << 8) | h[11];
 	img->height = (h[12] << 24) | (h[13] << 16) | (h[14] << 8) | h[15];
 	img->bit_depth = h[16];
-	img->color_type = h[17];
+	img->color_type = h[17] == 6 ? GL_RGBA : GL_RGB;
 	return (1);
 }
 
@@ -72,10 +72,10 @@ uint8_t	read_shunk(FILE *fd, t_img *img)
 	}
 	if (size_chunk > img->file_size)
 		return (1);
-	if (!fread(&img->data[img->cur_data], size_chunk, 1, fd))
+	if (!fread(&(img->data[img->cur_data]), size_chunk, 1, fd))
 		return (1);
 	img->cur_data += size_chunk;
-	img->data[img->cur_data] = '\0';
+
 	fseek(fd, 4, SEEK_CUR);
 	return (0);
 }
@@ -88,7 +88,6 @@ t_img	*new_img(const char *name)
 	if (!(fd = fopen(name, "r"))
 			|| !(img = init_img(fd)))
 		return (NULL);
-	printf("img initialized\n");
 	if (!check_signature(fd))
 	{
 		free(img->data);
@@ -96,19 +95,18 @@ t_img	*new_img(const char *name)
 		fclose(fd);
 		return (NULL);
 	}
-	printf("Signature checked\n");
 	read_header(img, fd);
-	printf("Header readed\n");
 	while (!read_shunk(fd, img))
 	{
 	}
 	fclose(fd);
-	printf("Current data index: %llu\n", img->cur_data);
 	if (img->cur_data == 0)
 	{
 		ft_strdel(&img->data);
 		free(img);
 		return (NULL);
 	}
+	img->data[img->cur_data] = '\0';
+fwrite(img->data, img->cur_data, 1, logger);
 	return (img);
 }

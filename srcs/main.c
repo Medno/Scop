@@ -6,7 +6,7 @@
 /*   By: pchadeni <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/10 16:37:00 by pchadeni          #+#    #+#             */
-/*   Updated: 2019/09/30 16:52:52 by pchadeni         ###   ########.fr       */
+/*   Updated: 2019/09/30 18:54:38 by pchadeni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 #include "vec3.h"
 #include "shaders.h"
 #include "transform.h"
+#include "logger.h"
 
 void	display_scop(t_monitor *monitor)
 {
@@ -160,6 +161,7 @@ printf("Updating monitor...\n");
 
 int main(int ac, char **av)
 {
+	init_logger();
 	(void)ac;
 	(void)av;
 	t_monitor	monitor;
@@ -168,5 +170,6 @@ int main(int ac, char **av)
 		return (1);
 	display_scop(&monitor);
 	destroy_monitor(&monitor);
+	quit_logger();
 	return (0);
 }

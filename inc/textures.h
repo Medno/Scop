@@ -6,6 +6,8 @@
 #include <GLFW/glfw3.h>
 #include "read_png.h"
 
+#include "logger.h"
+
 unsigned int	init_texture(void);
 
 #endif
