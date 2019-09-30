@@ -6,7 +6,7 @@
 /*   By: pchadeni <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/17 10:42:32 by pchadeni          #+#    #+#             */
-/*   Updated: 2019/09/17 15:47:12 by pchadeni         ###   ########.fr       */
+/*   Updated: 2019/09/30 17:07:59 by pchadeni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,6 @@
 
 uint8_t	handle_gl_err(const char *fn)
 {
-//	GLenum			err_code;
-//
-//	if ((err_code = glGetError()) != GL_NO_ERROR)
-//	{
-		dprintf(2, "OpenGL Error in function %s\n", fn);
-//		return (1);
-//	}
+	dprintf(2, "OpenGL Error in function %s\n", fn);
 	return (0);
 }

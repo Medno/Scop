@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   transform.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: pchadeni <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/09/30 17:18:06 by pchadeni          #+#    #+#             */
+/*   Updated: 2019/09/30 17:19:37 by pchadeni         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "transform.h"
 
 t_transform	create_transform(void)
@@ -10,7 +22,7 @@ t_transform	create_transform(void)
 	return (new_t);
 }
 
-t_mat4	scale(t_transform t)
+t_mat4		scale(t_transform t)
 {
 	t_mat4	scaled;
 
@@ -21,7 +33,7 @@ t_mat4	scale(t_transform t)
 	return (scaled);
 }
 
-t_mat4	rotate_axis(t_transform t, enum e_axis axis)
+t_mat4		rotate_axis(t_transform t, enum e_axis axis)
 {
 	t_mat4	n_mat4;
 	int		i;
@@ -45,19 +57,19 @@ t_mat4	rotate_axis(t_transform t, enum e_axis axis)
 	return (n_mat4);
 }
 
-t_mat4	rotate(t_transform t)
+t_mat4		rotate(t_transform t)
 {
-	t_mat4	rotX_matrix;
-	t_mat4	rotY_matrix;
-	t_mat4	rotZ_matrix;
+	t_mat4	rot_x_matrix;
+	t_mat4	rot_y_matrix;
+	t_mat4	rot_z_matrix;
 
-	rotX_matrix = rotate_axis(t, X_AXIS);
-	rotY_matrix = rotate_axis(t, Y_AXIS);
-	rotZ_matrix = rotate_axis(t, Z_AXIS);
-	return (mul_mat4(rotX_matrix, mul_mat4(rotY_matrix, rotZ_matrix)));
+	rot_x_matrix = rotate_axis(t, X_AXIS);
+	rot_y_matrix = rotate_axis(t, Y_AXIS);
+	rot_z_matrix = rotate_axis(t, Z_AXIS);
+	return (mul_mat4(rot_x_matrix, mul_mat4(rot_y_matrix, rot_z_matrix)));
 }
 
-t_mat4	get_model(t_transform t)
+t_mat4		get_model(t_transform t)
 {
 	t_mat4	pos_matrix;
 	t_mat4	rot_matrix;
@@ -68,6 +80,5 @@ t_mat4	get_model(t_transform t)
 	rot_matrix = rotate(t);
 	scale_matrix = scale(t);
 	final_matrix = mul_mat4(pos_matrix, mul_mat4(rot_matrix, scale_matrix));
-//print_mat4(final_matrix);
 	return (final_matrix);
 }

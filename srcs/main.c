@@ -6,7 +6,7 @@
 /*   By: pchadeni <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/10 16:37:00 by pchadeni          #+#    #+#             */
-/*   Updated: 2019/09/17 19:01:44 by pchadeni         ###   ########.fr       */
+/*   Updated: 2019/09/30 16:52:52 by pchadeni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,6 +135,7 @@ void	display_scop(t_monitor *monitor)
 	monitor->transformation = &transform;
 	while (!glfwWindowShouldClose(monitor->win))
 	{
+printf("Start looping...\n");
 		clear_window(0.91f, 0.86f, 0.79f, 1.0f);
 //		transform.position.x = sinf(count);
 //		transform.rotation.z = count;
@@ -142,10 +143,14 @@ void	display_scop(t_monitor *monitor)
 //	dprintf(2, "Position: %f, %f, %f\n", transform.position.x, transform.position.y, transform.position.z);
 //	transform.scale = create_vec3(cosf(count), cosf(count), cosf(count));
 
+printf("Binding shader...\n");
 		bind_shader(shader);
+printf("Updating shader...\n");
 		update_shader(shader, *(monitor->transformation));
 
+printf("Drawing mesh...\n");
 		draw_mesh(mesh);
+printf("Updating monitor...\n");
 		end = update_monitor(monitor);
 		count += 0.005f;
 	}

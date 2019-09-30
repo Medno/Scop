@@ -6,7 +6,7 @@
 /*   By: pchadeni <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/10 17:03:00 by pchadeni          #+#    #+#             */
-/*   Updated: 2019/09/17 19:51:14 by pchadeni         ###   ########.fr       */
+/*   Updated: 2019/09/30 17:22:49 by pchadeni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,10 +34,10 @@ void	edit_rasterization(void)
 
 void	key_callback(GLFWwindow *w, int key, int scancode, int act, int mods)
 {
-	(void)scancode;
-	(void)mods;
 	t_monitor	*mon;
 
+	(void)scancode;
+	(void)mods;
 	mon = (t_monitor *)glfwGetWindowUserPointer(w);
 	if (key == GLFW_KEY_ESCAPE && act == GLFW_PRESS)
 		glfwSetWindowShouldClose(w, GLFW_TRUE);
@@ -57,16 +57,16 @@ void	key_callback(GLFWwindow *w, int key, int scancode, int act, int mods)
 		mon->transformation->position.y -= 0.01f;
 }
 
-void framebuffer_size_callback(GLFWwindow* window, int width, int height)
+void	framebuffer_size_callback(GLFWwindow *window, int width, int height)
 {
 	(void)window;
 	glViewport(0, 0, width, height);
-} 
+}
 
 uint8_t	init_monitor(t_monitor *monitor)
 {
 	if (!glfwInit())
-		return error_glfw("Error during initialization of GLFW");
+		return (error_glfw("Error during initialization of GLFW"));
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 1);
 	glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
@@ -76,14 +76,14 @@ uint8_t	init_monitor(t_monitor *monitor)
 	if (!monitor->win)
 	{
 		glfwTerminate();
-		return error_glfw("Error while creating a window");
+		return (error_glfw("Error while creating a window"));
 	}
 	glfwSetWindowUserPointer(monitor->win, (void *)monitor);
 	glfwSetKeyCallback(monitor->win, key_callback);
 	glEnable(GL_MULTISAMPLE);
 	glfwMakeContextCurrent(monitor->win);
 	glViewport(0, 0, WIDTH, HEIGHT);
-	glfwSetFramebufferSizeCallback(monitor->win, framebuffer_size_callback);  
+	glfwSetFramebufferSizeCallback(monitor->win, framebuffer_size_callback);
 	return (1);
 }
 

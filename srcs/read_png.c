@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   read_png.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: pchadeni <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/09/30 17:05:54 by pchadeni          #+#    #+#             */
+/*   Updated: 2019/09/30 18:35:12 by pchadeni         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "read_png.h"
 
 t_img	*init_img(FILE *fd)
@@ -47,7 +59,7 @@ uint8_t	read_shunk(FILE *fd, t_img *img)
 {
 	char		begin[8];
 	uint32_t	size_chunk;
-	
+
 	if (!fread(begin, 8, 1, fd))
 		return (1);
 	size_chunk =
@@ -75,7 +87,8 @@ t_img	*new_img(const char *name)
 	t_img	*img;
 	FILE	*fd;
 
-	if (!(fd = fopen(name, "r")) || !(img = init_img(fd)))
+	if (!(fd = fopen(name, "r"))
+			|| !(img = init_img(fd)))
 		return (NULL);
 	printf("img initialized\n");
 	if (!check_signature(fd))
@@ -89,7 +102,8 @@ t_img	*new_img(const char *name)
 	read_header(img, fd);
 	printf("Header readed\n");
 	while (!read_shunk(fd, img))
-	{}
+	{
+	}
 	img->data[img->cur_data] = NULL;
 	fclose(fd);
 	printf("Current data index: %d\n", img->cur_data);

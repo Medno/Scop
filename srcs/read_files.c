@@ -1,11 +1,23 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   read_files.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: pchadeni <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/09/30 17:08:09 by pchadeni          #+#    #+#             */
+/*   Updated: 2019/09/30 17:08:58 by pchadeni         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "shaders.h"
 
-char	*read_shader_file(const char * filename)
+char	*read_shader_file(const char *filename)
 {
 	FILE	*fd;
 	char	*res;
 	long	file_size;
-	
+
 	if (!(fd = fopen(filename, "r")))
 	{
 		dprintf(2, "Error: Cannot open shader: %s\n", filename);

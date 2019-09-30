@@ -6,16 +6,16 @@
 /*   By: pchadeni <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/17 16:29:48 by pchadeni          #+#    #+#             */
-/*   Updated: 2019/09/17 17:55:59 by pchadeni         ###   ########.fr       */
+/*   Updated: 2019/09/30 17:22:20 by pchadeni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shaders.h"
 
-static uint8_t	check_shader_error(GLuint shad, GLuint f, uint8_t p, char* err)
+static uint8_t	check_shader_error(GLuint shad, GLuint f, uint8_t p, char *err)
 {
 	GLint	success;
-	GLchar	error[1024] = {0};
+	GLchar	error[1024];
 
 	if (p)
 		glGetProgramiv(shad, f, &success);
@@ -59,7 +59,7 @@ static uint8_t	create_shader(const char *file, GLenum shader_type)
 	return (shader);
 }
 
-uint8_t			construct_shader(const char * file, t_shader *shader)
+uint8_t			construct_shader(const char *file, t_shader *shader)
 {
 	int	i;
 
@@ -104,13 +104,16 @@ void			delete_shader(t_shader shader)
 	glDeleteProgram(shader.program);
 }
 
-void	bind_shader(t_shader shader)
+void			bind_shader(t_shader shader)
 {
 	glUseProgram(shader.program);
 }
 
-void	update_shader(t_shader s, t_transform t)
+void			update_shader(t_shader s, t_transform t)
 {
-	t_mat4	model = get_model(t);
-	glUniformMatrix4fv(s.uniforms[TRANSFORM_U], 1, GL_TRUE, &model.matrix[0][0]);
+	t_mat4	model;
+
+	model = get_model(t);
+	glUniformMatrix4fv(
+			s.uniforms[TRANSFORM_U], 1, GL_TRUE, &model.matrix[0][0]);
 }
