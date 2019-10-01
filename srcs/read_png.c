@@ -6,7 +6,7 @@
 /*   By: pchadeni <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/30 17:05:54 by pchadeni          #+#    #+#             */
-/*   Updated: 2019/09/30 19:39:04 by pchadeni         ###   ########.fr       */
+/*   Updated: 2019/10/01 16:52:38 by pchadeni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,15 +21,9 @@ t_img	*init_img(FILE *fd)
 	fseek(fd, 0L, SEEK_END);
 	img->file_size = ftell(fd);
 	fseek(fd, 0L, SEEK_SET);
-	img->cur_data = 0;
+	img->size_data = 0;
 	img->width = 0;
 	img->height = 0;
-	if (!(img->data =
-		(char*)malloc(sizeof(char) * ((img->file_size * MAX_SH) + 1))))
-	{
-		free(img);
-		return (NULL);
-	}
 	return (img);
 }
 
@@ -51,7 +45,32 @@ uint8_t	read_header(t_img *img, FILE *fd)
 	img->width = (h[8] << 24) | (h[9] << 16) | (h[10] << 8) | h[11];
 	img->height = (h[12] << 24) | (h[13] << 16) | (h[14] << 8) | h[15];
 	img->bit_depth = h[16];
-	img->color_type = h[17] == 6 ? GL_RGBA : GL_RGB;
+	if (h[17] == 0)
+	{
+		img->format = GL_LUMINANCE;
+		img->format_index = 1;
+	}
+	else if (h[17] == 4)
+	{
+		img->format = GL_LUMINANCE_ALPHA;
+		img->format_index = 2;
+	}
+	else if (h[17] == 2)
+	{
+		img->format = GL_RGB;
+		img->format_index = 3;
+	}
+	else
+	{
+		img->format = GL_RGBA;
+		img->format_index = 4;
+	}
+	if (!(img->data = (GLubyte*)malloc(sizeof(GLubyte)
+		* img->width * img->height * img->format_index)))
+	{
+		free(img);
+		return (0);
+	}
 	return (1);
 }
 
@@ -72,9 +91,9 @@ uint8_t	read_shunk(FILE *fd, t_img *img)
 	}
 	if (size_chunk > img->file_size)
 		return (1);
-	if (!fread(&(img->data[img->cur_data]), size_chunk, 1, fd))
+	if (!fread(&(img->data[img->file_size]), size_chunk, 1, fd))
 		return (1);
-	img->cur_data += size_chunk;
+	img->file_size += size_chunk;
 
 	fseek(fd, 4, SEEK_CUR);
 	return (0);
@@ -100,13 +119,13 @@ t_img	*new_img(const char *name)
 	{
 	}
 	fclose(fd);
-	if (img->cur_data == 0)
+	if (img->file_size == 0)
 	{
-		ft_strdel(&img->data);
+		free(img->data);
 		free(img);
 		return (NULL);
 	}
-	img->data[img->cur_data] = '\0';
-fwrite(img->data, img->cur_data, 1, logger);
+	img->data[img->file_size] = '\0';
+fwrite(img->data, img->file_size, 1, logger);
 	return (img);
 }

@@ -6,7 +6,7 @@
 /*   By: pchadeni <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/10 16:37:00 by pchadeni          #+#    #+#             */
-/*   Updated: 2019/09/30 18:54:38 by pchadeni         ###   ########.fr       */
+/*   Updated: 2019/10/01 16:57:09 by pchadeni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,7 +129,9 @@ void	display_scop(t_monitor *monitor)
 
 	end = 0;
 	count = 0.0f;
+printf("Creation of mesh...\n");
 	mesh = create_mesh(vertices, sizeof(vertices)/sizeof(vertices[0]), textures, sizeof(textures)/sizeof(textures[0]));
+printf("Creation of shader...\n");
 	if (!construct_shader("./res/basicShader", &shader))
 		return ;
 	transform = create_transform();
