@@ -26,12 +26,9 @@ typedef struct	s_tga_header
 	short	colormap_origin;	//2	3
 	short	colormap_len;		//2	5
 	GLubyte	colormap_size;		//1	6
-//	short	x_origin;			//2	7
-//	short	y_origin;			//2	10
 	short	width;				//2	12
 	short	height;				//2	14
 	GLubyte	pixel_depth;		//1	16
-//	GLubyte	img_descriptor;		//1	17
 }				t_tga_header;
 
 unsigned int	init_texture(void);

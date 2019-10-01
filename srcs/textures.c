@@ -12,16 +12,16 @@
 
 #include "textures.h"
 
-unsigned int	init_texture(void)
+t_texture	init_texture(void)
 {
-	unsigned int	texture;
+	t_texture		texture;
 //	t_img			*img;
 	t_tga_header	*head;
 	uint32_t		i;
 
 	i = 0;
-	glGenTextures(1, &texture);
-	glBindTexture(GL_TEXTURE_2D, texture);
+	glGenTextures(1, &texture.id);
+	glBindTexture(GL_TEXTURE_2D, texture.id);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_MIRRORED_REPEAT);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_MIRRORED_REPEAT);
 //	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
@@ -29,7 +29,7 @@ unsigned int	init_texture(void)
 			GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 	printf("Creating tga...\n");
-	head = new_tga_header("./res/wall_texture.tga");
+	fill_texture("./res/wall_texture.tga", &texture);
 /**	printf("Importing png\n");
 	img = new_img("./res/wood5.png");
 	if (img)
@@ -54,28 +54,47 @@ static t_tga_header	*init_header(FILE *fd)
 		return (NULL);
 	header->colormap_type = buffer[1];
 	header->compression_type = buffer[2];
-	header->colormap_origin = (short)buffer[3];
-	header->colormap_len = (short)buffer[5];
-	header->colormap_size = buffer[6];
-	header->width = (short)buffer[12];
-	header->height = (short)buffer[14];
+	header->colormap_origin = (buffer[3] & 0xFF) | ((buffer[4] & 0xFF) << 8);
+	header->colormap_len = (buffer[5] & 0xFF) | ((buffer[6] & 0xFF) << 8);
+	header->colormap_size = buffer[7];
+	header->width = (buffer[12] & 0xFF) | ((buffer[13] & 0xFF) << 8);
+	header->height = (buffer[14] & 0xFF) | ((buffer[15] & 0xFF) << 8);
 	header->pixel_depth = buffer[16];
 
-for (int i = 0; i < 18; i++)
-	fprintf(logger, "%#x\n", buffer[i]);
 fprintf(logger, "cm_type:	%d\ncom_type:	%d\ncm_orig:	%d\ncm_len:		%d\ncm_size:	%d\nwidth:		%d\nheight:		%d\npixel_d:	%d\n",
-		header->colormap_type,
-	header->compression_type,
-	header->colormap_origin,
-	header->colormap_len,
-	header->colormap_size,
-	header->width,
-	header->height,
-	header->pixel_depth);
+	header->colormap_type, header->compression_type, header->colormap_origin, header->colormap_len,
+	header->colormap_size, header->width, header->height, header->pixel_depth);
 	return (header);
 }
 
-t_tga_header		*new_tga_header(const char *filename)
+static void	fill_type_texture(t_tga_header *head, t_texture *texture)
+{
+  texinfo->width = header->width;
+  texinfo->height = header->height;
+
+	if (head->compression_type == 11 && header->pixel_depth == 8)
+	{
+		texture->format = GL_LUMINANCE;
+		texture->format_nb = 1;
+	}
+	else if (head->compression_type == 11)
+	{
+		texture->format = GL_LUMINANCE_ALPHA;
+		texture->format_nb = 2;
+	}
+	else if (head->compression_type == 10 && header->pixel_depth == 8)
+	{
+		texture->format = GL_RGB;
+		texture->format_nb = 3;
+	}
+	else if (head->compression_type == 10)
+	{
+		texture->format = GL_RGBA;
+		texture->format_nb = 4;
+	}
+}
+
+void		fill_texture(const char *filename, t_texture *texture)
 {
 	FILE			*fd;
 	t_tga_header	*header;
@@ -83,6 +102,7 @@ t_tga_header		*new_tga_header(const char *filename)
 	if (!(fd = fopen(filename, "rb")))
 		return (NULL);
 	header = init_header(fd);
+	fill_type_texture(header, texture);
 	fclose(fd);
 	return (header);
 }
