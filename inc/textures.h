@@ -7,15 +7,61 @@
 #include "read_png.h"
 
 #include "logger.h"
+#define SIZE_TGA_HEADER 18
+
+/*
+ *	image_type = 1	->				-> 8 bits	RGB
+ *	image_type = 2	->	depth = 16	-> 16 bits	RGB
+ *					->	depth = 24	-> 24 bits	RGB
+ *					->	depth = 32	-> 32 bits	RGB
+ *	image_type = 3	->	depth = 8	-> 8 bits	GREY
+ *					->	depth = 16	-> 16 bits	GREY
+ *
+ *	image_type = 9	->				-> 8 bits	RGB		RLE
+ *	image_type = 10	->	depth = 16	-> 16 bits	RGB		RLE
+ *					->	depth = 24	-> 24 bits	RGB		RLE
+ *					->	depth = 32	-> 24 bits	RGB		RLE
+ *	image_type = 11	->	depth = 8	-> 8 bits	GREY	RLE
+ *					->	depth = 16	-> 16 bits	GREY	RLE
+ 
+ */
+
+typedef enum	e_tga_type
+{
+	IMG_8_BITS,
+	IMG_16_BITS,
+	IMG_24_BITS,
+	IMG_32_BITS,
+	IMG_8_BITS_GREY,
+	IMG_16_BITS_GREY,
+	IMG_8_BITS_RLE,
+	IMG_16_BITS_RLE,
+	IMG_24_BITS_RLE,
+	IMG_32_BITS_RLE,
+	IMG_8_BITS_GREY_RLE,
+	IMG_16_BITS_GREY_RLE,
+}				t_tga_type;
+
+typedef enum	e_img_type
+{
+	IMG_COLORED,
+	IMG_GREY,
+	IMG_COLORED_RLE,
+	IMG_GREY_RLE,
+	NUM_TYPES
+}				t_img_type;
+
 
 typedef struct	s_texture
 {
-	GLuint	width;
-	GLuint	height;
-	GLenum	format;
-	GLint	format_nb;
-	GLuint	id;
-	GLubyte	*data;
+	GLuint		width;
+	GLuint		height;
+	GLenum		format;
+	GLint		format_nb;
+	GLuint		id;
+	GLubyte		*data;
+	t_tga_type	img_sub_type;
+	t_img_type	img_type;
 }				t_texture;
 
 typedef struct	s_tga_header
@@ -29,10 +75,11 @@ typedef struct	s_tga_header
 	short	width;				//2	12
 	short	height;				//2	14
 	GLubyte	pixel_depth;		//1	16
+	GLubyte	*colormap;
 }				t_tga_header;
 
-unsigned int	init_texture(void);
+t_texture	*init_texture(void);
 
 t_tga_header	*new_tga_header(const char *filename);
-
+void			handle_header_tga(t_texture *texture);
 #endif

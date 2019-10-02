@@ -3,106 +3,98 @@
 /*                                                        :::      ::::::::   */
 /*   textures.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pchadeni <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: pchadeni <pchadeni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/09/30 17:05:41 by pchadeni          #+#    #+#             */
-/*   Updated: 2019/10/01 18:16:59 by pchadeni         ###   ########.fr       */
+/*   Created: 2019/10/02 17:19:08 by pchadeni          #+#    #+#             */
+/*   Updated: 2019/10/02 18:54:02 by pchadeni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "textures.h"
 
-t_texture	init_texture(void)
+static void	init_array_function(void (*f)[](t_texture*, GLubyte*, t_tga_type))
 {
-	t_texture		texture;
-//	t_img			*img;
-	t_tga_header	*head;
+	f[IMG_COLORED] = &read_tga_bits_colored;
+	f[IMG_GREY] = &read_tga_bits_grey;
+	f[IMG_COLORED_RLE] = &read_tga_bits;
+	f[IMG_GREY_RLE] = &read_tga_bits;
+}
+
+t_texture	*fill_texture(GLubyte *ptr, t_texture *texture)
+{
+	t_tga_header	header;
+	void			(*f)[NUM_TYPES](t_texture*, GLubyte*, t_tga_type);
+
+	if (!(texture = (t_texture *)malloc(sizeof(t_texture))))
+		return (NULL);
+	handle_header_tga(texture, &header);
+	ptr += SIZE_TGA_HEADER + (GLubyte)ptr[0];
+	if (header.colormap_type)
+	{
+		header.colormap = ptr;
+		ptr += header.colormap_len * (header.colormap_size >> 3);
+	}
+	init_array_function(f);
+	if ((texture->data = (GLubyte *)malloc(sizeof(GLubyte) * texture->width
+		* texture->height * texture->format_nb)))
+		(*f)[texture->img_type](texture, ptr);
+	else
+	{
+		free(texture);
+		texture = NULL;
+	}
+	return (texture);
+}
+
+t_texture	*import_texture(const char *filename, t_texture *texture)
+{
+	GLubyte	*file_data;
+	GLubyte	*ptr;
+	FILE	*fd;
+	long	file_size;
+
+	texture = NULL;
+	if (!(fd = fopen(filename, "rb")))
+		return (NULL);
+	fseek(fd, 0, SEEK_END);
+	file_size = ftell(fd);
+	fseek(fd, 0, SEEK_SET);
+	file_data = (GLubyte *)malloc(sizeof(GLubyte) * file_size);
+	fclose(fd);
+	if (file_data)
+	{
+		ptr = file_data;
+		texture = fill_texture(ptr, texture);
+		free(file_data);
+	}
+	return (texture);
+}
+
+t_texture	*init_texture(void)
+{
+	t_texture		*texture;
 	uint32_t		i;
 
 	i = 0;
-	glGenTextures(1, &texture.id);
-	glBindTexture(GL_TEXTURE_2D, texture.id);
+	printf("Creating tga...\n");
+	texture = import_texture("./res/wall_texture.tga", texture);
+	glGenTextures(1, &texture->id);
+	glBindTexture(GL_TEXTURE_2D, texture->id);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_MIRRORED_REPEAT);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_MIRRORED_REPEAT);
 //	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 	glTexParameteri(GL_TEXTURE_2D,
 			GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-	printf("Creating tga...\n");
-	fill_texture("./res/wall_texture.tga", &texture);
 /**	printf("Importing png\n");
 	img = new_img("./res/wood5.png");
 	if (img)
 	{
 	printf("TexImage2d...\n");
-		glTexImage2D(GL_TEXTURE_2D, 0, img->format_index, img->width, img->height, 0,
-			img->format, GL_UNSIGNED_BYTE, img->data);
+glTexImage2D(GL_TEXTURE_2D, 0, img->format_index, img->width, img->height, 0,
+img->format, GL_UNSIGNED_BYTE, img->data);
 		glGenerateMipmap(GL_TEXTURE_2D);
 	}
 	*/
 	return (texture);
-}
-
-static t_tga_header	*init_header(FILE *fd)
-{
-	char			buffer[18];
-	t_tga_header	*header;
-
-	if (!(fread(buffer, 18, 1, fd)))
-		return (NULL);
-	if (!(header = (t_tga_header *)malloc(sizeof(t_tga_header))))
-		return (NULL);
-	header->colormap_type = buffer[1];
-	header->compression_type = buffer[2];
-	header->colormap_origin = (buffer[3] & 0xFF) | ((buffer[4] & 0xFF) << 8);
-	header->colormap_len = (buffer[5] & 0xFF) | ((buffer[6] & 0xFF) << 8);
-	header->colormap_size = buffer[7];
-	header->width = (buffer[12] & 0xFF) | ((buffer[13] & 0xFF) << 8);
-	header->height = (buffer[14] & 0xFF) | ((buffer[15] & 0xFF) << 8);
-	header->pixel_depth = buffer[16];
-
-fprintf(logger, "cm_type:	%d\ncom_type:	%d\ncm_orig:	%d\ncm_len:		%d\ncm_size:	%d\nwidth:		%d\nheight:		%d\npixel_d:	%d\n",
-	header->colormap_type, header->compression_type, header->colormap_origin, header->colormap_len,
-	header->colormap_size, header->width, header->height, header->pixel_depth);
-	return (header);
-}
-
-static void	fill_type_texture(t_tga_header *head, t_texture *texture)
-{
-  texinfo->width = header->width;
-  texinfo->height = header->height;
-
-	if (head->compression_type == 11 && header->pixel_depth == 8)
-	{
-		texture->format = GL_LUMINANCE;
-		texture->format_nb = 1;
-	}
-	else if (head->compression_type == 11)
-	{
-		texture->format = GL_LUMINANCE_ALPHA;
-		texture->format_nb = 2;
-	}
-	else if (head->compression_type == 10 && header->pixel_depth == 8)
-	{
-		texture->format = GL_RGB;
-		texture->format_nb = 3;
-	}
-	else if (head->compression_type == 10)
-	{
-		texture->format = GL_RGBA;
-		texture->format_nb = 4;
-	}
-}
-
-void		fill_texture(const char *filename, t_texture *texture)
-{
-	FILE			*fd;
-	t_tga_header	*header;
-
-	if (!(fd = fopen(filename, "rb")))
-		return (NULL);
-	header = init_header(fd);
-	fill_type_texture(header, texture);
-	fclose(fd);
-	return (header);
 }

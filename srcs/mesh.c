@@ -42,7 +42,7 @@ printf("End of mesh...\n");
 void	draw_mesh(t_mesh mesh)
 {
 	printf("\tBinding textures...\n");
-	glBindTexture(GL_TEXTURE_2D, mesh.texture);
+	glBindTexture(GL_TEXTURE_2D, mesh.texture.id);
 	printf("\tBinding VAO...\n");
 	glBindVertexArray(mesh.vao);
 	printf("\tDrawing Arrays...\n");

@@ -33,7 +33,7 @@ typedef struct	s_mesh
 	GLuint			vao;
 	GLuint			vab[NUM_BUFFERS];
 	unsigned int	count_draw;
-	unsigned int	texture;
+	t_texture		texture;
 	unsigned int	len_textures;
 }				t_mesh;
 
