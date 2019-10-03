@@ -27,6 +27,11 @@ MAIN_SRCS = main.c		\
 			transform.c	\
 			read_png.c	\
 			textures.c	\
+			read_tga_bits.c	\
+			read_tga_bits_colored_rle.c	\
+			read_tga_bits_grey.c	\
+			read_tga_bits_rle.c	\
+			tga_header.c	\
 			shaders.c
 			
 

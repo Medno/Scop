@@ -4,9 +4,11 @@
 # define GL_SILENCE_DEPRECATION
 # define GLFW_INCLUDE_GLCOREARB
 #include <GLFW/glfw3.h>
-#include "read_png.h"
 
 #include "logger.h"
+#include <stdlib.h>
+#include <stdio.h>
+#include <libft.h>
 #define SIZE_TGA_HEADER 18
 
 /*
@@ -46,23 +48,9 @@ typedef enum	e_img_type
 {
 	IMG_COLORED,
 	IMG_GREY,
-	IMG_COLORED_RLE,
-	IMG_GREY_RLE,
+	IMG_RLE,
 	NUM_TYPES
 }				t_img_type;
-
-
-typedef struct	s_texture
-{
-	GLuint		width;
-	GLuint		height;
-	GLenum		format;
-	GLint		format_nb;
-	GLuint		id;
-	GLubyte		*data;
-	t_tga_type	img_sub_type;
-	t_img_type	img_type;
-}				t_texture;
 
 typedef struct	s_tga_header
 {
@@ -78,8 +66,40 @@ typedef struct	s_tga_header
 	GLubyte	*colormap;
 }				t_tga_header;
 
+
+typedef struct	s_texture
+{
+	GLuint			id;
+	GLuint			width;
+	GLuint			height;
+	GLenum			format;
+	GLint			format_nb;
+	GLubyte			*data;
+	t_tga_type		img_sub_type;
+	t_img_type		img_type;
+	GLubyte			*file_data;
+	t_tga_header	tga_header;
+}				t_texture;
+
 t_texture	*init_texture(void);
 
 t_tga_header	*new_tga_header(const char *filename);
-void			handle_header_tga(t_texture *texture);
+void		handle_header_tga(t_texture *texture, GLubyte *p);
+
+void	read_tga_bits_rle(t_texture *texture);
+
+void	read_tga_bits_colored(t_texture *texture);
+void	read_tga_bits_grey(t_texture *texture);
+
+void	read_8_colored_rle(t_texture *tex, GLubyte *ptr, unsigned short c,
+		GLubyte *data);
+void	read_16_colored_rle(t_texture *tex, GLubyte *ptr, unsigned short c,
+		GLubyte *data);
+void	read_24_colored_rle(t_texture *tex, GLubyte *ptr, unsigned short c,
+		GLubyte *data);
+void	read_32_colored_rle(t_texture *tex, GLubyte *ptr, unsigned short c,
+		GLubyte *data);
+
+void    print_texture(t_texture *texture, uint8_t log);
+void	print_header(t_tga_header header, uint8_t log);
 #endif

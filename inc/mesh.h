@@ -6,7 +6,7 @@
 /*   By: pchadeni <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/17 15:43:20 by pchadeni          #+#    #+#             */
-/*   Updated: 2019/09/17 15:51:57 by pchadeni         ###   ########.fr       */
+/*   Updated: 2019/10/03 18:10:34 by pchadeni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@
 enum
 {
 	POSITION_VB,
+	TEXTURES_VB,
 
 	NUM_BUFFERS
 };
@@ -33,7 +34,7 @@ typedef struct	s_mesh
 	GLuint			vao;
 	GLuint			vab[NUM_BUFFERS];
 	unsigned int	count_draw;
-	t_texture		texture;
+	t_texture		*texture;
 	unsigned int	len_textures;
 }				t_mesh;
 

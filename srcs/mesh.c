@@ -6,7 +6,7 @@
 /*   By: pchadeni <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/17 15:43:12 by pchadeni          #+#    #+#             */
-/*   Updated: 2019/10/01 16:58:21 by pchadeni         ###   ########.fr       */
+/*   Updated: 2019/10/03 18:10:41 by pchadeni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ t_mesh	create_mesh(t_vec3 *vertices, unsigned int len_vertices, float *textures,
 		len_textures * sizeof(float), textures);
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(t_vec3), 0);
 	glEnableVertexAttribArray(0);
+	glBindBuffer(GL_ARRAY_BUFFER, mesh.vab[TEXTURES_VB]);
 	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(float),
 			(void*)(len_vertices * sizeof(t_vec3)));
 	glEnableVertexAttribArray(1);
@@ -42,7 +43,8 @@ printf("End of mesh...\n");
 void	draw_mesh(t_mesh mesh)
 {
 	printf("\tBinding textures...\n");
-	glBindTexture(GL_TEXTURE_2D, mesh.texture.id);
+	glActiveTexture(GL_TEXTURE0);
+	glBindTexture(GL_TEXTURE_2D, mesh.texture->id);
 	printf("\tBinding VAO...\n");
 	glBindVertexArray(mesh.vao);
 	printf("\tDrawing Arrays...\n");
