@@ -136,6 +136,9 @@ printf("Creation of shader...\n");
 		return ;
 	transform = create_transform();
 	monitor->transformation = &transform;
+	bind_shader(shader); // glUseProgram
+//	glUniform1i(glGetUniformLocation(shader.program, "texture1"), 0);
+
 	while (!glfwWindowShouldClose(monitor->win))
 	{
 printf("Start looping...\n");
@@ -147,7 +150,7 @@ printf("Start looping...\n");
 //	transform.scale = create_vec3(cosf(count), cosf(count), cosf(count));
 
 printf("Binding shader...\n");
-		bind_shader(shader);
+		bind_shader(shader); // glUseProgram
 printf("Updating shader...\n");
 		update_shader(shader, *(monitor->transformation));
 
