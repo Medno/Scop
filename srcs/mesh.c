@@ -6,7 +6,7 @@
 /*   By: pchadeni <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/17 15:43:12 by pchadeni          #+#    #+#             */
-/*   Updated: 2019/10/03 18:10:41 by pchadeni         ###   ########.fr       */
+/*   Updated: 2019/10/04 16:39:53 by pchadeni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,16 +18,20 @@ t_mesh	create_mesh(t_vec3 *vertices, unsigned int len_vertices, float *textures,
 
 	mesh.count_draw = len_vertices;
 	mesh.len_textures = len_textures;
+
 	glGenVertexArrays(1, &mesh.vao);
-	glGenBuffers(NUM_BUFFERS, mesh.vab);
+	glGenBuffers(NUM_BUFFERS, mesh.vbo);
+
 	glBindVertexArray(mesh.vao);
-	glBindBuffer(GL_ARRAY_BUFFER, mesh.vab[POSITION_VB]);
+	glBindBuffer(GL_ARRAY_BUFFER, mesh.vbo[POSITION_VB]);
 
 	float	*merged = merge_coordinates(vertices, textures, len_vertices, len_textures);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(merged), merged, GL_STATIC_DRAW);
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), 0);
+
+	glBufferData(GL_ARRAY_BUFFER, len_vertices * len_textures * 3, merged, GL_STATIC_DRAW);
+
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void *)0);
 	glEnableVertexAttribArray(0);
-	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(3 * sizeof(float)));
+	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void *)(3 * sizeof(float)));
 	glEnableVertexAttribArray(1);
 
 //	glBufferData(GL_ARRAY_BUFFER, len_vertices * sizeof(t_vec3) + (len_textures * sizeof(float)), 0, GL_STATIC_DRAW);
@@ -44,7 +48,7 @@ t_mesh	create_mesh(t_vec3 *vertices, unsigned int len_vertices, float *textures,
 */
 	glBindVertexArray(0);
 printf("Creation of texture...\n");
-//	mesh.texture = init_texture();
+	mesh.texture = init_texture();
 printf("End of mesh...\n");
 //handle_error
 	return (mesh);
@@ -52,9 +56,6 @@ printf("End of mesh...\n");
 
 void	draw_mesh(t_mesh mesh)
 {
-	printf("\tBinding textures...\n");
-	glActiveTexture(GL_TEXTURE0);
-	glBindTexture(GL_TEXTURE_2D, mesh.texture->id);
 	printf("\tBinding VAO...\n");
 	glBindVertexArray(mesh.vao);
 	printf("\tDrawing Arrays...\n");

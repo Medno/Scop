@@ -6,7 +6,7 @@
 /*   By: pchadeni <pchadeni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/02 17:19:08 by pchadeni          #+#    #+#             */
-/*   Updated: 2019/10/03 17:09:56 by pchadeni         ###   ########.fr       */
+/*   Updated: 2019/10/04 16:27:19 by pchadeni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ t_texture	*fill_texture(GLubyte *ptr, t_texture *texture)
 
 	if (!(texture = (t_texture *)malloc(sizeof(t_texture))))
 		return (NULL);
-printf("Value of ptr: %p\n", texture);
 	handle_header_tga(texture, ptr);
 	ptr += SIZE_TGA_HEADER + (GLubyte)ptr[0];
 	texture->file_data = ptr;
@@ -32,16 +31,10 @@ printf("Value of ptr: %p\n", texture);
 	f[IMG_COLORED] = &read_tga_bits_colored;
 	f[IMG_GREY] = &read_tga_bits_grey;
 	f[IMG_RLE] = &read_tga_bits_rle;
-printf("Allocating texture data\n");
-printf("Allocating :	%zu\n", sizeof(GLubyte) * texture->width * texture->height * texture->format_nb);
 	if ((texture->data = (GLubyte *)malloc(sizeof(GLubyte) * texture->width
 		* texture->height * texture->format_nb)))
 	{
-print_texture(texture, 0);
-printf("Begin of pointer to function\n");
-printf("For img_type:	%d\n", texture->img_type);
 		f[texture->img_type](texture);
-printf("End of pointer to function\n");
 		return (texture);
 	}
 	free(texture);
@@ -86,6 +79,7 @@ t_texture	*init_texture(void)
 	texture = import_texture("./res/wall_texture.tga");
 	glGenTextures(1, &texture->id);
 	glBindTexture(GL_TEXTURE_2D, texture->id);
+
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_MIRRORED_REPEAT);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_MIRRORED_REPEAT);
 //	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
@@ -93,11 +87,12 @@ t_texture	*init_texture(void)
 			GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
-	glTexImage2D(GL_TEXTURE_2D, 0, texture->format_nb, texture->width, texture->height, 0,
+	glTexImage2D(GL_TEXTURE_2D, 0, texture->format, texture->width, texture->height, 0,
 	texture->format, GL_UNSIGNED_BYTE, texture->data);
+
 	glGenerateMipmap(GL_TEXTURE_2D);
 
-print_texture(texture, 1);
+//FREE TEXTURE
 	return (texture);
 }
 

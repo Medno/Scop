@@ -6,7 +6,7 @@
 /*   By: pchadeni <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/10 16:37:00 by pchadeni          #+#    #+#             */
-/*   Updated: 2019/10/01 16:57:09 by pchadeni         ###   ########.fr       */
+/*   Updated: 2019/10/04 16:31:38 by pchadeni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,24 +104,7 @@ void	display_scop(t_monitor *monitor)
 		create_vec3(-0.5f,  0.5f,  0.5f),
 		create_vec3(-0.5f,  0.5f, -0.5f)
     };
-/*	t_vec3 vertices[] = {
-		create_vec3(-0.5, -0.5, 0.5), //FRONT_LEFT
-		create_vec3(0.5, -0.5, 0.5), //RIGHT_LEFT
-		create_vec3(0.0, sqrt(3.0)/3.0, 0.0), //MIDDLE
 
-		create_vec3(-0.5, -0.5, 0.5), //FRONT_LEFT
-		create_vec3(0.5, -0.5, 0.5), //RIGHT_LEFT
-		create_vec3(0.0, -0.5, -0.5), //BACK
-
-		create_vec3(-0.5, -0.5 , 0.5), //FRONT_LEFT
-		create_vec3(0.0, sqrt(3.0)/3.0, 0.0), //MIDDLE
-		create_vec3(0.0, -0.5, -0.5), //BACK
-
-		create_vec3(0.5, -0.5, 0.5), //RIGHT_LEFT
-		create_vec3(0.0, sqrt(3.0)/3.0, 0.0),
-		create_vec3(0.0, -0.5, -0.5) //BACK
-	};
-	*/
 	t_shader	shader;
 	t_mesh		mesh;
 	t_transform	transform;
@@ -130,24 +113,26 @@ void	display_scop(t_monitor *monitor)
 	end = 0;
 	count = 0.0f;
 printf("Creation of mesh...\n");
-	mesh = create_mesh(vertices, sizeof(vertices)/sizeof(vertices[0]), textures, sizeof(textures)/sizeof(textures[0]));
+
+	mesh = create_mesh(vertices, sizeof(vertices)/sizeof(vertices[0]),
+			textures, sizeof(textures)/sizeof(textures[0]));
+
 printf("Creation of shader...\n");
 	if (!construct_shader("./res/basicShader", &shader))
 		return ;
 	transform = create_transform();
 	monitor->transformation = &transform;
 	bind_shader(shader); // glUseProgram
-//	glUniform1i(glGetUniformLocation(shader.program, "texture1"), 0);
+	glUniform1i(glGetUniformLocation(shader.program, "texture1"), 0);
 
+print_texture(mesh.texture, 1);
 	while (!glfwWindowShouldClose(monitor->win))
 	{
 printf("Start looping...\n");
 		clear_window(0.91f, 0.86f, 0.79f, 1.0f);
-//		transform.position.x = sinf(count);
-//		transform.rotation.z = count;
-//		transform.rotation.y = count;
-//	dprintf(2, "Position: %f, %f, %f\n", transform.position.x, transform.position.y, transform.position.z);
-//	transform.scale = create_vec3(cosf(count), cosf(count), cosf(count));
+
+		glActiveTexture(GL_TEXTURE0);
+		glBindTexture(GL_TEXTURE_2D, mesh.texture->id);
 
 printf("Binding shader...\n");
 		bind_shader(shader); // glUseProgram
