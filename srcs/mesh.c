@@ -22,19 +22,29 @@ t_mesh	create_mesh(t_vec3 *vertices, unsigned int len_vertices, float *textures,
 	glGenBuffers(NUM_BUFFERS, mesh.vab);
 	glBindVertexArray(mesh.vao);
 	glBindBuffer(GL_ARRAY_BUFFER, mesh.vab[POSITION_VB]);
-	glBufferData(GL_ARRAY_BUFFER, len_vertices * sizeof(t_vec3) + (len_textures * sizeof(float)), 0, GL_STATIC_DRAW);
-	glBufferSubData(GL_ARRAY_BUFFER, 0, len_vertices * sizeof(t_vec3), vertices);
-	glBufferSubData(GL_ARRAY_BUFFER, len_vertices * sizeof(t_vec3),
-		len_textures * sizeof(float), textures);
+
+	float	*merged = merge_coordinates(vertices, textures, len_vertices, len_textures);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(merged), merged, GL_STATIC_DRAW);
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), 0);
+	glEnableVertexAttribArray(0);
+	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(3 * sizeof(float)));
+	glEnableVertexAttribArray(1);
+
+//	glBufferData(GL_ARRAY_BUFFER, len_vertices * sizeof(t_vec3) + (len_textures * sizeof(float)), 0, GL_STATIC_DRAW);
+//	glBufferSubData(GL_ARRAY_BUFFER, 0, len_vertices * sizeof(t_vec3), vertices);
+//	glBufferSubData(GL_ARRAY_BUFFER, len_vertices * sizeof(t_vec3),
+//		len_textures * sizeof(float), textures);
+/*
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(t_vec3), 0);
 	glEnableVertexAttribArray(0);
 	glBindBuffer(GL_ARRAY_BUFFER, mesh.vab[TEXTURES_VB]);
 	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(float),
 			(void*)(len_vertices * sizeof(t_vec3)));
 	glEnableVertexAttribArray(1);
+*/
 	glBindVertexArray(0);
 printf("Creation of texture...\n");
-	mesh.texture = init_texture();
+//	mesh.texture = init_texture();
 printf("End of mesh...\n");
 //handle_error
 	return (mesh);

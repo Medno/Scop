@@ -32,6 +32,7 @@ MAIN_SRCS = main.c		\
 			read_tga_bits_grey.c	\
 			read_tga_bits_rle.c	\
 			tga_header.c	\
+			merge_coordinates.c	\
 			shaders.c
 			
 

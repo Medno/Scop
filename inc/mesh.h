@@ -24,7 +24,6 @@
 enum
 {
 	POSITION_VB,
-	TEXTURES_VB,
 
 	NUM_BUFFERS
 };
@@ -41,5 +40,6 @@ typedef struct	s_mesh
 t_mesh	create_mesh(t_vec3 *vertices, unsigned int len_vertices, float *textures, unsigned int len_textures);
 void	delete_mesh(t_mesh mesh);
 void	draw_mesh(t_mesh mesh);
+float	*merge_coordinates(t_vec3 vertices[], float texture[], unsigned int l_ver, unsigned int l_tex);
 
 #endif
