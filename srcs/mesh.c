@@ -6,7 +6,7 @@
 /*   By: pchadeni <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/17 15:43:12 by pchadeni          #+#    #+#             */
-/*   Updated: 2019/10/04 16:39:53 by pchadeni         ###   ########.fr       */
+/*   Updated: 2019/10/04 16:46:55 by pchadeni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,18 +34,6 @@ t_mesh	create_mesh(t_vec3 *vertices, unsigned int len_vertices, float *textures,
 	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void *)(3 * sizeof(float)));
 	glEnableVertexAttribArray(1);
 
-//	glBufferData(GL_ARRAY_BUFFER, len_vertices * sizeof(t_vec3) + (len_textures * sizeof(float)), 0, GL_STATIC_DRAW);
-//	glBufferSubData(GL_ARRAY_BUFFER, 0, len_vertices * sizeof(t_vec3), vertices);
-//	glBufferSubData(GL_ARRAY_BUFFER, len_vertices * sizeof(t_vec3),
-//		len_textures * sizeof(float), textures);
-/*
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(t_vec3), 0);
-	glEnableVertexAttribArray(0);
-	glBindBuffer(GL_ARRAY_BUFFER, mesh.vab[TEXTURES_VB]);
-	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(float),
-			(void*)(len_vertices * sizeof(t_vec3)));
-	glEnableVertexAttribArray(1);
-*/
 	glBindVertexArray(0);
 printf("Creation of texture...\n");
 	mesh.texture = init_texture();
