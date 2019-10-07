@@ -21,5 +21,6 @@ t_mat4	add_mat4(t_mat4 first, t_mat4 second);
 t_mat4	sub_mat4(t_mat4 first, t_mat4 second);
 t_mat4	mul_mat4(t_mat4 first, t_mat4 second);
 t_mat4	translate(t_mat4 mat4, t_vec3 vec3);
+t_mat4	projection_mat4(float angle, float ratio, float near, float far);
 void	print_mat4(t_mat4 m);
 #endif

@@ -84,6 +84,7 @@ uint8_t	init_monitor(t_monitor *monitor)
 	glfwMakeContextCurrent(monitor->win);
 	glViewport(0, 0, WIDTH, HEIGHT);
 	glfwSetFramebufferSizeCallback(monitor->win, framebuffer_size_callback);
+	glEnable(GL_DEPTH_TEST);
 	return (1);
 }
 
@@ -96,7 +97,7 @@ void	destroy_monitor(t_monitor *monitor)
 void	clear_window(float r, float g, float b, float a)
 {
 	glClearColor(r, g, b, a);
-	glClear(GL_COLOR_BUFFER_BIT);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 }
 
 uint8_t	update_monitor(t_monitor *monitor)

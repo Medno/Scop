@@ -7,12 +7,16 @@
 #include <stdio.h>
 #include "libft.h"
 #include "transform.h"
+#include "monitor.h"
+#include "mat4.h"
 
 # define NUM_SHADERS 2
 
 enum
 {
-	TRANSFORM_U,
+	MODEL_U,
+	VIEW_U,
+	PROJECTION_U,
 
 	NUM_UNIFORMS
 };
