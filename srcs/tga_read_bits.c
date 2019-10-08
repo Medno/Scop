@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   read_tga_bits.c                                    :+:      :+:    :+:   */
+/*   tga_read_bits.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pchadeni <pchadeni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/10/02 12:16:40 by pchadeni          #+#    #+#             */
-/*   Updated: 2019/10/03 17:28:07 by pchadeni         ###   ########.fr       */
+/*   Created: 2019/10/08 14:38:17 by pchadeni          #+#    #+#             */
+/*   Updated: 2019/10/08 14:40:53 by pchadeni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void	assign_x_bits(t_texture *tex, int i, int j, t_tga_type type)
 	}
 }
 
-void	read_tga_bits_colored(t_texture *texture)
+void	tga_read_bits_colored(t_texture *texture)
 {
 	GLuint	i;
 	int		j;

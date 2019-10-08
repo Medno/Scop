@@ -6,20 +6,20 @@
 /*   By: pchadeni <pchadeni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/02 17:19:08 by pchadeni          #+#    #+#             */
-/*   Updated: 2019/10/08 14:03:03 by pchadeni         ###   ########.fr       */
+/*   Updated: 2019/10/08 14:48:32 by pchadeni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "textures.h"
 
-t_texture	*read_tga_bits(GLubyte *ptr, t_texture *texture)
+t_texture	*tga_read_bits(GLubyte *ptr, t_texture *texture)
 {
 	void			(*f[NUM_TYPES])(t_texture*);
 
 	if (!(texture = (t_texture *)malloc(sizeof(t_texture))))
 		return (NULL);
 	handle_header_tga(texture, ptr);
-	ptr += SIZE_TGA_HEADER + (GLubyte)ptr[0];
+	ptr += TGA_HEADER_SIZE + (GLubyte)ptr[0];
 	texture->file_data = ptr;
 	if (texture->tga_header.colormap_type)
 	{
@@ -27,9 +27,9 @@ t_texture	*read_tga_bits(GLubyte *ptr, t_texture *texture)
 		ptr += texture->tga_header.colormap_len
 			* (texture->tga_header.colormap_size >> 3);
 	}
-	f[IMG_COLORED] = &read_tga_bits_colored;
-	f[IMG_GREY] = &read_tga_bits_grey;
-	f[IMG_RLE] = &read_tga_bits_rle;
+	f[IMG_COLORED] = &tga_read_bits_colored;
+	f[IMG_GREY] = &tga_read_bits_grey;
+	f[IMG_RLE] = &tga_read_bits_rle;
 	if ((texture->data = (GLubyte *)malloc(sizeof(GLubyte) * texture->width
 		* texture->height * texture->format_nb)))
 	{
@@ -59,7 +59,7 @@ t_texture	*read_texture_file(const char *filename)
 	{
 		fread(file_data, sizeof(GLubyte), file_size, fd);
 		ptr = file_data;
-		texture = read_tga_bits(ptr, texture);
+		texture = tga_read_bits(ptr, texture);
 		free(file_data);
 	}
 	fclose(fd);

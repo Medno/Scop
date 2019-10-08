@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   read_tga_bits_rle.c                                :+:      :+:    :+:   */
+/*   tga_read_bits_rle.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pchadeni <pchadeni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/10/02 18:49:49 by pchadeni          #+#    #+#             */
-/*   Updated: 2019/10/03 14:44:53 by pchadeni         ###   ########.fr       */
+/*   Created: 2019/10/08 14:42:24 by pchadeni          #+#    #+#             */
+/*   Updated: 2019/10/08 14:59:43 by pchadeni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,49 +23,8 @@ static int	set_new_coord(t_texture *texture)
 	return (4);
 }
 
-void	handle_colored_nrle(t_texture *texture, int *j, int loop, GLubyte *ptr)
-{
-	int				i;
-	unsigned short	color;
-	void			(*f[4])(t_texture *, GLubyte *, unsigned short, GLubyte *);
-
-	i = 0;
-	f[0] = &read_8_colored_rle;
-	f[1] = &read_16_colored_rle;
-	f[2] = &read_24_colored_rle;
-	f[3] = &read_32_colored_rle;
-	while (i < loop)
-	{
-		color = (texture->img_sub_type == IMG_8_BITS_GREY_RLE)
-			? texture->file_data[*j]
-			: texture->file_data[*j] + (texture->file_data[*j] << 8);
-		f[(texture->tga_header.pixel_depth / 8) - 1](texture, ptr, color,
-				&texture->file_data[*j]);
-		ptr += texture->format_nb;
-		i++;
-		(*j) += texture->tga_header.pixel_depth / 8;
-	}
-}
-
-void	handle_non_rle(t_texture *texture, int *j, int loop, GLubyte *ptr)
-{
-	int		i;
-
-	i = 0;
-	if (!(texture->img_sub_type == IMG_8_BITS_GREY_RLE
-		|| texture->img_sub_type == IMG_16_BITS_GREY_RLE))
-		handle_colored_nrle(texture, j, loop, ptr);
-	else
-	{
-		ft_memcpy(ptr, texture->file_data + *j,
-				loop * sizeof(GLubyte) * texture->format_nb);
-		(*j) += loop * texture->format_nb;
-	}
-}
-
-
-
-void	handle_colored_rle(t_texture *texture, int *j, int loop, GLubyte *ptr)
+static void	handle_colored_rle(t_texture *texture, int *j,
+		int loop, GLubyte *ptr)
 {
 	int				i;
 	unsigned short	color;
@@ -89,13 +48,25 @@ void	handle_colored_rle(t_texture *texture, int *j, int loop, GLubyte *ptr)
 	}
 }
 
-void	handle_rle(t_texture *texture, int *j, int loop, GLubyte *ptr)
+static void	set_color_alpha(GLubyte *ptr, GLubyte color, GLubyte alpha
+		, int loop)
 {
-	GLubyte color;
-	GLubyte alpha;
 	int		i;
 
 	i = 0;
+	while (i < loop)
+	{
+		ptr[i * 2] = color;
+		ptr[(i * 2) + 1] = alpha;
+		i++;
+	}
+}
+
+static void	handle_rle(t_texture *texture, int *j, int loop, GLubyte *ptr)
+{
+	GLubyte color;
+	GLubyte alpha;
+
 	if (!(texture->img_sub_type == IMG_8_BITS_GREY_RLE
 		|| texture->img_sub_type == IMG_16_BITS_GREY_RLE))
 		handle_colored_rle(texture, j, loop, ptr);
@@ -108,18 +79,13 @@ void	handle_rle(t_texture *texture, int *j, int loop, GLubyte *ptr)
 		{
 			alpha = texture->file_data[*(j + 1)];
 			(*j)++;
-			while (i < loop) 
-			{
-				ptr[i * 2] = color;
-				ptr[(i * 2) + 1] = alpha;
-				i++;
-			}
+			set_color_alpha(ptr, color, alpha, loop);
 		}
 		(*j)++;
 	}
 }
 
-void	read_tga_bits_rle(t_texture *texture)
+void		tga_read_bits_rle(t_texture *texture)
 {
 	int		j;
 	int		size;

@@ -6,7 +6,7 @@
 #    By: pchadeni <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/01/08 14:57:58 by pchadeni          #+#    #+#              #
-#    Updated: 2019/09/30 19:26:08 by pchadeni         ###   ########.fr        #
+#    Updated: 2019/10/08 14:37:54 by pchadeni         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,10 +27,11 @@ MAIN_SRCS = main.c		\
 			transform.c	\
 			read_png.c	\
 			textures.c	\
-			read_tga_bits.c	\
-			read_tga_bits_colored_rle.c	\
-			read_tga_bits_grey.c	\
-			read_tga_bits_rle.c	\
+			tga_read_bits.c	\
+			tga_read_bits_colored_nrle.c	\
+			tga_read_bits_colored_rle.c	\
+			tga_read_bits_grey.c	\
+			tga_read_bits_rle.c	\
 			tga_header.c	\
 			merge_coordinates.c	\
 			shaders.c
@@ -51,7 +52,7 @@ HEAD = $(INCLUDES)/monitor.h	\
 	   $(INCLUDES)/vec3.h		\
 	   $(INCLUDES)/shaders.h	\
 	   $(INCLUDES)/transform.h	\
-	   $(INCLUDES)/read_png.h	\
+	   $(INCLUDES)/read_tga.h	\
 	   $(INCLUDES)/handle_error.h	\
 	   $(INCLUDES)/textures.h	\
 	   $(INCLUDES)/mesh.h

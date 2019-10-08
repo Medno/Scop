@@ -6,13 +6,13 @@
 /*   By: pchadeni <pchadeni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/02 17:09:22 by pchadeni          #+#    #+#             */
-/*   Updated: 2019/10/08 13:49:42 by pchadeni         ###   ########.fr       */
+/*   Updated: 2019/10/08 14:57:07 by pchadeni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "textures.h"
 
-static void	set_tga_type_rle(t_texture *texture, t_tga_header *header)
+static void			set_tga_type_rle(t_texture *texture, t_tga_header *header)
 {
 	texture->img_type = IMG_RLE;
 	if (header->compression_type == 9)
@@ -35,7 +35,7 @@ static void	set_tga_type_rle(t_texture *texture, t_tga_header *header)
 		texture->img_sub_type = 0;
 }
 
-static void	set_tga_type(t_texture *texture, t_tga_header *header)
+static void			set_tga_type(t_texture *texture, t_tga_header *header)
 {
 	texture->img_type = IMG_COLORED;
 	if (header->compression_type == 1)
@@ -74,10 +74,10 @@ static t_tga_header	init_header(GLubyte *buffer)
 	return (header);
 }
 
-void		set_format_tga(t_texture *texture)
+static void			set_format_tga(t_texture *texture)
 {
-	if (texture->tga_header.compression_type == 3 
-		||texture->tga_header.compression_type == 11)
+	if (texture->tga_header.compression_type == 3
+		|| texture->tga_header.compression_type == 11)
 	{
 		texture->format = GL_RGB;
 		if (texture->tga_header.pixel_depth == 8)
@@ -99,8 +99,10 @@ void		set_format_tga(t_texture *texture)
 		}
 	}
 }
+
 //UPDATE IT into glTexParameteriv
-void		handle_header_tga(t_texture *texture, GLubyte *p)
+
+void				handle_header_tga(t_texture *texture, GLubyte *p)
 {
 	texture->tga_header = init_header(p);
 	texture->width = texture->tga_header.width;
