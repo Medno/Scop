@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: pchadeni <marvin@42.fr>                    +#+  +:+       +#+         #
+#    By: pchadeni <pchadeni@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2018/01/08 14:57:58 by pchadeni          #+#    #+#              #
-#    Updated: 2019/10/08 14:37:54 by pchadeni         ###   ########.fr        #
+#    Created: 2019/10/08 18:55:23 by pchadeni          #+#    #+#              #
+#    Updated: 2019/10/08 19:28:27 by pchadeni         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,13 +19,14 @@ NAME = scop
 MAIN_SRCS = main.c		\
 			logger.c	\
 			monitor.c	\
-			mat4.c		\
+			mat4_basic_operations.c		\
+			mat4_constructors.c		\
 			vec3.c		\
 			read_files.c\
 			mesh.c	\
 			handle_error.c	\
-			transform.c	\
-			read_png.c	\
+			model_constructors.c	\
+			model_transformations.c	\
 			textures.c	\
 			tga_read_bits.c	\
 			tga_read_bits_colored_nrle.c	\
@@ -34,7 +35,8 @@ MAIN_SRCS = main.c		\
 			tga_read_bits_rle.c	\
 			tga_header.c	\
 			merge_coordinates.c	\
-			shaders.c
+			shaders_updates.c	\
+			shaders_constructors.c
 			
 
 OBJ += $(addprefix ./$(OBJ_PATH)/, $(MAIN_SRCS:.c=.o))
@@ -51,7 +53,7 @@ HEAD = $(INCLUDES)/monitor.h	\
 	   $(INCLUDES)/mat4.h		\
 	   $(INCLUDES)/vec3.h		\
 	   $(INCLUDES)/shaders.h	\
-	   $(INCLUDES)/transform.h	\
+	   $(INCLUDES)/model.h	\
 	   $(INCLUDES)/read_tga.h	\
 	   $(INCLUDES)/handle_error.h	\
 	   $(INCLUDES)/textures.h	\
@@ -81,11 +83,11 @@ delete_logger:
 $(NAME): $(LIB) $(OBJ)
 	@printf "\33[2KObjects created $(BOLD_GREEN)✓$(EOC)\n"
 	@printf "Start making $(NAME)...\n"
-	$(CC) $(CFLAGS) $(LDFLAGS) $(GLFLAGS) $(INC) -o $(NAME) $(OBJ)
+	@$(CC) $(CFLAGS) $(LDFLAGS) $(GLFLAGS) $(INC) -o $(NAME) $(OBJ)
 	@printf "$(BOLD_GREEN)⤖     $(NAME)$(EOC) created $(BOLD_GREEN)✓$(EOC)\n"
 
 $(OBJ_PATH)/%.o: $(SRCS_PATH)/%.c $(HEAD)
-	$(CC) $(CFLAGS) $(INC) -o $@ -c $<
+	@$(CC) $(CFLAGS) $(INC) -o $@ -c $<
 	@printf " $(COL_GREEN)[OK]$(EOC) $(COL_YELLOW)Compiling:$(EOC) $<\r"
 
 makelib:
@@ -101,7 +103,7 @@ cleanlib:
 
 fclean: clean
 	@rm -Rf $(NAME) $(LINK)
-	@echo "$(BOLD_GREEN)$(NAME) $(EOC) fclean $(BOLD_GREEN)✓$(EOC)"
+	@echo "$(BOLD_GREEN)$(NAME)$(EOC) fclean $(BOLD_GREEN)✓$(EOC)"
 
 fcleanlib:
 	@make fclean -C $(LIB_PATH)

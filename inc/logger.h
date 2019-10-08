@@ -3,19 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   logger.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pchadeni <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: pchadeni <pchadeni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/09/30 18:46:20 by pchadeni          #+#    #+#             */
-/*   Updated: 2019/10/03 15:18:57 by pchadeni         ###   ########.fr       */
+/*   Created: 2019/10/08 19:14:47 by pchadeni          #+#    #+#             */
+/*   Updated: 2019/10/08 19:16:23 by pchadeni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LOGGER_H
 # define LOGGER_H
 
-#include <stdio.h>
+# include <stdio.h>
 
-FILE	*logger;
+FILE	*g_logger;
 
 void	init_logger(void);
 void	quit_logger(void);

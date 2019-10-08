@@ -6,7 +6,7 @@
 /*   By: pchadeni <pchadeni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/02 17:19:08 by pchadeni          #+#    #+#             */
-/*   Updated: 2019/10/08 14:48:32 by pchadeni         ###   ########.fr       */
+/*   Updated: 2019/10/08 19:24:52 by pchadeni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,10 +104,10 @@ GLuint	create_texture(void)
 
 
 
-void	print_header(t_tga_header header, uint8_t log)
+void	print_header(t_tga_header header, uint8_t g_log)
 {
-	if (log)
-		fprintf(logger, "cm_type:	%d\ncom_type:	%d\ncm_orig:	%d\ncm_len:		%d\ncm_size:	%d\nwidth:		%d\nheight:		%d\npixel_d:	%d\n",
+	if (g_log)
+		fprintf(g_logger, "cm_type:	%d\ncom_type:	%d\ncm_orig:	%d\ncm_len:		%d\ncm_size:	%d\nwidth:		%d\nheight:		%d\npixel_d:	%d\n",
 	header.colormap_type, header.compression_type, header.colormap_origin, header.colormap_len,
 	header.colormap_size, header.width, header.height, header.pixel_depth);
 	else
@@ -116,22 +116,22 @@ void	print_header(t_tga_header header, uint8_t log)
 	header.colormap_size, header.width, header.height, header.pixel_depth);
 }
 
-void	print_texture(t_texture *texture, uint8_t log)
+void	print_texture(t_texture *texture, uint8_t g_log)
 {
-	if (log)
+	if (g_log)
 	{
-		fprintf(logger, "Start debugging Texture...\n");
-		fprintf(logger, "Width :		%d\n", texture->width);
-		fprintf(logger, "Height :	%d\n", texture->height);
-		fprintf(logger, "format :	%d\n", texture->format);
-		fprintf(logger, "format_nb :	%d\n", texture->format_nb);
-		print_header(texture->tga_header, log);
+		fprintf(g_logger, "Start debugging Texture...\n");
+		fprintf(g_logger, "Width :		%d\n", texture->width);
+		fprintf(g_logger, "Height :	%d\n", texture->height);
+		fprintf(g_logger, "format :	%d\n", texture->format);
+		fprintf(g_logger, "format_nb :	%d\n", texture->format_nb);
+		print_header(texture->tga_header, g_log);
 		for(unsigned int i = 0; i < texture->height * texture->width; i++) {
-			fprintf(logger, "%x ", texture->data[i]);
+			fprintf(g_logger, "%x ", texture->data[i]);
 			if (!(i % texture->width) && i)
-				fprintf(logger, "\n");
+				fprintf(g_logger, "\n");
 		}
-		fprintf(logger, "End debugging Texture...\n");
+		fprintf(g_logger, "End debugging Texture...\n");
 	}
 	else
 	{
@@ -140,7 +140,7 @@ void	print_texture(t_texture *texture, uint8_t log)
 		printf("Height :	%d\n", texture->height);
 		printf("format :	%d\n", texture->format);
 		printf("format_nb :	%d\n", texture->format_nb);
-		print_header(texture->tga_header, log);
+		print_header(texture->tga_header, g_log);
 		printf("End debugging Texture...\n");
 	}
 }

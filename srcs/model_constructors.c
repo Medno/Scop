@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   transform.c                                        :+:      :+:    :+:   */
+/*   model_constructors.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pchadeni <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: pchadeni <pchadeni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/09/30 17:18:06 by pchadeni          #+#    #+#             */
-/*   Updated: 2019/10/08 19:05:31 by pchadeni         ###   ########.fr       */
+/*   Created: 2019/10/08 19:07:08 by pchadeni          #+#    #+#             */
+/*   Updated: 2019/10/08 19:07:21 by pchadeni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "transform.h"
+#include "model.h"
 
 t_transform	create_transform(void)
 {

@@ -6,16 +6,16 @@
 /*   By: pchadeni <pchadeni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/08 14:38:30 by pchadeni          #+#    #+#             */
-/*   Updated: 2019/10/08 14:49:08 by pchadeni         ###   ########.fr       */
+/*   Updated: 2019/10/08 19:19:41 by pchadeni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef READ_TGA_H
 # define READ_TGA_H
 
-#define TGA_HEADER_SIZE 18
+# define TGA_HEADER_SIZE 18
 
-typedef struct s_texture t_texture;
+typedef struct s_texture	t_texture;
 
 typedef enum	e_tga_type
 {

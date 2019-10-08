@@ -6,7 +6,7 @@
 /*   By: pchadeni <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/17 16:29:48 by pchadeni          #+#    #+#             */
-/*   Updated: 2019/10/08 11:19:03 by pchadeni         ###   ########.fr       */
+/*   Updated: 2019/10/08 18:58:09 by pchadeni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,19 +59,27 @@ static uint8_t	create_shader(const char *file, GLenum shader_type)
 	return (shader);
 }
 
+/*
+** Construction, compilation and linking of vertex and fragment shader
+** Linking the uniforms matrices corresponding to their utility
+**   file	- File name of the shader
+**  shader	- Structure where we store the location of uniform matrices
+**			  and id of shader objects
+*/
+
 uint8_t			construct_shader(const char *file, t_shader *shader)
 {
 	int	i;
 
 	i = 0;
-	shader->shaders[0] = create_shader(file, GL_VERTEX_SHADER);
-	shader->shaders[1] = create_shader(file, GL_FRAGMENT_SHADER);
-	if (!shader->shaders[0] || !shader->shaders[1])
+	shader->id_so[0] = create_shader(file, GL_VERTEX_SHADER);
+	shader->id_so[1] = create_shader(file, GL_FRAGMENT_SHADER);
+	if (!shader->id_so[0] || !shader->id_so[1])
 		return (0);
 	shader->program = glCreateProgram();
 	while (i < NUM_SHADERS)
 	{
-		glAttachShader(shader->program, shader->shaders[i]);
+		glAttachShader(shader->program, shader->id_so[i]);
 		i++;
 	}
 	glLinkProgram(shader->program);
@@ -94,36 +102,9 @@ void			delete_shader(t_shader shader)
 	i = 0;
 	while (i < NUM_SHADERS)
 	{
-		glDetachShader(shader.program, shader.shaders[i]);
-		glDeleteShader(shader.shaders[i]);
+		glDetachShader(shader.program, shader.id_so[i]);
+		glDeleteShader(shader.id_so[i]);
 		i++;
 	}
 	glDeleteProgram(shader.program);
-}
-
-void			use_shader(t_shader shader)
-{
-	glUseProgram(shader.program);
-}
-
-/*
-** Send matrices (MVP) to the vertex shader
-*/
-
-void			update_shader(t_shader s, t_transform t)
-{
-	t_mat4	model;
-	t_mat4	view;
-	t_mat4	projection;
-
-	model = get_model(t);
-	glUniformMatrix4fv(
-			s.uniforms[MODEL_U], 1, GL_TRUE, &model.matrix[0][0]);
-	view = new_mat4(IDENTITY);
-	view = translate(view, create_vec3(0.0f, 0.0f, -3.0f));
-	glUniformMatrix4fv(
-			s.uniforms[VIEW_U], 1, GL_TRUE, &view.matrix[0][0]);
-	projection = projection_mat4(45.0f, (float)WIDTH / (float)HEIGHT, 0.01f, 100.0f);
-	glUniformMatrix4fv(
-			s.uniforms[PROJECTION_U], 1, GL_TRUE, &projection.matrix[0][0]);
 }

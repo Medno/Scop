@@ -6,7 +6,7 @@
 /*   By: pchadeni <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/10 16:37:00 by pchadeni          #+#    #+#             */
-/*   Updated: 2019/10/08 13:52:50 by pchadeni         ###   ########.fr       */
+/*   Updated: 2019/10/08 19:09:55 by pchadeni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 #include "mesh.h"
 #include "vec3.h"
 #include "shaders.h"
-#include "transform.h"
+#include "model.h"
 #include "logger.h"
 
 void	display_scop(t_monitor *monitor)
