@@ -6,7 +6,7 @@
 /*   By: pchadeni <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/10 16:37:00 by pchadeni          #+#    #+#             */
-/*   Updated: 2019/10/04 16:31:38 by pchadeni         ###   ########.fr       */
+/*   Updated: 2019/10/08 13:52:50 by pchadeni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,36 +112,26 @@ void	display_scop(t_monitor *monitor)
 
 	end = 0;
 	count = 0.0f;
-printf("Creation of mesh...\n");
 
 	mesh = create_mesh(vertices, sizeof(vertices)/sizeof(vertices[0]),
 			textures, sizeof(textures)/sizeof(textures[0]));
-
-printf("Creation of shader...\n");
 	if (!construct_shader("./res/basicShader", &shader))
 		return ;
 	transform = create_transform();
 	monitor->transformation = &transform;
-	bind_shader(shader); // glUseProgram
-	glUniform1i(glGetUniformLocation(shader.program, "texture1"), 0);
+	use_shader(shader);
 
-print_texture(mesh.texture, 1);
 	while (!glfwWindowShouldClose(monitor->win))
 	{
-printf("Start looping...\n");
 		clear_window(0.91f, 0.86f, 0.79f, 1.0f);
 
 		glActiveTexture(GL_TEXTURE0);
-		glBindTexture(GL_TEXTURE_2D, mesh.texture->id);
+		glBindTexture(GL_TEXTURE_2D, mesh.texture);
 
-printf("Binding shader...\n");
-		bind_shader(shader); // glUseProgram
-printf("Updating shader...\n");
+		use_shader(shader);
 		update_shader(shader, *(monitor->transformation));
 
-printf("Drawing mesh...\n");
 		draw_mesh(mesh);
-printf("Updating monitor...\n");
 		end = update_monitor(monitor);
 		count += 0.005f;
 	}
@@ -159,7 +149,7 @@ int main(int ac, char **av)
 	if (!init_monitor(&monitor))
 		return (1);
 	display_scop(&monitor);
-	destroy_monitor(&monitor);
+	destroy_monitor(monitor);
 	quit_logger();
 	return (0);
 }

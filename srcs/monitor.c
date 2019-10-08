@@ -6,7 +6,7 @@
 /*   By: pchadeni <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/10 17:03:00 by pchadeni          #+#    #+#             */
-/*   Updated: 2019/09/30 17:22:49 by pchadeni         ###   ########.fr       */
+/*   Updated: 2019/10/08 12:28:15 by pchadeni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,8 +69,8 @@ uint8_t	init_monitor(t_monitor *monitor)
 		return (error_glfw("Error during initialization of GLFW"));
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 1);
-	glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+	glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
 	glfwWindowHint(GLFW_SAMPLES, 4);
 	monitor->win = glfwCreateWindow(WIDTH, HEIGHT, "Scop", NULL, NULL);
 	if (!monitor->win)
@@ -80,19 +80,16 @@ uint8_t	init_monitor(t_monitor *monitor)
 	}
 	glfwSetWindowUserPointer(monitor->win, (void *)monitor);
 	glfwSetKeyCallback(monitor->win, key_callback);
-	glEnable(GL_MULTISAMPLE);
 	glfwMakeContextCurrent(monitor->win);
-	glViewport(0, 0, WIDTH, HEIGHT);
 	glfwSetFramebufferSizeCallback(monitor->win, framebuffer_size_callback);
+	glEnable(GL_MULTISAMPLE);
 	glEnable(GL_DEPTH_TEST);
 	return (1);
 }
 
-void	destroy_monitor(t_monitor *monitor)
-{
-	glfwDestroyWindow(monitor->win);
-	glfwTerminate();
-}
+/*
+** Clear the screen from the previous iteration
+*/
 
 void	clear_window(float r, float g, float b, float a)
 {
@@ -100,9 +97,22 @@ void	clear_window(float r, float g, float b, float a)
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 }
 
+/*
+** Render loop.
+** glfwSwapBuffers will swap the color buffer that has been used to
+** draw in during this iteration and show it as output to the screen
+** glfwPollEvents checks any events are triggered.
+*/
+
 uint8_t	update_monitor(t_monitor *monitor)
 {
 	glfwSwapBuffers(monitor->win);
 	glfwPollEvents();
 	return (0);
+}
+
+void	destroy_monitor(t_monitor monitor)
+{
+	glfwDestroyWindow(monitor.win);
+	glfwTerminate();
 }

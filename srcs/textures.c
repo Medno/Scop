@@ -6,14 +6,13 @@
 /*   By: pchadeni <pchadeni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/02 17:19:08 by pchadeni          #+#    #+#             */
-/*   Updated: 2019/10/04 16:27:19 by pchadeni         ###   ########.fr       */
+/*   Updated: 2019/10/08 14:03:03 by pchadeni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "textures.h"
 
-
-t_texture	*fill_texture(GLubyte *ptr, t_texture *texture)
+t_texture	*read_tga_bits(GLubyte *ptr, t_texture *texture)
 {
 	void			(*f[NUM_TYPES])(t_texture*);
 
@@ -41,7 +40,7 @@ t_texture	*fill_texture(GLubyte *ptr, t_texture *texture)
 	return(NULL);
 }
 
-t_texture	*import_texture(const char *filename)
+t_texture	*read_texture_file(const char *filename)
 {
 	t_texture		*texture;
 	GLubyte	*file_data;
@@ -56,29 +55,41 @@ t_texture	*import_texture(const char *filename)
 	file_size = ftell(fd);
 	fseek(fd, 0, SEEK_SET);
 	file_data = (GLubyte *)malloc(sizeof(GLubyte) * file_size);
-printf("Filesize : %ld\n", file_size);
-	fread(file_data, sizeof(GLubyte), file_size, fd);
-	fclose(fd);
 	if (file_data)
 	{
+		fread(file_data, sizeof(GLubyte), file_size, fd);
 		ptr = file_data;
-printf("Start filling\n");
-		texture = fill_texture(ptr, texture);
+		texture = read_tga_bits(ptr, texture);
 		free(file_data);
 	}
+	fclose(fd);
 	return (texture);
 }
 
-t_texture	*init_texture(void)
+static void	define_texture_img(char const *filename)
 {
 	t_texture		*texture;
-	uint32_t		i;
+	
+	texture = read_texture_file(filename);
+	if (texture && texture->data)
+	{
+		glTexImage2D(GL_TEXTURE_2D, 0, texture->format, texture->width,
+			texture->height, 0, texture->format,
+			GL_UNSIGNED_BYTE, texture->data);
+		glGenerateMipmap(GL_TEXTURE_2D);
+		free(texture->data);
+		free(texture);
+	}
+}
+
+GLuint	create_texture(void)
+{
+	GLuint		id;
+	uint32_t	i;
 
 	i = 0;
-	printf("Creating tga...\n");
-	texture = import_texture("./res/wall_texture.tga");
-	glGenTextures(1, &texture->id);
-	glBindTexture(GL_TEXTURE_2D, texture->id);
+	glGenTextures(1, &id);
+	glBindTexture(GL_TEXTURE_2D, id);
 
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_MIRRORED_REPEAT);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_MIRRORED_REPEAT);
@@ -86,15 +97,11 @@ t_texture	*init_texture(void)
 	glTexParameteri(GL_TEXTURE_2D,
 			GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-
-	glTexImage2D(GL_TEXTURE_2D, 0, texture->format, texture->width, texture->height, 0,
-	texture->format, GL_UNSIGNED_BYTE, texture->data);
-
-	glGenerateMipmap(GL_TEXTURE_2D);
-
-//FREE TEXTURE
-	return (texture);
+	define_texture_img("./res/wall_texture.tga");
+	return (id);
 }
+
+
 
 
 void	print_header(t_tga_header header, uint8_t log)

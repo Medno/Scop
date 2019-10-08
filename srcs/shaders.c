@@ -6,7 +6,7 @@
 /*   By: pchadeni <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/17 16:29:48 by pchadeni          #+#    #+#             */
-/*   Updated: 2019/09/30 17:22:20 by pchadeni         ###   ########.fr       */
+/*   Updated: 2019/10/08 11:19:03 by pchadeni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,27 +64,20 @@ uint8_t			construct_shader(const char *file, t_shader *shader)
 	int	i;
 
 	i = 0;
-	shader->program = glCreateProgram();
 	shader->shaders[0] = create_shader(file, GL_VERTEX_SHADER);
 	shader->shaders[1] = create_shader(file, GL_FRAGMENT_SHADER);
 	if (!shader->shaders[0] || !shader->shaders[1])
-		return (1);
+		return (0);
+	shader->program = glCreateProgram();
 	while (i < NUM_SHADERS)
 	{
 		glAttachShader(shader->program, shader->shaders[i]);
 		i++;
 	}
-	glBindAttribLocation(shader->program, 0, "position");
 	glLinkProgram(shader->program);
 	if (check_shader_error(shader->program, GL_LINK_STATUS, 1,
 		"Error: Program linking failed: "))
 		return (0);
-	/*
-	glValidateProgram(shader->program);
-	if (check_shader_error(shader->program, GL_VALIDATE_STATUS, 1,
-		"Error: Program is invalid: "))
-		return (0);
-	*/
 	shader->uniforms[MODEL_U] =
 		glGetUniformLocation(shader->program, "model");
 	shader->uniforms[VIEW_U] =
@@ -108,10 +101,14 @@ void			delete_shader(t_shader shader)
 	glDeleteProgram(shader.program);
 }
 
-void			bind_shader(t_shader shader)
+void			use_shader(t_shader shader)
 {
 	glUseProgram(shader.program);
 }
+
+/*
+** Send matrices (MVP) to the vertex shader
+*/
 
 void			update_shader(t_shader s, t_transform t)
 {

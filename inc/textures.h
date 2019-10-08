@@ -81,9 +81,8 @@ typedef struct	s_texture
 	t_tga_header	tga_header;
 }				t_texture;
 
-t_texture	*init_texture(void);
+GLuint	create_texture(void);
 
-t_tga_header	*new_tga_header(const char *filename);
 void		handle_header_tga(t_texture *texture, GLubyte *p);
 
 void	read_tga_bits_rle(t_texture *texture);

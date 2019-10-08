@@ -6,7 +6,7 @@
 /*   By: pchadeni <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/17 15:43:20 by pchadeni          #+#    #+#             */
-/*   Updated: 2019/10/04 15:35:41 by pchadeni         ###   ########.fr       */
+/*   Updated: 2019/10/08 11:38:19 by pchadeni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ typedef struct	s_mesh
 	GLuint			vao;
 	GLuint			vbo[NUM_BUFFERS];
 	unsigned int	count_draw;
-	t_texture		*texture;
+	unsigned int	texture;
 	unsigned int	len_textures;
 }				t_mesh;
 

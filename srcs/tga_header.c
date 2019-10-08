@@ -6,7 +6,7 @@
 /*   By: pchadeni <pchadeni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/02 17:09:22 by pchadeni          #+#    #+#             */
-/*   Updated: 2019/10/03 16:52:06 by pchadeni         ###   ########.fr       */
+/*   Updated: 2019/10/08 13:49:42 by pchadeni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,6 @@ static t_tga_header	init_header(GLubyte *buffer)
 	header.width = (buffer[12] & 0xFF) | ((buffer[13] & 0xFF) << 8);
 	header.height = (buffer[14] & 0xFF) | ((buffer[15] & 0xFF) << 8);
 	header.pixel_depth = buffer[16];
-print_header(header, 0);
 	return (header);
 }
 
@@ -99,7 +98,6 @@ void		set_format_tga(t_texture *texture)
 			texture->format_nb = 4;
 		}
 	}
-printf("Values for RGB : %d, RGBA: %d\n", GL_RGB, GL_RGBA);
 }
 //UPDATE IT into glTexParameteriv
 void		handle_header_tga(t_texture *texture, GLubyte *p)
@@ -109,5 +107,4 @@ void		handle_header_tga(t_texture *texture, GLubyte *p)
 	texture->height = texture->tga_header.height;
 	set_tga_type(texture, &texture->tga_header);
 	set_format_tga(texture);
-print_texture(texture, 0);
 }
