@@ -52,6 +52,15 @@ t_mat4	mat4_copy(t_mat4 copy)
 	return (result);
 }
 
+
+t_mat4			mat4_add_vec3(t_mat4 mat, t_vec3 vect, uint8_t coord)
+{
+	mat.matrix[coord][0] = vect.x;
+	mat.matrix[coord][1] = vect.y;
+	mat.matrix[coord][2] = vect.z;
+	return (mat);
+}
+
 void	mat4_print(t_mat4 m)
 {
 	int	i;

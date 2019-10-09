@@ -18,9 +18,9 @@
 # include <GLFW/glfw3.h>
 # include <stdio.h>
 # include "libft.h"
-# include "model.h"
 # include "monitor.h"
 # include "mat4.h"
+# include "view.h"
 
 # define NUM_SHADERS 2
 
@@ -44,7 +44,7 @@ uint8_t			construct_shader(const char *file, t_shader *new_shader);
 void			delete_shader(t_shader shader);
 void			use_shader(t_shader shader);
 
-void			update_shader(t_shader s, t_transform t);
+void			update_shader(t_shader s, t_monitor *m);
 
 char			*read_shader_file(const char *filename);
 

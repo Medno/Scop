@@ -43,6 +43,20 @@ void	key_callback(GLFWwindow *w, int key, int scancode, int act, int mods)
 		glfwSetWindowShouldClose(w, GLFW_TRUE);
 	else if (key == GLFW_KEY_R && act == GLFW_PRESS)
 		edit_rasterization();
+	else if (key == GLFW_KEY_W && (act == GLFW_PRESS || act == GLFW_REPEAT)
+		&& mon && mon->camera)
+	{
+		printf("Before update of position\n");
+		printf("Coordinates: %f %f %f\n",
+				mon->camera->position.x, mon->camera->position.y, mon->camera->position.z);
+		t_vec3	scalar_product = vec3_mul_scalar(mon->camera->front, mon->camera->speed);
+		printf("Scalar variable: %f %f %f\n", scalar_product.x, scalar_product.y, scalar_product.z);
+		mon->camera->position = vec3_add(mon->camera->position, scalar_product);
+
+		printf("Update of position\n");
+		printf("Coordinates: %f %f %f\n",
+				mon->camera->position.x, mon->camera->position.y, mon->camera->position.z);
+	}
 	else if (key == GLFW_KEY_K && (act == GLFW_PRESS || act == GLFW_REPEAT)
 		&& mon && mon->transformation)
 		mon->transformation->rotation.y -= 0.01f;
@@ -84,6 +98,7 @@ uint8_t	init_monitor(t_monitor *monitor)
 	glfwSetFramebufferSizeCallback(monitor->win, framebuffer_size_callback);
 	glEnable(GL_MULTISAMPLE);
 	glEnable(GL_DEPTH_TEST);
+	monitor->camera = init_camera();
 	return (1);
 }
 
@@ -115,4 +130,5 @@ void	destroy_monitor(t_monitor monitor)
 {
 	glfwDestroyWindow(monitor.win);
 	glfwTerminate();
+	free(monitor.camera);
 }

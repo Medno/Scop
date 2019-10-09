@@ -18,6 +18,8 @@
 # include <GLFW/glfw3.h>
 # include <stdio.h>
 # include "model.h"
+# include "view.h"
+# include "logger.h"
 
 # define WIDTH 800
 # define HEIGHT 600
@@ -25,6 +27,7 @@
 typedef struct	s_monitor {
 	GLFWwindow	*win;
 	t_transform	*transformation;
+	t_camera	*camera;
 }				t_monitor;
 
 uint8_t			init_monitor(t_monitor *monitor);

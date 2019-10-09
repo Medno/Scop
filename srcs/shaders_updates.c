@@ -21,18 +21,19 @@ void			use_shader(t_shader shader)
 ** Send matrices (MVP) to the vertex shader
 */
 
-void			update_shader(t_shader s, t_transform t)
+void			update_shader(t_shader s, t_monitor *m)
 {
 	t_mat4	model;
 	t_mat4	view;
 	t_mat4	projection;
 	float	ratio;
 
-	model = get_model(t);
+	model = get_model(*(m->transformation));
 	glUniformMatrix4fv(
 			s.uniforms[MODEL_U], 1, GL_TRUE, &model.matrix[0][0]);
-	view = new_mat4(IDENTITY);
-	view = translate(view, create_vec3(0.0f, 0.0f, -3.0f));
+
+	view = view_look_at(m->camera->position,
+		vec3_add(m->camera->position, m->camera->front), m->camera->up);
 	glUniformMatrix4fv(
 			s.uniforms[VIEW_U], 1, GL_TRUE, &view.matrix[0][0]);
 	ratio = (float)WIDTH / (float)HEIGHT;

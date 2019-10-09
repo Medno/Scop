@@ -57,6 +57,7 @@ HEAD = $(INCLUDES)/monitor.h	\
 	   $(INCLUDES)/vec3.h		\
 	   $(INCLUDES)/shaders.h	\
 	   $(INCLUDES)/model.h	\
+	   $(INCLUDES)/view.h	\
 	   $(INCLUDES)/read_tga.h	\
 	   $(INCLUDES)/handle_error.h	\
 	   $(INCLUDES)/textures.h	\

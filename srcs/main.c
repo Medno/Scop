@@ -129,7 +129,7 @@ void	display_scop(t_monitor *monitor)
 		glBindTexture(GL_TEXTURE_2D, mesh.texture);
 
 		use_shader(shader);
-		update_shader(shader, *(monitor->transformation));
+		update_shader(shader, monitor);
 
 		draw_mesh(mesh);
 		end = update_monitor(monitor);
