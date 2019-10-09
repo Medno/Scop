@@ -32,6 +32,37 @@ void	edit_rasterization(void)
 	glPolygonMode(GL_FRONT_AND_BACK, polygon_mode);
 }
 
+float	degree_to_radian(float degree)
+{
+	return (degree * M_PI / 180.0);
+}
+
+void	edit_front(t_camera *camera, float xoffset, float yoffset)
+{
+	float xpos = xoffset + camera->last_x;
+	float ypos = yoffset + camera->last_y;
+	camera->last_x = xpos;
+	camera->last_y = ypos;
+
+	float sensibility = 0.05f;
+	xoffset *= sensibility;
+	yoffset *= sensibility;
+
+	camera->yaw += xoffset;
+	camera->pitch += yoffset;
+
+	if (camera->pitch > 89.0f)
+		camera->pitch = 89.0f;
+	if (camera->pitch < -89.0f)
+		camera->pitch = -89.0f;
+	t_vec3	new_front;
+
+	new_front.x = cos(degree_to_radian(camera->yaw)) * cos(degree_to_radian(camera->pitch));
+	new_front.y = sin(degree_to_radian(camera->pitch));
+	new_front.z = sin(degree_to_radian(camera->yaw)) * cos(degree_to_radian(camera->pitch));
+	camera->front = new_front;
+}
+
 void	key_callback(GLFWwindow *w, int key, int scancode, int act, int mods)
 {
 	t_monitor	*mon;
@@ -39,24 +70,48 @@ void	key_callback(GLFWwindow *w, int key, int scancode, int act, int mods)
 	(void)scancode;
 	(void)mods;
 	mon = (t_monitor *)glfwGetWindowUserPointer(w);
+//	mon->camera->speed = mon->camera->delta_time * 5.5f;
 	if (key == GLFW_KEY_ESCAPE && act == GLFW_PRESS)
 		glfwSetWindowShouldClose(w, GLFW_TRUE);
 	else if (key == GLFW_KEY_R && act == GLFW_PRESS)
 		edit_rasterization();
+
+	else if (key == GLFW_KEY_UP && (act == GLFW_PRESS || act == GLFW_REPEAT)
+		&& mon && mon->camera)
+		edit_front(mon->camera, 0.0f, 10.0f);
+	else if (key == GLFW_KEY_LEFT && (act == GLFW_PRESS || act == GLFW_REPEAT)
+		&& mon && mon->camera)
+		edit_front(mon->camera, -10.0f, 0.0f);
+	else if (key == GLFW_KEY_DOWN && (act == GLFW_PRESS || act == GLFW_REPEAT)
+		&& mon && mon->camera)
+		edit_front(mon->camera, 0.0f, -10.0f);
+	else if (key == GLFW_KEY_RIGHT && (act == GLFW_PRESS || act == GLFW_REPEAT)
+		&& mon && mon->camera)
+		edit_front(mon->camera, 10.0f, 0.0f);
+
+
+
+
 	else if (key == GLFW_KEY_W && (act == GLFW_PRESS || act == GLFW_REPEAT)
 		&& mon && mon->camera)
-	{
-		printf("Before update of position\n");
-		printf("Coordinates: %f %f %f\n",
-				mon->camera->position.x, mon->camera->position.y, mon->camera->position.z);
-		t_vec3	scalar_product = vec3_mul_scalar(mon->camera->front, mon->camera->speed);
-		printf("Scalar variable: %f %f %f\n", scalar_product.x, scalar_product.y, scalar_product.z);
-		mon->camera->position = vec3_add(mon->camera->position, scalar_product);
+		mon->camera->position = vec3_add(mon->camera->position,
+			vec3_mul_scalar(mon->camera->front, mon->camera->speed));
+	else if (key == GLFW_KEY_S && (act == GLFW_PRESS || act == GLFW_REPEAT)
+		&& mon && mon->camera)
+		mon->camera->position = vec3_sub(mon->camera->position,
+			vec3_mul_scalar(mon->camera->front, mon->camera->speed));
+	else if (key == GLFW_KEY_A && (act == GLFW_PRESS || act == GLFW_REPEAT)
+		&& mon && mon->camera)
+		mon->camera->position = vec3_sub(mon->camera->position,
+			vec3_mul_scalar(vec3_normalize(vec3_cross(mon->camera->front, mon->camera->up)), mon->camera->speed));
+	else if (key == GLFW_KEY_D && (act == GLFW_PRESS || act == GLFW_REPEAT)
+		&& mon && mon->camera)
+		mon->camera->position = vec3_add(mon->camera->position,
+			vec3_mul_scalar(vec3_normalize(vec3_cross(mon->camera->front, mon->camera->up)), mon->camera->speed));
 
-		printf("Update of position\n");
-		printf("Coordinates: %f %f %f\n",
-				mon->camera->position.x, mon->camera->position.y, mon->camera->position.z);
-	}
+
+
+
 	else if (key == GLFW_KEY_K && (act == GLFW_PRESS || act == GLFW_REPEAT)
 		&& mon && mon->transformation)
 		mon->transformation->rotation.y -= 0.01f;

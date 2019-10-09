@@ -10,7 +10,22 @@ t_camera	*init_camera(void)
 	camera->front = vec3_new(0.0f, 0.0f, -1.0f);
 	camera->up = vec3_new(0.0f, 1.0f, 0.0f);
 	camera->speed = 0.05f;
+	camera->delta_time = 0.0f;
+	camera->last_frame = 0.0f;
+	camera->last_x = WIDTH / 2;
+	camera->last_y = HEIGHT / 2;
+	camera->yaw = -90.0f;
+	camera->pitch = 0.0f;
 	return (camera);
+}
+
+void	update_delta_time(t_camera *camera)
+{
+	float	current_frame;
+
+	current_frame = glfwGetTime();
+	camera->delta_time = current_frame - camera->last_frame;
+	camera->last_frame = current_frame;
 }
 
 t_mat4	create_new_axes(t_vec3 position, t_vec3 target, t_vec3 upspace)

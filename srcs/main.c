@@ -124,6 +124,7 @@ void	display_scop(t_monitor *monitor)
 	while (!glfwWindowShouldClose(monitor->win))
 	{
 		clear_window(0.91f, 0.86f, 0.79f, 1.0f);
+		update_delta_time(monitor->camera);
 
 		glActiveTexture(GL_TEXTURE0);
 		glBindTexture(GL_TEXTURE_2D, mesh.texture);
