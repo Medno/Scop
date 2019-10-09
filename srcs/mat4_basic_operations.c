@@ -12,7 +12,7 @@
 
 #include "mat4.h"
 
-t_mat4	add_mat4(t_mat4 first, t_mat4 second)
+t_mat4	mat4_add(t_mat4 first, t_mat4 second)
 {
 	t_mat4	res;
 	int		i;
@@ -29,7 +29,7 @@ t_mat4	add_mat4(t_mat4 first, t_mat4 second)
 	return (res);
 }
 
-t_mat4	mul_mat4(t_mat4 first, t_mat4 second)
+t_mat4	mat4_mul(t_mat4 first, t_mat4 second)
 {
 	t_mat4	res;
 	int		i;

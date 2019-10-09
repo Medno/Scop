@@ -12,7 +12,7 @@
 
 #include "mat4.h"
 
-t_mat4	new_mat4(enum e_mat type)
+t_mat4	mat4_new(enum e_mat type)
 {
 	t_mat4	result;
 	int		i;
@@ -32,7 +32,7 @@ t_mat4	new_mat4(enum e_mat type)
 	return (result);
 }
 
-t_mat4	copy_mat4(t_mat4 copy)
+t_mat4	mat4_copy(t_mat4 copy)
 {
 	t_mat4	result;
 	int		i;
@@ -52,7 +52,7 @@ t_mat4	copy_mat4(t_mat4 copy)
 	return (result);
 }
 
-void	print_mat4(t_mat4 m)
+void	mat4_print(t_mat4 m)
 {
 	int	i;
 	int	j;

@@ -21,10 +21,13 @@ MAIN_SRCS = main.c		\
 			monitor.c	\
 			mat4_basic_operations.c		\
 			mat4_constructors.c		\
-			vec3.c		\
+			vec3_basic_operations.c		\
+			vec3_constructors.c		\
+			vec3_geometry.c		\
 			read_files.c\
 			mesh.c	\
 			handle_error.c	\
+			view_constructors.c	\
 			model_constructors.c	\
 			model_transformations.c	\
 			textures.c	\

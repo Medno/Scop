@@ -13,6 +13,8 @@
 #ifndef VEC3_H
 # define VEC3_H
 
+# include <math.h>
+
 typedef struct	s_vec3
 {
 	float	x;
@@ -20,9 +22,14 @@ typedef struct	s_vec3
 	float	z;
 }				t_vec3;
 
-t_vec3			create_vec3(float x, float y, float z);
-t_vec3			add_vec3(t_vec3 first, t_vec3 second);
-t_vec3			sub_vec3(t_vec3 first, t_vec3 second);
-float			mul_vec3(t_vec3 first, t_vec3 second);
+t_vec3			vec3_new(float x, float y, float z);
+
+t_vec3			vec3_add(t_vec3 first, t_vec3 second);
+t_vec3			vec3_sub(t_vec3 first, t_vec3 second);
+t_vec3			vec3_mul_scalar(t_vec3 first, float scalar);
+
+float			vec3_magnitude(t_vec3 vect);
+t_vec3			vec3_normalize(t_vec3 vect);
+t_vec3			vec3_cross(t_vec3 first, t_vec3 second);
 
 #endif

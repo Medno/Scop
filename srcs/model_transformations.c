@@ -32,7 +32,7 @@ t_mat4			projection_mat4(float angle, float ratio,
 	t_mat4	result;
 	float	tan_half_angle;
 
-	result = new_mat4(ZEROS);
+	result = mat4_new(ZEROS);
 	tan_half_angle = tan(angle / 2);
 	result.matrix[0][0] = 1 / (ratio * tan_half_angle);
 	result.matrix[1][1] = 1 / (tan_half_angle);
@@ -46,7 +46,7 @@ t_mat4			scale(t_transform t)
 {
 	t_mat4	scaled;
 
-	scaled = new_mat4(IDENTITY);
+	scaled = mat4_new(IDENTITY);
 	scaled.matrix[0][0] *= t.scale.x;
 	scaled.matrix[1][1] *= t.scale.y;
 	scaled.matrix[2][2] *= t.scale.z;
@@ -60,7 +60,7 @@ static t_mat4	rotate_axis(t_transform t, enum e_axis axis)
 	int		j;
 	float	angle;
 
-	n_mat4 = new_mat4(IDENTITY);
+	n_mat4 = mat4_new(IDENTITY);
 	i = (axis == X_AXIS) ? 1 : 0;
 	j = (axis == Y_AXIS) ? i + 2 : i + 1;
 	if (axis == X_AXIS)
@@ -86,5 +86,5 @@ t_mat4			rotate(t_transform t)
 	rot_x_matrix = rotate_axis(t, X_AXIS);
 	rot_y_matrix = rotate_axis(t, Y_AXIS);
 	rot_z_matrix = rotate_axis(t, Z_AXIS);
-	return (mul_mat4(rot_x_matrix, mul_mat4(rot_y_matrix, rot_z_matrix)));
+	return (mat4_mul(rot_x_matrix, mat4_mul(rot_y_matrix, rot_z_matrix)));
 }
