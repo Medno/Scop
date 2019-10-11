@@ -19,6 +19,7 @@
 # include <stdlib.h>
 # include <stdio.h>
 # include <libft.h>
+# include "read_file.h"
 # include "read_tga.h"
 # include "logger.h"
 

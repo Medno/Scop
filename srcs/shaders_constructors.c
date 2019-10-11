@@ -44,7 +44,7 @@ static uint8_t	create_shader(const char *file, GLenum shader_type)
 	? ft_strjoin(file, ".vert") : ft_strjoin(file, ".frag");
 	if (!full_path)
 		return (0);
-	shader_src_str[0] = read_shader_file(full_path);
+	shader_src_str[0] = (GLchar *)read_file(full_path, "r");
 	ft_strdel(&full_path);
 	if (!shader_src_str[0])
 		return (0);

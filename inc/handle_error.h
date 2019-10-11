@@ -17,5 +17,6 @@
 # include <stdint.h>
 
 uint8_t	handle_gl_err(const char *fn);
+void	*print_error(const char *msg, const char *filename);
 
 #endif

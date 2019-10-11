@@ -17,3 +17,12 @@ uint8_t	handle_gl_err(const char *fn)
 	dprintf(2, "OpenGL Error in function %s\n", fn);
 	return (0);
 }
+
+void	*print_error(const char *msg, const char *filename)
+{
+	if (filename)
+		dprintf(2, "%s%s\n", msg, filename);
+	else
+		dprintf(2, "%s\n", msg);
+	return (NULL);
+}

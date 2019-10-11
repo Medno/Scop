@@ -45,24 +45,15 @@ t_texture	*read_texture_file(const char *filename)
 	t_texture		*texture;
 	GLubyte	*file_data;
 	GLubyte	*ptr;
-	FILE	*fd;
-	long	file_size;
 
 	texture = NULL;
-	if (!(fd = fopen(filename, "rb")))
-		return (NULL);
-	fseek(fd, 0, SEEK_END);
-	file_size = ftell(fd);
-	fseek(fd, 0, SEEK_SET);
-	file_data = (GLubyte *)malloc(sizeof(GLubyte) * file_size);
+	file_data = (GLubyte *)read_file(filename, "rb");
 	if (file_data)
 	{
-		fread(file_data, sizeof(GLubyte), file_size, fd);
 		ptr = file_data;
 		texture = tga_read_bits(ptr, texture);
 		free(file_data);
 	}
-	fclose(fd);
 	return (texture);
 }
 
