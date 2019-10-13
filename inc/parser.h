@@ -1,6 +1,29 @@
 #ifndef PARSER_H
 # define PARSER_H
 
+# include "libft.h"
+# include "read_file.h"
+# include "errno.h"
+
+enum	e_face_type
+{
+	V_1,
+	V_2,
+	V_3
+};
+
+typedef struct	s_parse_obj
+{
+	t_vec3				*vertices;
+	t_vec3				*vertices_normal;
+	t_vec3				*vertices_texture;
+	int					*indices;
+	enum e_face_type	face_type;
+	size_t				len_vertices;
+	size_t				len_vertices_normal;
+	size_t				len_vertices_texture;
+}				t_parse_obj;
+
 enum	e_token_obj
 {
 	VERTEX,
@@ -12,5 +35,7 @@ enum	e_token_obj
 	MATERIAL,
 	COMMENT
 };
+
+uint8_t	check_float(const char *str, float *fl);
 
 #endif
