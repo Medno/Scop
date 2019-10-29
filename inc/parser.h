@@ -24,6 +24,10 @@ typedef struct	s_parse_obj
 	size_t				len_vertices;
 	size_t				len_vertices_normal;
 	size_t				len_vertices_texture;
+	size_t				len_faces;
+	size_t				index_vertices;
+	size_t				index_vertices_normal;
+	size_t				index_vertices_texture;
 }				t_parse_obj;
 
 enum	e_token_obj

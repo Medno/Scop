@@ -6,6 +6,7 @@ void print_parser_data(t_parse_obj *parser)
 	printf("Number of vertices : %zu\n", parser->len_vertices);
 	printf("Number of normal : %zu\n", parser->len_vertices_normal);
 	printf("Number of texture : %zu\n", parser->len_vertices_texture);
+	printf("Number of faces : %zu\n", parser->len_faces);
 }
 
 void	init_parse_obj(t_parse_obj *parser)
@@ -18,6 +19,10 @@ void	init_parse_obj(t_parse_obj *parser)
 	parser->len_vertices = 0;
 	parser->len_vertices_normal = 0;
 	parser->len_vertices_texture = 0;
+	parser->len_faces = 0;
+	parser->index_vertices = 0;
+	parser->index_vertices_normal = 0;
+	parser->index_vertices_texture = 0;
 }
 
 uint8_t	check_float(const char *str, float *f)
@@ -48,7 +53,7 @@ uint8_t	check_float(const char *str, float *f)
 		return (0);
 	return (1);
 }
-
+/*
 void	get_length_arrays_obj(char **data, t_parse_obj *parse)
 {
 	size_t	i;
@@ -66,19 +71,138 @@ void	get_length_arrays_obj(char **data, t_parse_obj *parse)
 			parse->len_vertices_texture++;
 		else if (!ft_strncmp(data[i], "vn ", 3))
 			parse->len_vertices_normal++;
+		else if (!ft_strncmp(data[i], "f ", 2))
 		i++;
 	}
 }
+*/
 //TODO: Find a way to pass 4 by 4 vertices (no splitting a face)
-void	parse_obj_data(char **data, t_parse_obj *parse)
+void	handle_faces(t_parse_obj *parse, char *str) {
+	int		nb_faces;
+	int		i;
+	char	*get_esp;
+	char	*get_nl;
+
+	i = 0;
+	nb_faces = 0;
+	printf("Starting handling_face\n");
+	get_nl = ft_strchr(str, '\n');
+	while (str[i] && &str[i] < get_nl) {
+		printf("index: %c\n", str[i]);
+		if (!(get_esp = ft_strchr(&str[i], ' ')))
+			break ; // handle_error
+		nb_faces++;
+		if (nb_faces >= 5)
+			break;
+		if (!get_esp)
+			i += ft_strlen(&str[i]);
+		else
+			i += get_esp - &str[i];
+		if (str[i])
+			i++;
+	}
+	printf("End of parcing faces, nb : %d\n", nb_faces);
+	if (i > str[i])
+		printf("Error");//handle_error
+	if (nb_faces > 5)
+		return ; //handle_error
+	parse->len_faces += (nb_faces == 5 || (!get_esp && nb_faces == 4)) ? 2 : 1;
+	printf("len_faces : %zu\n", parse->len_faces);
+}
+
+void	get_length_arrays_obj(char *data, t_parse_obj *parse)
+{
+	size_t	i;
+	char	*get_nl;
+
+	i = 0;
+	while (data[i])
+	{
+		if ((get_nl = ft_strchr(&data[i], '\n')) == NULL)
+			return ; // Handle Error
+		if (!ft_strncmp(&data[i], "v ", 2))
+			parse->len_vertices++;
+		else if (!ft_strncmp(&data[i], "vt ", 3))
+			parse->len_vertices_texture++;
+		else if (!ft_strncmp(&data[i], "vn ", 3))
+			parse->len_vertices_normal++;
+		else if (!ft_strncmp(&data[i], "f ", 2))
+			handle_faces(parse, &data[i]);
+		i += get_nl - &data[i];
+		i++;
+	}
+}
+
+void	create_vertices_arrays(t_parse_obj *parse)
+{
+	if (!(parse->vertices = (t_vec3 *)malloc(sizeof(t_vec3) * parse->len_vertices)))
+		return ; //Handle_error
+	if (!(parse->vertices_normal = (t_vec3 *)malloc(sizeof(t_vec3) * parse->len_vertices_normal)))
+		return ; //Handle_error
+	if (!(parse->vertices_texture = (t_vec3 *)malloc(sizeof(t_vec3) * parse->len_vertices_texture)))
+		return ; //Handle_error
+}
+
+void	add_vertice(t_parse_obj *parse, char *str)
+{
+	int		i;
+	char	*get_esp;
+	char	*get_nl;
+
+	i = 0;
+	nb_faces = 0;
+	get_nl = ft_strchr(str, '\n');
+	if (!(get_esp = ft_strchr(&str[i], ' ')))
+		return ; // handle_error
+	i += get_esp - &str[i] + 1;
+	while (str[i] && &str[i] < get_nl) {
+		
+		if (!(get_esp = ft_strchr(&str[i], ' ')))
+			break ; // handle_error
+		if (!get_esp)
+			i += ft_strlen(&str[i]);
+		else
+			i += get_esp - &str[i];
+		if (str[i])
+			i++;
+	}
+	/* Create a vec3 */
+}
+// Check indexes with len etc
+void	get_vertices_values(char *data, t_parse_obj *parse)
+{
+	size_t	i;
+	char	*get_nl;
+
+	i = 0;
+	while (data[i])
+	{
+		if ((get_nl = ft_strchr(&data[i], '\n')) == NULL)
+			return ; // Handle Error
+		if (!ft_strncmp(&data[i], "v ", 2))
+			parse->;
+		else if (!ft_strncmp(&data[i], "vt ", 3))
+			add_vertice(parse, &data[i]);
+		else if (!ft_strncmp(&data[i], "vn ", 3))
+			parse->len_vertices_normal++;
+		else if (!ft_strncmp(&data[i], "f ", 2))
+			handle_faces(parse, &data[i]);
+		i += get_nl - &data[i];
+		i++;
+	}
+}
+
+void	parse_obj_data(char *data, t_parse_obj *parse)
 {
 	get_length_arrays_obj(data, parse);
+	create_vertices_arrays(parse);
+	get_vertices_values(data, parse);
 }
 
 void	parse_obj_file(const char *obj_name)
 {
 	char		*obj_data_str;
-	char		**obj_data;
+//	char		**obj_data;
 	t_parse_obj	*parse;
 
 	if (!(parse = (t_parse_obj *)malloc(sizeof(t_parse_obj))))
@@ -88,17 +212,12 @@ void	parse_obj_file(const char *obj_name)
 	if (!(obj_data_str = read_file(obj_name, "r")))
 		return ;
 	printf("File readed\n");
-	if ((obj_data = ft_strsplit(obj_data_str, '\n')) != NULL)
-	{
-	printf("File data has been splitted\n");
-		parse_obj_data(obj_data, parse);
-		ft_tabdel(obj_data);
-	}
+	parse_obj_data(obj_data_str, parse);
+
 	ft_strdel(&obj_data_str);
 print_parser_data(parse);
 	return ;
 }
-
 
 
 int main(int argc, char **argv) {
