@@ -2,8 +2,10 @@
 # define PARSER_H
 
 # include "libft.h"
+# include "vec3.h"
 # include "read_file.h"
 # include "errno.h"
+# include <string.h>
 
 enum	e_face_type
 {
