@@ -47,7 +47,7 @@ t_texture	*read_texture_file(const char *filename)
 	GLubyte	*ptr;
 
 	texture = NULL;
-	file_data = (GLubyte *)read_file(filename, "rb");
+	file_data = (GLubyte *)read_file(filename, "rb", NULL);
 	if (file_data)
 	{
 		ptr = file_data;

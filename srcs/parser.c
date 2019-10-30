@@ -189,6 +189,11 @@ uint8_t	add_vertice(t_vec3 *vec, char *str, size_t *index, e_token_obj type)
 // //Handle Vec2 for textures;
 uint8_t	parse_faces(t_parse_obj *parse, char *data)
 {
+	//For each lines, get the content of f. Put the values into the final array
+	size_t	i;
+
+	i = 0;
+	while (i < parse->obj_len)
 	return (0);
 }
 
@@ -207,9 +212,9 @@ uint8_t	get_vertices_values(char *data, t_parse_obj *parse)
 		else if (!ft_strncmp(&data[i], "vn ", 3))
 			add_vertice(parse->vertices_texture, &data[i], &parse->index_vertices_texture);
 		else if (!ft_strncmp(&data[i], "f ", 2))
-			return (handle_faces(parse, &data[i]));
+			return (parse_faces(parse, &data[i]));
 		if ((get_nl = ft_strchr(&data[i], '\n')) == NULL)
-			return (1); // Handle Error
+			return (1); // End of file
 		i += get_nl - &data[i];
 		i++;
 	}
@@ -232,7 +237,7 @@ uint8_t	parse_obj_file(const char *obj_name)
 		return ((uint8_t)print_error("Error: Cannot allocate memory for parser structure", NULL));
 	init_parse_obj(parse);
 	printf("Parser initialized\n");
-	if (!(obj_data_str = read_file(obj_name, "r")))
+	if (!(obj_data_str = read_file(obj_name, "r", &parse->obj_size)))
 		return (NULL);
 	printf("File readed\n");
 	parse_obj_data(obj_data_str, parse);

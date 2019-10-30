@@ -13,7 +13,7 @@
 #include "libft.h"
 #include "handle_error.h"
 
-void	*read_file(const char *filename, const char *opt)
+void	*read_file(const char *filename, const char *opt, long *length_data)
 {
 	FILE	*fd;
 	char	*res;
@@ -23,6 +23,8 @@ void	*read_file(const char *filename, const char *opt)
 		return (print_error("Error: Cannot open: ", filename));
 	fseek(fd, 0L, SEEK_END);
 	file_size = ftell(fd);
+	if (length_data)
+		*length_data = file_size;
 	fseek(fd, 0L, SEEK_SET);
 	if (!(res = ft_strnew(file_size)))
 		return (print_error("Error: Cannot allocate string for file: ",
