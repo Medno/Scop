@@ -82,7 +82,6 @@ void	get_length_arrays_obj(char **data, t_parse_obj *parse)
 	}
 }
 */
-//TODO: Find a way to pass 4 by 4 vertices (no splitting a face)
 void	handle_faces(t_parse_obj *parse, char *str) {
 	int		nb_faces;
 	int		i;
@@ -147,13 +146,13 @@ void	create_vertices_arrays(t_parse_obj *parse)
 		return ; //Handle_error
 	if (!(parse->vertices_texture = (t_vec3 *)malloc(sizeof(t_vec3) * parse->len_vertices_texture)))
 		return ; //Handle_error
-	if (!(parse->all_data = (float *)malloc(sizeof(float) * ((3 * parse->len_vertices) + (2 * parse->len_vertices) + (3 * parse->len_vertices_normal)))))
+	if (!(parse->all_data = (float *)malloc(sizeof(float) * ((3 * parse->len_vertices) + (2 * parse->len_vertices) + (3 * parse->len_vertices)))))
 		return ; //Handle_error
 	if (!(parse->indices_data = (int *)malloc(sizeof(int) * parse->len_faces)))
 		return ; //Handle_error
 }
 
-void	add_vertice(t_vec3 *vec, char *str, size_t *index, e_token_obj type)
+uint8_t	add_vertice(t_vec3 *vec, char *str, size_t *index, e_token_obj type)
 {
 	int		i;
 	char	*get_esp;
@@ -162,28 +161,29 @@ void	add_vertice(t_vec3 *vec, char *str, size_t *index, e_token_obj type)
 	i = 0;
 	get_nl = ft_strchr(str, '\n');
 	if (!(get_esp = ft_strchr(&str[i], ' ')))
-		return ; // handle_error
+		return (print_error("Error: Parser: Wrong format in the obj file, missing a space character", NULL));
 	i += get_esp - &str[i] + 1;
 	float f = check_float(&str[i], &f);
 	printf("Value: %f\n", f);
 	if (str[i])
 		check_float(&str[i], &vec[*index].x);
 	if (!(get_esp = ft_strchr(&str[i], ' ')))
-		return ; // handle_error
+		return (print_error("Error: Parser: Wrong format in the obj file, missing a space character", NULL));
 	i += get_esp - &str[i] + 1;
 	if (str[i])
 		check_float(&str[i], &vec[*index].y);
 	if (type == TEXTURE)
 	{
 		(*index)++;
-		return ;
+		return (1);
 	}
 	if (!(get_esp = ft_strchr(&str[i], ' ')))
-		return ; // handle_error
+		return (print_error("Error: Parser: Wrong format in the obj file, missing a space character", NULL));
 	i += get_esp - &str[i] + 1;
 	if (str[i])
 		check_float(&str[i], &vec[*index].z);
 	(*index)++;
+	return (1);
 }
 // Check indexes with len etc
 // //Handle Vec2 for textures;
@@ -223,30 +223,31 @@ void	parse_obj_data(char *data, t_parse_obj *parse)
 	get_vertices_values(data, parse);
 }
 
-void	parse_obj_file(const char *obj_name)
+uint8_t	parse_obj_file(const char *obj_name)
 {
 	char		*obj_data_str;
 	t_parse_obj	*parse;
 
 	if (!(parse = (t_parse_obj *)malloc(sizeof(t_parse_obj))))
-		return ;
+		return ((uint8_t)print_error("Error: Cannot allocate memory for parser structure", NULL));
 	init_parse_obj(parse);
 	printf("Parser initialized\n");
 	if (!(obj_data_str = read_file(obj_name, "r")))
-		return ;
+		return (NULL);
 	printf("File readed\n");
 	parse_obj_data(obj_data_str, parse);
 
 	ft_strdel(&obj_data_str);
 print_parser_data(parse);
-	return ;
+	return (1);
 }
 
 
 int main(int argc, char **argv) {
 	if (argc != 2)
 		return (1);
-	parse_obj_file(argv[1]);
+	if (!parse_obj_file(argv[1]))
+		return (1);
 	return (0);
 }
 
