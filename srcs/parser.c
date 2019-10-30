@@ -7,6 +7,12 @@ void print_parser_data(t_parse_obj *parser)
 	printf("Number of normal : %zu\n", parser->len_vertices_normal);
 	printf("Number of texture : %zu\n", parser->len_vertices_texture);
 	printf("Number of faces : %zu\n", parser->len_faces);
+	for (size_t i = 0; i < parser->index_vertices; i++)
+		printf("Vertice [%zu] = ( %f, %f, %f )\n", i, parser->vertices[i].x, parser->vertices[i].y, parser->vertices[i].z);
+	for (size_t i = 0; i < parser->index_vertices_normal; i++)
+		printf("Vertice normal [%zu] = ( %f, %f, %f )\n", i, parser->vertices_normal[i].x, parser->vertices_normal[i].y,parser->vertices_normal[i].z);
+	for (size_t i = 0; i < parser->index_vertices_texture; i++)
+		printf("Vertice texture [%zu] = ( %f, %f, %f )\n", i, parser->vertices_texture[i].x, parser->vertices_texture[i].y, parser->vertices_texture[i].z);
 }
 
 void	init_parse_obj(t_parse_obj *parser)
@@ -35,7 +41,7 @@ uint8_t	check_float(const char *str, float *f)
 	i = 0;
 	point = 0;
 	len = ft_strlen(str);
-	while (i < len)
+	while (i < len && !ft_iswsp(str[i]))
 	{
 		is_digit = ft_isdigit(str[i]);
 		if (!point && str[i] == '.' && i != 0 && i != len - 1)
@@ -141,35 +147,52 @@ void	create_vertices_arrays(t_parse_obj *parse)
 		return ; //Handle_error
 	if (!(parse->vertices_texture = (t_vec3 *)malloc(sizeof(t_vec3) * parse->len_vertices_texture)))
 		return ; //Handle_error
+	if (!(parse->all_data = (float *)malloc(sizeof(float) * ((3 * parse->len_vertices) + (2 * parse->len_vertices) + (3 * parse->len_vertices_normal)))))
+		return ; //Handle_error
+	if (!(parse->indices_data = (int *)malloc(sizeof(int) * parse->len_faces)))
+		return ; //Handle_error
 }
 
-void	add_vertice(t_parse_obj *parse, char *str)
+void	add_vertice(t_vec3 *vec, char *str, size_t *index, e_token_obj type)
 {
 	int		i;
 	char	*get_esp;
 	char	*get_nl;
 
 	i = 0;
-	nb_faces = 0;
 	get_nl = ft_strchr(str, '\n');
 	if (!(get_esp = ft_strchr(&str[i], ' ')))
 		return ; // handle_error
 	i += get_esp - &str[i] + 1;
-	while (str[i] && &str[i] < get_nl) {
-		
-		if (!(get_esp = ft_strchr(&str[i], ' ')))
-			break ; // handle_error
-		if (!get_esp)
-			i += ft_strlen(&str[i]);
-		else
-			i += get_esp - &str[i];
-		if (str[i])
-			i++;
+	float f = check_float(&str[i], &f);
+	printf("Value: %f\n", f);
+	if (str[i])
+		check_float(&str[i], &vec[*index].x);
+	if (!(get_esp = ft_strchr(&str[i], ' ')))
+		return ; // handle_error
+	i += get_esp - &str[i] + 1;
+	if (str[i])
+		check_float(&str[i], &vec[*index].y);
+	if (type == TEXTURE)
+	{
+		(*index)++;
+		return ;
 	}
-	/* Create a vec3 */
+	if (!(get_esp = ft_strchr(&str[i], ' ')))
+		return ; // handle_error
+	i += get_esp - &str[i] + 1;
+	if (str[i])
+		check_float(&str[i], &vec[*index].z);
+	(*index)++;
 }
 // Check indexes with len etc
-void	get_vertices_values(char *data, t_parse_obj *parse)
+// //Handle Vec2 for textures;
+uint8_t	parse_faces(t_parse_obj *parse, char *data)
+{
+	return (0);
+}
+
+uint8_t	get_vertices_values(char *data, t_parse_obj *parse)
 {
 	size_t	i;
 	char	*get_nl;
@@ -177,19 +200,20 @@ void	get_vertices_values(char *data, t_parse_obj *parse)
 	i = 0;
 	while (data[i])
 	{
-		if ((get_nl = ft_strchr(&data[i], '\n')) == NULL)
-			return ; // Handle Error
 		if (!ft_strncmp(&data[i], "v ", 2))
-			parse->;
+			add_vertice(parse->vertices, &data[i], &parse->index_vertices);
 		else if (!ft_strncmp(&data[i], "vt ", 3))
-			add_vertice(parse, &data[i]);
+			add_vertice(parse->vertices_normal, &data[i], &parse->index_vertices_normal);
 		else if (!ft_strncmp(&data[i], "vn ", 3))
-			parse->len_vertices_normal++;
+			add_vertice(parse->vertices_texture, &data[i], &parse->index_vertices_texture);
 		else if (!ft_strncmp(&data[i], "f ", 2))
-			handle_faces(parse, &data[i]);
+			return (handle_faces(parse, &data[i]));
+		if ((get_nl = ft_strchr(&data[i], '\n')) == NULL)
+			return (1); // Handle Error
 		i += get_nl - &data[i];
 		i++;
 	}
+	return (1);
 }
 
 void	parse_obj_data(char *data, t_parse_obj *parse)
@@ -202,7 +226,6 @@ void	parse_obj_data(char *data, t_parse_obj *parse)
 void	parse_obj_file(const char *obj_name)
 {
 	char		*obj_data_str;
-//	char		**obj_data;
 	t_parse_obj	*parse;
 
 	if (!(parse = (t_parse_obj *)malloc(sizeof(t_parse_obj))))
