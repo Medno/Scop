@@ -185,15 +185,42 @@ uint8_t	add_vertice(t_vec3 *vec, char *str, size_t *index, e_token_obj type)
 	(*index)++;
 	return (1);
 }
+
+uint8_t	handle_coordinates(t_parse_obj *parse, char *data)
+{
+	char	*next_sp;
+
+	next_sp = ft_strchr(data, ' ');
+	if (!next_sp)
+		return (print_error("Error: Parser: Wrong format in the obj file, missing a space character", NULL));
+	
+	if (parse->len_vertices_texture != 0 && parse->len_vertices_normal != 0)
+		handle_three_coordinates(parse, &data[i]);
+	else if (parse->len_vertices_texture != 0 || parse->len_vertices_normal != 0)
+		handle_two_coordinates(parse, &data[i]);
+	else
+		handle_coordinates(parse, &data[i]);
+}
 // Check indexes with len etc
 // //Handle Vec2 for textures;
 uint8_t	parse_faces(t_parse_obj *parse, char *data)
 {
 	//For each lines, get the content of f. Put the values into the final array
 	size_t	i;
+	char	*next_nl;
 
 	i = 0;
 	while (i < parse->obj_len)
+	{
+		next_nl = ft_strchr(&data[i], '\n');
+		handle_coordinates(parse, &data[i]);
+		if (next_nl)
+			i += next_nl - &data[i];
+		else
+			i += ft_strlen(&data[i]);
+		if (data[i])
+			i++;
+	}
 	return (0);
 }
 
