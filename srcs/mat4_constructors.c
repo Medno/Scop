@@ -6,7 +6,7 @@
 /*   By: pchadeni <pchadeni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/08 19:01:03 by pchadeni          #+#    #+#             */
-/*   Updated: 2019/10/08 19:01:04 by pchadeni         ###   ########.fr       */
+/*   Updated: 2019/11/05 18:28:06 by pchadeni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,8 +52,7 @@ t_mat4	mat4_copy(t_mat4 copy)
 	return (result);
 }
 
-
-t_mat4			mat4_add_vec3(t_mat4 mat, t_vec3 vect, uint8_t coord)
+t_mat4	mat4_add_vec3(t_mat4 mat, t_vec3 vect, uint8_t coord)
 {
 	mat.matrix[coord][0] = vect.x;
 	mat.matrix[coord][1] = vect.y;

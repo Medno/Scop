@@ -6,7 +6,7 @@
 /*   By: pchadeni <pchadeni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/08 18:51:43 by pchadeni          #+#    #+#             */
-/*   Updated: 2019/10/08 18:57:50 by pchadeni         ###   ########.fr       */
+/*   Updated: 2019/11/05 18:31:20 by pchadeni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ void			update_shader(t_shader s, t_monitor *m)
 	model = get_model(*(m->transformation));
 	glUniformMatrix4fv(
 			s.uniforms[MODEL_U], 1, GL_TRUE, &model.matrix[0][0]);
-
 	view = view_look_at(m->camera->position,
 		vec3_add(m->camera->position, m->camera->front), m->camera->up);
 	glUniformMatrix4fv(

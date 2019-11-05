@@ -6,7 +6,7 @@
 /*   By: pchadeni <pchadeni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/05 10:27:15 by pchadeni          #+#    #+#             */
-/*   Updated: 2019/11/05 10:27:55 by pchadeni         ###   ########.fr       */
+/*   Updated: 2019/11/05 18:30:57 by pchadeni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ uint8_t	check_float(const char *str, float *f)
 		if (!point && str[i] == '.' && i != 0 && i != len - 1)
 			point = 1;
 		else if ((str[i] == '.' && point) || (!is_digit && str[i] != '-')
-				|| (str[i] == '-'  && i != 0))
+			|| (str[i] == '-'  && i != 0))
 			return (0);
 		i++;
 	}
