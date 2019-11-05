@@ -6,7 +6,7 @@
 /*   By: pchadeni <pchadeni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/08 19:19:16 by pchadeni          #+#    #+#             */
-/*   Updated: 2019/10/08 19:19:24 by pchadeni         ###   ########.fr       */
+/*   Updated: 2019/11/05 13:30:07 by pchadeni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,13 @@ typedef struct	s_vec3
 	float	z;
 }				t_vec3;
 
+typedef enum	e_vec3_coordinate
+{
+	COORD_X,
+	COORD_Y,
+	COORD_Z
+}				t_v3_coord;
+
 t_vec3			vec3_new(float x, float y, float z);
 
 t_vec3			vec3_add(t_vec3 first, t_vec3 second);
@@ -32,4 +39,5 @@ float			vec3_magnitude(t_vec3 vect);
 t_vec3			vec3_normalize(t_vec3 vect);
 t_vec3			vec3_cross(t_vec3 first, t_vec3 second);
 
+float			*vec3_assign_coord(t_vec3 *vec, t_v3_coord coord);
 #endif
