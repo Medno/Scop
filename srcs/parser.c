@@ -6,7 +6,7 @@
 /*   By: pchadeni <pchadeni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/05 10:25:29 by pchadeni          #+#    #+#             */
-/*   Updated: 2019/11/05 11:36:48 by pchadeni         ###   ########.fr       */
+/*   Updated: 2019/11/05 16:10:11 by pchadeni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ uint8_t	parse_obj_file(const char *obj_name)
 	char		*obj_data_str;
 	t_parse_obj	*parse;
 
-	if (!(parse = init_parse_obj(parse)))
+	if (!(parse = init_parse_obj()))
 		return (1);
 printf("Parser initialized\n");
 	if (!(obj_data_str = read_file(obj_name, "r", &parse->obj_size)))

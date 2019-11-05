@@ -6,7 +6,7 @@
 /*   By: pchadeni <pchadeni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/05 10:25:32 by pchadeni          #+#    #+#             */
-/*   Updated: 2019/11/05 11:37:01 by pchadeni         ###   ########.fr       */
+/*   Updated: 2019/11/05 18:01:12 by pchadeni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,20 +41,25 @@ typedef struct	s_parse_obj
 	size_t				index_vertices;
 	size_t				index_vertices_normal;
 	size_t				index_vertices_texture;
+	size_t				index_indices;
 	long				obj_size;
+	uint8_t				offset_all_data;
+	uint8_t				offset_all_data_normal;
+	int					current_indice;
+	float				*all_data;
 }				t_parse_obj;
 
-enum	e_token_obj
+typedef enum	e_token_obj
 {
 	VERTEX,
 	TEXTURE,
-	N_VERTEX,
+	NORMAL,
 	FACES,
 	NAME,
 	GROUP,
 	MATERIAL,
 	COMMENT
-};
+}				t_token_obj;
 
 typedef enum	e_error_parser
 {
@@ -68,13 +73,17 @@ typedef enum	e_error_parser
 	PARSING_MISSING_SPACE,
 	PARSING_INDEX_OUT_OF_BOUND
 }				t_error_parser;
+
+uint8_t		check_float(const char *str, float *fl);
+
+t_parse_obj	*init_parse_obj(void);
+uint8_t		create_vertices_arrays(t_parse_obj *parse);
 uint8_t		print_parser_error(t_error_parser error);
 
-uint8_t	check_float(const char *str, float *fl);
+uint8_t		get_length_arrays_obj(char *data, t_parse_obj *parse);
+uint8_t		get_vertices_values(char *data, t_parse_obj *parse);
 
-void	init_parse_obj(t_parse_obj *parser);
-uint8_t	create_vertices_arrays(t_parse_obj *parse);
-uint8_t	print_parser_error(e_error_parser error);
+uint8_t		count_faces(char *str);
 
 void	print_parser_data(t_parse_obj *parser);
 
