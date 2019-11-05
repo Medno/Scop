@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parser.h                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: pchadeni <pchadeni@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/11/05 10:25:32 by pchadeni          #+#    #+#             */
+/*   Updated: 2019/11/05 11:37:01 by pchadeni         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef PARSER_H
 # define PARSER_H
 
@@ -43,6 +55,24 @@ enum	e_token_obj
 	COMMENT
 };
 
+enum	e_error_parser
+{
+	ARRAY_VERTICES,
+	ARRAY_VERTICES_NORMAL,
+	ARRAY_VERTICES_TEXTURE,
+	ARRAY_ALL_DATA,
+	ARRAY_INDICES,
+	PARSING_NO_NEWLINE,
+	PARSING_NB_FACES,
+	PARSING_MISSING_SPACE
+};
+
 uint8_t	check_float(const char *str, float *fl);
+
+void	init_parse_obj(t_parse_obj *parser);
+uint8_t	create_vertices_arrays(t_parse_obj *parse);
+uint8_t	print_parser_error(e_error_parser error);
+
+void	print_parser_data(t_parse_obj *parser);
 
 #endif
