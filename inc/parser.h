@@ -16,7 +16,8 @@
 # include "libft.h"
 # include "vec3.h"
 # include "read_file.h"
-# include "errno.h"
+# include "handle_error.h"
+# include <errno.h>
 # include <string.h>
 
 enum	e_face_type
@@ -55,7 +56,7 @@ enum	e_token_obj
 	COMMENT
 };
 
-enum	e_error_parser
+typedef enum	e_error_parser
 {
 	ARRAY_VERTICES,
 	ARRAY_VERTICES_NORMAL,
@@ -64,8 +65,10 @@ enum	e_error_parser
 	ARRAY_INDICES,
 	PARSING_NO_NEWLINE,
 	PARSING_NB_FACES,
-	PARSING_MISSING_SPACE
-};
+	PARSING_MISSING_SPACE,
+	PARSING_INDEX_OUT_OF_BOUND
+}				t_error_parser;
+uint8_t		print_parser_error(t_error_parser error);
 
 uint8_t	check_float(const char *str, float *fl);
 

@@ -12,31 +12,6 @@
 
 #include "parser.h"
 
-uint8_t	print_parser_error(e_error_parser error)
-{
-	char	buf[512];
-
-	if (error == ARRAY_VERTICES)
-		strcpy(buf, "Error: Cannot allocate memory for array of vertices");
-	else if (error == ARRAY_VERTICES_NORMAL)
-		strcpy(buf,
-				"Error: Cannot allocate memory for array of normal vertices");
-	else if (error == ARRAY_VERTICES_TEXTURE)
-		strcpy(buf,
-				"Error: Cannot allocate memory for array of texture vertices");
-	else if (error == ARRAY_ALL_DATA)
-		strcpy(buf,
-			"Error: Cannot allocate memory for the array sent to OpenGL");
-	else if (error == ARRAY_INDICES)
-		strcpy(buf, "Error: Cannot allocate memory for the array of indices"));
-	else if (error == PARSING_NO_NEWLINE)
-	else if (error == PARSING_NB_FACES)
-	else if (error == PARSING_MISSING_SPACE)
-		strcpy(buf, "Error: Parser: Wrong format, missing a space character");
-
-	return ((uint8_t)print_error(buf, NULL));
-}
-
 void	parse_obj_data(char *data, t_parse_obj *parse)
 {
 	if (!get_length_arrays_obj(data, parse))
@@ -71,4 +46,34 @@ int main(int argc, char **argv) {
 		return (1);
 	return (0);
 }
+
+
+uint8_t	print_parser_error(t_error_parser error)
+{
+	char	buf[512];
+
+	if (error == ARRAY_VERTICES)
+		strcpy(buf, "Error: Cannot allocate memory for array of vertices");
+	else if (error == ARRAY_VERTICES_NORMAL)
+		strcpy(buf,
+				"Error: Cannot allocate memory for array of normal vertices");
+	else if (error == ARRAY_VERTICES_TEXTURE)
+		strcpy(buf,
+				"Error: Cannot allocate memory for array of texture vertices");
+	else if (error == ARRAY_ALL_DATA)
+		strcpy(buf,
+			"Error: Cannot allocate memory for the array sent to OpenGL");
+	else if (error == ARRAY_INDICES)
+		strcpy(buf, "Error: Cannot allocate memory for the array of indices");
+	else if (error == PARSING_NO_NEWLINE)
+		strcpy(buf, "Error: Missing newline in obj file");
+	else if (error == PARSING_NB_FACES)
+		strcpy(buf, "Error: Parser: Invalid number of faces");
+	else if (error == PARSING_MISSING_SPACE)
+		strcpy(buf, "Error: Parser: Wrong format, missing a space character");
+	else if (error == PARSING_INDEX_OUT_OF_BOUND)
+		strcpy(buf, "Error: Parser: Index out of bound");
+	return ((uint8_t)print_error(buf, NULL));
+}
+
 
