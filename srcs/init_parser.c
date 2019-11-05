@@ -64,6 +64,8 @@ uint8_t	create_vertices_arrays(t_parse_obj *parse)
 		parse->offset_all_data += 2;
 		parse->offset_all_data_normal += 2;
 	}
+printf("size of all_data: %lu\n", (3 * parse->len_vertices) + (2 * parse->len_vertices) +
+		 (3 * parse->len_vertices));
 	return (1);
 }
 
@@ -75,8 +77,8 @@ void	print_parser_data(t_parse_obj *parser)
 	printf("Number of normal : %zu\n", parser->len_vertices_normal);
 	printf("Number of texture : %zu\n", parser->len_vertices_texture);
 	printf("Number of faces : %zu\n", parser->len_faces);
-//	for (size_t i = 0; i < parser->len_vertices; i++)
-//		printf("Vertice [%zu] = ( %f, %f, %f )\n", i, parser->vertices[i].x, parser->vertices[i].y, parser->vertices[i].z);
+	for (size_t i = 0; i < parser->len_vertices; i++)
+		printf("Vertice [%zu] = ( %f, %f, %f )\n", i, parser->vertices[i].x, parser->vertices[i].y, parser->vertices[i].z);
 	for (size_t i = 0; i < parser->len_vertices_normal; i++)
 		printf("Vertice normal [%zu] = ( %f, %f, %f )\n", i, parser->vertices_normal[i].x, parser->vertices_normal[i].y,parser->vertices_normal[i].z);
 	for (size_t i = 0; i < parser->len_vertices_texture; i++)

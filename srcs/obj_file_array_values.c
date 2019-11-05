@@ -22,7 +22,7 @@ uint8_t	add_vertice(t_vec3 *vec, char *str, size_t *index, t_token_obj type)
 	i = 0;
 	coord = COORD_X;
 	get_nl = ft_strchr(str, '\n');
-	while (&str[i] < get_nl)
+	while (&str[i] < get_nl && coord <= COORD_Z)
 	{
 		float f = check_float(&str[i], &f);
 		if (!(get_esp = ft_strchr(&str[i], ' ')))
@@ -52,6 +52,12 @@ void	assign_all_data_index(t_parse_obj *parse, int indice, t_token_obj tok)
 {
 printf("Start initialize_indices_single_index\n");
 printf("indice: %d\n", indice);
+printf("searched indice in array : %d\n", parse->current_indice * parse->offset_all_data);
+printf("Before\n");
+printf("vertices, vector = ( %f, %f, %f )\n", parse->vertices[indice].x, parse->vertices[indice].y, parse->vertices[indice].z);
+printf("Before 1\n");
+printf("assign_all_data, vector = ( %f, %f, %f )\n", parse->all_data[parse->current_indice * parse->offset_all_data], parse->all_data[parse->current_indice * parse->offset_all_data + 1], parse->all_data[parse->current_indice * parse->offset_all_data + 2]);
+printf("After\n");
 	if (tok == VERTEX)
 		assign_vec3(&parse->all_data[parse->current_indice * parse->offset_all_data],
 			parse->vertices[indice], tok);
@@ -75,6 +81,7 @@ printf("Start initialize_indices_single_splitted\n");
 	if (i > (unsigned)parse->obj_size)
 		return (print_parser_error(PARSING_NB_FACES));
 	indice = ft_atoi(&str[i]) - 1;
+printf("Indice calculated : %d\n", indice);
 	parse->indices[parse->index_indices] = indice;
 	parse->index_indices++;
 	if (tok == VERTEX)
@@ -91,6 +98,7 @@ uint8_t	initialize_indices_single(t_parse_obj *parse, char *str, int len)
 	char	*next_next_slash;
 
 printf("Start handling_indices_line_single\n");
+printf("Str single : %s\n", str);
 	if (!initialize_indices_single_splitted(parse, str, VERTEX))
 		return (0);
 	if (parse->len_vertices_normal == 0 && parse->len_vertices_texture == 0)
@@ -119,7 +127,7 @@ printf("Start handling_indices_line_triplet\n");
 	{
 		if (!initialize_indices_single(parse, next_sp, len))
 			return (0);
-		next_sp = ft_strchr(next_sp, ' ');
+		next_sp = ft_strchr(next_sp + 1, ' ');
 		i++;
 	}
 	return (1);
