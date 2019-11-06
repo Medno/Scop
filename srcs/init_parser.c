@@ -6,7 +6,7 @@
 /*   By: pchadeni <pchadeni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/05 10:25:58 by pchadeni          #+#    #+#             */
-/*   Updated: 2019/11/05 18:55:45 by pchadeni         ###   ########.fr       */
+/*   Updated: 2019/11/06 11:48:54 by pchadeni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,8 @@ uint8_t	create_vertices_arrays(t_parse_obj *parse)
 		(t_vec3 *)malloc(sizeof(t_vec3) * parse->len_vertices_texture)))
 		return (print_parser_error(ARRAY_VERTICES_TEXTURE));
 	if (!(parse->all_data = (float *)malloc(sizeof(float) *
-		((3 * parse->len_vertices) + (2 * parse->len_vertices) +
-		 (3 * parse->len_vertices)))))
+		((3 * parse->len_vertices) + (2 * parse->len_vertices_texture) +
+		 (3 * parse->len_vertices_normal)))))
 		return (print_parser_error(ARRAY_ALL_DATA));
 	if (!(parse->indices = (int *)malloc(sizeof(int) * parse->len_faces)))
 		return (print_parser_error(ARRAY_INDICES));
@@ -64,9 +64,21 @@ uint8_t	create_vertices_arrays(t_parse_obj *parse)
 		parse->offset_all_data += 2;
 		parse->offset_all_data_normal += 2;
 	}
-printf("size of all_data: %lu\n", (3 * parse->len_vertices) + (2 * parse->len_vertices) +
-		 (3 * parse->len_vertices));
+printf("Number of faces : %zu\n", parse->len_faces);
+printf("size of all_data: %lu\n", (3 * parse->len_vertices) + (2 * parse->len_vertices_texture) +
+		 (3 * parse->len_vertices_normal));
 	return (1);
+}
+
+void destroy_parse_obj(t_parse_obj *parse)
+{
+	free(parse->vertices);
+	free(parse->vertices_normal);
+	free(parse->vertices_texture);
+	free(parse->all_data);
+	free(parse->indices);
+	free(parse);
+	parse = NULL;
 }
 
 

@@ -6,7 +6,7 @@
 /*   By: pchadeni <pchadeni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/05 10:25:29 by pchadeni          #+#    #+#             */
-/*   Updated: 2019/11/05 16:10:11 by pchadeni         ###   ########.fr       */
+/*   Updated: 2019/11/06 11:52:06 by pchadeni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ printf("File readed\n");
 
 	ft_strdel(&obj_data_str);
 print_parser_data(parse);
+destroy_parse_obj(parse);
 	return (1);
 }
 
