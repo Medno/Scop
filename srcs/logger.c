@@ -6,7 +6,7 @@
 /*   By: pchadeni <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/30 18:48:20 by pchadeni          #+#    #+#             */
-/*   Updated: 2019/10/08 19:24:15 by pchadeni         ###   ########.fr       */
+/*   Updated: 2019/11/06 14:28:43 by pchadeni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	init_logger(void)
 {
 	if (!(g_logger = fopen("./.log", "w")))
-		return;
+		return ;
 }
 
 void	quit_logger(void)

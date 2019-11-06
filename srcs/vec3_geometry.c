@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   vec3_geometry.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: pchadeni <pchadeni@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/11/06 13:36:15 by pchadeni          #+#    #+#             */
+/*   Updated: 2019/11/06 13:36:21 by pchadeni         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "vec3.h"
 
 float	vec3_magnitude(t_vec3 vect)
@@ -18,7 +30,7 @@ t_vec3	vec3_normalize(t_vec3 vect)
 	return (normalized);
 }
 
-t_vec3			vec3_cross(t_vec3 first, t_vec3 second)
+t_vec3	vec3_cross(t_vec3 first, t_vec3 second)
 {
 	return (vec3_new(
 		(first.y * second.z) - (second.y * first.z),

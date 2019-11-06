@@ -6,7 +6,7 @@
 /*   By: pchadeni <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/30 17:08:09 by pchadeni          #+#    #+#             */
-/*   Updated: 2019/09/30 17:08:58 by pchadeni         ###   ########.fr       */
+/*   Updated: 2019/11/06 14:35:15 by pchadeni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,10 @@ void	*read_file(const char *filename, const char *opt, long *length_data)
 		*length_data = file_size;
 	fseek(fd, 0L, SEEK_SET);
 	if (!(res = ft_strnew(file_size)))
+	{
 		return (print_error("Error: Cannot allocate string for file: ",
 			filename));
+	}
 	if (!(fread(res, file_size, 1, fd)))
 		return (print_error("Error: Cannot read shader: ", filename));
 	fclose(fd);

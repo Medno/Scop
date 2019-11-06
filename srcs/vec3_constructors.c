@@ -6,7 +6,7 @@
 /*   By: pchadeni <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/30 17:19:43 by pchadeni          #+#    #+#             */
-/*   Updated: 2019/11/05 18:19:20 by pchadeni         ###   ########.fr       */
+/*   Updated: 2019/11/06 13:37:45 by pchadeni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,8 @@ t_vec3	vec3_new(float x, float y, float z)
 float	*vec3_assign_coord(t_vec3 *vec, t_v3_coord coord)
 {
 	if (coord == COORD_X)
-		return &vec->x;
+		return (&vec->x);
 	else if (coord == COORD_Y)
-		return &vec->y;
-	return &vec->z;
+		return (&vec->y);
+	return (&vec->z);
 }

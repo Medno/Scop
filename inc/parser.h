@@ -6,7 +6,7 @@
 /*   By: pchadeni <pchadeni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/05 10:25:32 by pchadeni          #+#    #+#             */
-/*   Updated: 2019/11/06 11:49:14 by pchadeni         ###   ########.fr       */
+/*   Updated: 2019/11/06 13:26:26 by pchadeni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,8 @@ uint8_t		get_length_arrays_obj(char *data, t_parse_obj *parse);
 uint8_t		get_vertices_values(char *data, t_parse_obj *parse);
 
 uint8_t		count_faces(char *str);
+
+uint8_t	initialize_indices_triplet(t_parse_obj *parse, char *data, int len);
 
 void	print_parser_data(t_parse_obj *parser);
 
