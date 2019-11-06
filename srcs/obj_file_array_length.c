@@ -6,7 +6,7 @@
 /*   By: pchadeni <pchadeni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/05 10:36:24 by pchadeni          #+#    #+#             */
-/*   Updated: 2019/11/05 15:27:05 by pchadeni         ###   ########.fr       */
+/*   Updated: 2019/11/06 11:46:12 by pchadeni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ uint8_t	handle_faces(t_parse_obj *parse, char *str)
 	nb_faces = count_faces(str);
 	if (nb_faces == 0)
 		return (0);
-	parse->len_faces += nb_faces;
+	parse->len_faces += nb_faces == 4 ? 6 : 3;
 	return (1);
 }
 
