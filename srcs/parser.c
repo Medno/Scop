@@ -6,7 +6,7 @@
 /*   By: pchadeni <pchadeni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/05 10:25:29 by pchadeni          #+#    #+#             */
-/*   Updated: 2019/11/06 13:35:57 by pchadeni         ###   ########.fr       */
+/*   Updated: 2019/11/06 15:20:08 by pchadeni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ printf("File readed\n");
 	parse_obj_data(obj_data_str, parse);
 
 	ft_strdel(&obj_data_str);
-//print_parser_data(parse);
+print_parser_data(parse);
 destroy_parse_obj(parse);
 	return (1);
 }
@@ -76,5 +76,3 @@ uint8_t	print_parser_error(t_error_parser error)
 		strcpy(buf, "Error: Parser: Index out of bound");
 	return ((uint8_t)print_error(buf, NULL));
 }
-
-

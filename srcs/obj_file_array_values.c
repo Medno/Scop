@@ -6,7 +6,7 @@
 /*   By: pchadeni <pchadeni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/05 10:37:09 by pchadeni          #+#    #+#             */
-/*   Updated: 2019/11/06 13:32:06 by pchadeni         ###   ########.fr       */
+/*   Updated: 2019/11/06 16:39:00 by pchadeni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ uint8_t	add_vertice(t_vec3 *vec, char *str, size_t *index, t_token_obj type)
 		if (get_esp - i > 0)
 			check_float(&str[i], vec3_assign_coord(&vec[*index], coord));
 		coord += 1;
-		if (type == TEXTURE && coord == 2)
+		if (type == TEXTURE && coord == COORD_Z)
 			break ;
 	}
 	(*index)++;
@@ -59,7 +59,7 @@ uint8_t	handle_indices_line(t_parse_obj *parse, char *data, int len)
 	}
 	return (1);
 }
-
+/*
 uint8_t	parse_faces(t_parse_obj *parse, char *data, long current)
 {
 	long	i;
@@ -81,7 +81,7 @@ uint8_t	parse_faces(t_parse_obj *parse, char *data, long current)
 	}
 	return (1);
 }
-
+*/
 uint8_t	get_vertices_values(char *data, t_parse_obj *parse)
 {
 	long	i;
@@ -90,19 +90,20 @@ uint8_t	get_vertices_values(char *data, t_parse_obj *parse)
 	i = 0;
 	while (i < parse->obj_size)
 	{
+		get_nl = ft_strchr(&data[i], '\n');
 		if (!ft_strncmp(&data[i], "v ", 2))
 			add_vertice(parse->vertices, &data[i], &parse->index_vertices,
 				VERTEX);
 		else if (!ft_strncmp(&data[i], "vt ", 3))
-			add_vertice(parse->vertices_normal, &data[i],
-				&parse->index_vertices_normal, NORMAL);
-		else if (!ft_strncmp(&data[i], "vn ", 3))
 			add_vertice(parse->vertices_texture, &data[i],
 				&parse->index_vertices_texture, TEXTURE);
+		else if (!ft_strncmp(&data[i], "vn ", 3))
+			add_vertice(parse->vertices_normal, &data[i],
+				&parse->index_vertices_normal, NORMAL);
 		else if (!ft_strncmp(&data[i], "f ", 2))
-			return (parse_faces(parse, &data[i], i));
-		if ((get_nl = ft_strchr(&data[i], '\n')) == NULL)
-			return (1);
+			handle_indices_line(parse, &data[i], get_nl - &data[i]);
+		if (get_nl == NULL)
+			get_nl = data + parse->obj_size;
 		i += get_nl - &data[i];
 		i++;
 	}
