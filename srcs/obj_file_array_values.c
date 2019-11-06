@@ -149,7 +149,7 @@ printf("Start handling_indices_line\n");
 	nb_faces = count_faces(data);
 	if (nb_faces == 4)
 	{
-		next_sp = ft_strchr(&data[i], ' ');
+		next_sp = ft_strchr(&data[i] + 1, ' ');
 		i += next_sp - &data[i];
 		if (!initialize_indices_triplet(parse, &data[i], len))
 			return (0);
