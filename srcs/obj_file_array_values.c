@@ -6,7 +6,7 @@
 /*   By: pchadeni <pchadeni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/05 10:37:09 by pchadeni          #+#    #+#             */
-/*   Updated: 2019/11/06 16:39:00 by pchadeni         ###   ########.fr       */
+/*   Updated: 2019/11/07 14:50:28 by pchadeni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@ uint8_t	add_vertice(t_vec3 *vec, char *str, size_t *index, t_token_obj type)
 	i = 0;
 	coord = COORD_X;
 	get_nl = ft_strchr(str, '\n');
+	if (get_nl == NULL)
+		get_nl = str + ft_strlen(str);
 	while (&str[i] < get_nl && coord <= COORD_Z)
 	{
 		if (!(get_esp = ft_strchr(&str[i], ' ')))
@@ -37,7 +39,7 @@ uint8_t	add_vertice(t_vec3 *vec, char *str, size_t *index, t_token_obj type)
 	return (1);
 }
 
-uint8_t	handle_indices_line(t_parse_obj *parse, char *data, int len)
+uint8_t	handle_indices_line(t_parser_obj *parse, char *data, int len)
 {
 	char	*next_sp;
 	uint8_t	nb_faces;
@@ -59,30 +61,8 @@ uint8_t	handle_indices_line(t_parse_obj *parse, char *data, int len)
 	}
 	return (1);
 }
-/*
-uint8_t	parse_faces(t_parse_obj *parse, char *data, long current)
-{
-	long	i;
-	long	remaining_len;
-	char	*next_nl;
-	int		len;
 
-	i = 0;
-	remaining_len = parse->obj_size - current;
-	while (i < remaining_len)
-	{
-		next_nl = ft_strchr(&data[i], '\n');
-		len = next_nl ? next_nl - &data[i] : ft_strlen(&data[i]);
-		if (!handle_indices_line(parse, &data[i], len))
-			return (0);
-		i += len;
-		if (data[i])
-			i++;
-	}
-	return (1);
-}
-*/
-uint8_t	get_vertices_values(char *data, t_parse_obj *parse)
+uint8_t	get_vertices_values(char *data, t_parser_obj *parse)
 {
 	long	i;
 	char	*get_nl;
@@ -91,6 +71,8 @@ uint8_t	get_vertices_values(char *data, t_parse_obj *parse)
 	while (i < parse->obj_size)
 	{
 		get_nl = ft_strchr(&data[i], '\n');
+		if (get_nl == NULL)
+			get_nl = data + parse->obj_size;
 		if (!ft_strncmp(&data[i], "v ", 2))
 			add_vertice(parse->vertices, &data[i], &parse->index_vertices,
 				VERTEX);
@@ -102,8 +84,6 @@ uint8_t	get_vertices_values(char *data, t_parse_obj *parse)
 				&parse->index_vertices_normal, NORMAL);
 		else if (!ft_strncmp(&data[i], "f ", 2))
 			handle_indices_line(parse, &data[i], get_nl - &data[i]);
-		if (get_nl == NULL)
-			get_nl = data + parse->obj_size;
 		i += get_nl - &data[i];
 		i++;
 	}
