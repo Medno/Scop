@@ -6,41 +6,48 @@
 /*   By: pchadeni <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/17 15:43:12 by pchadeni          #+#    #+#             */
-/*   Updated: 2019/10/08 14:04:07 by pchadeni         ###   ########.fr       */
+/*   Updated: 2019/11/07 16:53:57 by pchadeni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "mesh.h"
 
-t_mesh	create_mesh(t_vec3 *vertices, unsigned int len_vertices, float *textures, unsigned int len_textures)
+uint8_t	create_mesh(const char *filename, t_mesh *mesh)
 {
-	t_mesh	mesh;
-	float	*merged;
+//	float	*merged;
+	t_parser_obj	*parser;
 	
-	mesh.count_draw = len_vertices;
-	mesh.len_textures = len_textures;
-	merged = merge_coordinates(vertices, textures, len_vertices, len_textures);
-	if (merged)
+	if (!(parser = parse_obj_file(filename)))
+		return (0);
+	mesh->count_draw = parser->len_vertices;
+	mesh->len_textures = parser->len_vertices_texture;
+//	merged = merge_coordinates(vertices, textures, len_vertices, len_textures);
+	if (parser)
 	{
-		glGenVertexArrays(1, &mesh.vao);
-		glGenBuffers(NUM_BUFFERS, mesh.vbo);
+		glGenVertexArrays(1, &mesh->vao);
+		glGenBuffers(NUM_BUFFERS, mesh->vbo);
 
-		glBindVertexArray(mesh.vao);
-		glBindBuffer(GL_ARRAY_BUFFER, mesh.vbo[POSITION_VB]);
+		glBindVertexArray(mesh->vao);
+		glBindBuffer(GL_ARRAY_BUFFER, mesh->vbo[POSITION_VB]);
 
-		glBufferData(GL_ARRAY_BUFFER, len_vertices * len_textures * 3, merged, GL_STATIC_DRAW);
+		glBufferData(GL_ARRAY_BUFFER, parser->all_data_size, parser->all_data, GL_STATIC_DRAW);
 
-		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void *)0);
+		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, parser->offset_all_data * sizeof(float), (void *)0);
 		glEnableVertexAttribArray(0);
-		glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void *)(3 * sizeof(float)));
-		glEnableVertexAttribArray(1);
+		if (parser->len_vertices_texture > 0)
+		{
+			glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, parser->offset_all_data * sizeof(float), (void *)(parser->offset_all_data - 2 * sizeof(float)));
+			glEnableVertexAttribArray(1);
+		}
 
 		glBindVertexArray(0);
-		mesh.texture = create_texture();
-		free(merged);
+		mesh->texture = create_texture();
+//		free(merged);
 	}
+	if (parser)
+		destroy_parser_obj(parser);
 //handle_error
-	return (mesh);
+	return (1);
 }
 
 void	draw_mesh(t_mesh mesh)

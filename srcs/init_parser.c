@@ -6,7 +6,7 @@
 /*   By: pchadeni <pchadeni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/05 10:25:58 by pchadeni          #+#    #+#             */
-/*   Updated: 2019/11/07 14:52:27 by pchadeni         ###   ########.fr       */
+/*   Updated: 2019/11/07 14:56:43 by pchadeni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ void			destroy_parser_obj(t_parser_obj *parser)
 	free(parser->vertices);
 	free(parser->vertices_normal);
 	free(parser->vertices_texture);
-	free(parser->all_data);
+//	free(parser->all_data);
 	free(parser->indices);
 	free(parser);
 	parser = NULL;

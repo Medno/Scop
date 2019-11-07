@@ -6,7 +6,7 @@
 #    By: pchadeni <pchadeni@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/10/08 18:55:23 by pchadeni          #+#    #+#              #
-#    Updated: 2019/10/08 19:28:27 by pchadeni         ###   ########.fr        #
+#    Updated: 2019/11/07 16:55:25 by pchadeni         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -39,7 +39,13 @@ MAIN_SRCS = main.c		\
 			tga_header.c	\
 			merge_coordinates.c	\
 			shaders_updates.c	\
-			shaders_constructors.c
+			shaders_constructors.c	\
+			obj_file_array_indices.c	\
+			obj_file_array_length.c \
+			obj_file_array_values.c	\
+			parser.c	\
+			parse_float.c \
+			init_parser.c
 			
 
 OBJ += $(addprefix ./$(OBJ_PATH)/, $(MAIN_SRCS:.c=.o))

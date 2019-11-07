@@ -6,7 +6,7 @@
 /*   By: pchadeni <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/17 15:43:20 by pchadeni          #+#    #+#             */
-/*   Updated: 2019/10/08 19:18:36 by pchadeni         ###   ########.fr       */
+/*   Updated: 2019/11/07 15:45:53 by pchadeni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # include "vec3.h"
 # include "handle_error.h"
 # include "textures.h"
+# include "parser.h"
 
 enum
 {
@@ -37,8 +38,7 @@ typedef struct	s_mesh
 	unsigned int	len_textures;
 }				t_mesh;
 
-t_mesh			create_mesh(t_vec3 *vertices, unsigned int len_vertices,
-		float *textures, unsigned int len_textures);
+uint8_t			create_mesh(const char *filename, t_mesh *mesh);
 void			delete_mesh(t_mesh mesh);
 void			draw_mesh(t_mesh mesh);
 float			*merge_coordinates(t_vec3 vertices[], float texture[],
