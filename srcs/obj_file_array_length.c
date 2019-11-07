@@ -6,7 +6,7 @@
 /*   By: pchadeni <pchadeni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/05 10:36:24 by pchadeni          #+#    #+#             */
-/*   Updated: 2019/11/06 13:32:18 by pchadeni         ###   ########.fr       */
+/*   Updated: 2019/11/07 10:40:32 by pchadeni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,52 +31,54 @@ uint8_t	count_faces(char *str)
 	i = 0;
 	nb_faces = 0;
 	get_nl = ft_strchr(str, '\n');
-	if (get_nl)
-		while (str[i] && &str[i] < get_nl)
-		{
-			if (!(get_esp = ft_strchr(&str[i], ' ')))
-				break ;
-			nb_faces++;
-			if (nb_faces >= 5)
-				break ;
-			i += (!get_esp) ? ft_strlen(&str[i]) : get_esp - &str[i];
-			if (str[i])
-				i++;
-		}
+	if (!get_nl)
+		get_nl = str + ft_strlen(str);
+	while (str[i] && &str[i] < get_nl)
+	{
+		if (!(get_esp = ft_strchr(&str[i], ' ')))
+			break ;
+		nb_faces++;
+		if (nb_faces >= 5)
+			break ;
+		i += (!get_esp) ? ft_strlen(&str[i]) : get_esp - &str[i];
+		if (str[i])
+			i++;
+	}
 	if (!check_count_faces(i, nb_faces))
 		return (0);
 	return (nb_faces == 5 || (!get_esp && nb_faces == 4)) ? 4 : 3;
 }
 
-uint8_t	handle_faces(t_parse_obj *parse, char *str)
+uint8_t	handle_faces(t_parser_obj *parser, char *str)
 {
 	int	nb_faces;
 
 	nb_faces = count_faces(str);
 	if (nb_faces == 0)
 		return (0);
-	parse->len_faces += nb_faces == 4 ? 6 : 3;
+	parser->len_faces += nb_faces == 4 ? 6 : 3;
 	return (1);
 }
 
-uint8_t	get_length_arrays_obj(char *data, t_parse_obj *parse)
+uint8_t	get_length_arrays_obj(char *data, t_parser_obj *parser)
 {
-	size_t	i;
+	long	i;
 	char	*get_nl;
 
 	i = 0;
-	while (data[i])
+	while (i < parser->obj_size)
 	{
-		if ((get_nl = ft_strchr(&data[i], '\n')) == NULL)
-			return (1);
+		get_nl = ft_strchr(&data[i], '\n');
+		if (get_nl == NULL)
+			get_nl = data + parser->obj_size;
 		if (!ft_strncmp(&data[i], "v ", 2))
-			parse->len_vertices++;
+			parser->len_vertices++;
 		else if (!ft_strncmp(&data[i], "vt ", 3))
-			parse->len_vertices_texture++;
+			parser->len_vertices_texture++;
 		else if (!ft_strncmp(&data[i], "vn ", 3))
-			parse->len_vertices_normal++;
+			parser->len_vertices_normal++;
 		else if (!ft_strncmp(&data[i], "f ", 2))
-			if (!handle_faces(parse, &data[i]))
+			if (!handle_faces(parser, &data[i]))
 				return (0);
 		i += get_nl - &data[i];
 		i++;

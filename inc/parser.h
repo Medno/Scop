@@ -6,7 +6,7 @@
 /*   By: pchadeni <pchadeni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/05 10:25:32 by pchadeni          #+#    #+#             */
-/*   Updated: 2019/11/06 17:03:22 by pchadeni         ###   ########.fr       */
+/*   Updated: 2019/11/07 11:18:25 by pchadeni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ enum	e_face_type
 	V_3
 };
 
-typedef struct	s_parse_obj
+typedef struct	s_parser_obj
 {
 	t_vec3				*vertices;
 	t_vec3				*vertices_normal;
@@ -45,10 +45,9 @@ typedef struct	s_parse_obj
 	long				obj_size;
 	uint8_t				offset_all_data;
 	uint8_t				offset_all_data_normal;
-	int					current_indice;
 	size_t				all_data_size;
 	float				*all_data;
-}				t_parse_obj;
+}				t_parser_obj;
 
 typedef enum	e_token_obj
 {
@@ -77,18 +76,18 @@ typedef enum	e_error_parser
 
 uint8_t		check_float(const char *str, float *fl);
 
-t_parse_obj	*init_parse_obj(void);
-uint8_t		create_vertices_arrays(t_parse_obj *parse);
-void 		destroy_parse_obj(t_parse_obj *parse);
+t_parser_obj	*init_parser_obj(void);
+uint8_t		create_vertices_arrays(t_parser_obj *parse);
+void 		destroy_parser_obj(t_parser_obj *parse);
 uint8_t		print_parser_error(t_error_parser error);
 
-uint8_t		get_length_arrays_obj(char *data, t_parse_obj *parse);
-uint8_t		get_vertices_values(char *data, t_parse_obj *parse);
+uint8_t		get_length_arrays_obj(char *data, t_parser_obj *parse);
+uint8_t		get_vertices_values(char *data, t_parser_obj *parse);
 
 uint8_t		count_faces(char *str);
 
-uint8_t	initialize_indices_triplet(t_parse_obj *parse, char *data, int len);
+uint8_t	initialize_indices_triplet(t_parser_obj *parse, char *data, int len);
 
-void	print_parser_data(t_parse_obj *parser);
+void	print_parser_data(t_parser_obj *parser);
 
 #endif

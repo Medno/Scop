@@ -6,7 +6,7 @@
 /*   By: pchadeni <pchadeni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/05 10:27:15 by pchadeni          #+#    #+#             */
-/*   Updated: 2019/11/06 14:31:58 by pchadeni         ###   ########.fr       */
+/*   Updated: 2019/11/07 12:00:45 by pchadeni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,12 @@ uint8_t	check_float(const char *str, float *f)
 	size_t	i;
 	uint8_t	point;
 	uint8_t	is_digit;
+	char	*bad;
 
 	i = 0;
 	point = 0;
 	len = ft_strlen(str);
+	*f = 0.0;
 	while (i < len && !ft_iswsp(str[i]))
 	{
 		is_digit = ft_isdigit(str[i]);
@@ -34,9 +36,8 @@ uint8_t	check_float(const char *str, float *f)
 	}
 	if (!point)
 		return (0);
-	errno = 0;
-	*f = strtof(str, NULL);
-	if (errno == ERANGE)
+	*f = strtof(str, &bad);
+	if (*f == 0.0 && bad == str)
 		return (0);
 	return (1);
 }
