@@ -20,6 +20,7 @@ void	print_parser_data(t_parser_obj *parser)
 	printf("Number of texture : %zu\n", parser->len_vertices_texture);
 	printf("Number of faces : %zu\n", parser->len_faces);
 	printf("Number of data : %zu\n", parser->all_data_size);
+	printf("Offset between data : %hhu\n", parser->offset_all_data);
 	printf("Print of vertices\n");
 	for (size_t i = 0; i < parser->len_vertices; i++)
 	{
@@ -38,6 +39,6 @@ void	print_parser_data(t_parser_obj *parser)
 	printf("All Data: \n");
 	for (size_t i = 0; i < parser->all_data_size; i++)
 		printf("[%zu]: %f\n", i, parser->all_data[i]);
-//	for (size_t i = 0; i < parser->len_faces; i++)
-//		printf("Face [%zu] = %d\n", i, parser->indices[i]);
+	for (size_t i = 0; i < parser->len_faces; i++)
+		printf("Face [%zu] = %d\n", i, parser->indices[i]);
 }
