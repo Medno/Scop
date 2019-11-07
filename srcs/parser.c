@@ -6,7 +6,7 @@
 /*   By: pchadeni <pchadeni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/05 10:25:29 by pchadeni          #+#    #+#             */
-/*   Updated: 2019/11/07 14:30:25 by pchadeni         ###   ########.fr       */
+/*   Updated: 2019/11/07 14:46:50 by pchadeni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,20 +22,18 @@ uint8_t	parse_obj_data(char *data, t_parser_obj *parse)
 
 uint8_t	parse_obj_file(const char *obj_name)
 {
-	char		*obj_data_str;
+	char			*obj_data_str;
 	t_parser_obj	*parser;
 
 	if (!(parser = init_parser_obj()))
 		return (1);
-printf("Parser initialized\n");
 	if (!(obj_data_str = read_file(obj_name, "r", &parser->obj_size)))
 		return (0);
-printf("File readed\n");
 	if (parse_obj_data(obj_data_str, parser))
 		print_parser_data(parser);
 	ft_strdel(&obj_data_str);
 	if (parser)
-destroy_parser_obj(parser);
+		destroy_parser_obj(parser);
 	return (1);
 }
 

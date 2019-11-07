@@ -6,7 +6,7 @@
 /*   By: pchadeni <pchadeni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/06 13:25:52 by pchadeni          #+#    #+#             */
-/*   Updated: 2019/11/07 11:42:52 by pchadeni         ###   ########.fr       */
+/*   Updated: 2019/11/07 14:49:58 by pchadeni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,8 @@ void	assign_vec3(float *array, t_vec3 vect, t_token_obj tok)
 		*(array + 2) = vect.z;
 }
 
-void	assign_all_data_index(t_parser_obj *parser, int indice, t_token_obj tok)
+void	assign_data_index(t_parser_obj *parser, int indice, t_token_obj tok)
 {
-//printf("Indice in all_data: %lu\n", parser->index_indices * parser->offset_all_data);
-//printf("Indice in array: %d\n", indice);
-//printf("token: %d\n", tok);
 	if (tok == VERTEX)
 		assign_vec3(&parser->all_data[
 			parser->index_indices * parser->offset_all_data],
@@ -50,11 +47,9 @@ uint8_t	init_indices_splitted(t_parser_obj *parser, char *str, t_token_obj tok)
 	if (i > (unsigned)parser->obj_size)
 		return (print_parser_error(PARSING_NB_FACES));
 	indice = ft_atoi(&str[i]) - 1;
-
 	if (indice < 0 || (unsigned)indice > parser->len_vertices)
 		return (print_parser_error(PARSING_INDEX_OUT_OF_BOUND));
-	assign_all_data_index(parser, indice, tok);
-
+	assign_data_index(parser, indice, tok);
 	return (1);
 }
 

@@ -6,7 +6,7 @@
 /*   By: pchadeni <pchadeni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/05 10:37:09 by pchadeni          #+#    #+#             */
-/*   Updated: 2019/11/07 12:05:34 by pchadeni         ###   ########.fr       */
+/*   Updated: 2019/11/07 14:50:28 by pchadeni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ uint8_t	add_vertice(t_vec3 *vec, char *str, size_t *index, t_token_obj type)
 		i += get_esp - &str[i] + 1;
 		if (get_esp - i > 0)
 			check_float(&str[i], vec3_assign_coord(&vec[*index], coord));
-	
 		coord += 1;
 		if (type == TEXTURE && coord == COORD_Z)
 			break ;

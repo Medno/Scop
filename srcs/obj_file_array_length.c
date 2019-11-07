@@ -6,7 +6,7 @@
 /*   By: pchadeni <pchadeni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/05 10:36:24 by pchadeni          #+#    #+#             */
-/*   Updated: 2019/11/07 10:40:32 by pchadeni         ###   ########.fr       */
+/*   Updated: 2019/11/07 14:50:44 by pchadeni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 uint8_t	check_count_faces(int i, int nb_faces)
 {
-	if (i == 0/* || i > str[i]*/)
+	if (i == 0)
 		return (print_parser_error(PARSING_NO_NEWLINE));
 	if (nb_faces > 5 || nb_faces < 3)
 		return (print_parser_error(PARSING_NB_FACES));
