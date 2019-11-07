@@ -6,7 +6,7 @@
 /*   By: pchadeni <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/10 16:37:00 by pchadeni          #+#    #+#             */
-/*   Updated: 2019/10/08 19:09:55 by pchadeni         ###   ########.fr       */
+/*   Updated: 2019/11/07 15:46:08 by pchadeni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,10 @@
 #include "model.h"
 #include "logger.h"
 
-void	display_scop(t_monitor *monitor)
+void	display_scop(t_monitor *monitor, const char *filename)
 {
 	uint8_t		end;
+	/*
 	float	textures[] = {
 		0.0f, 0.0f,
 		1.0f, 0.0f,
@@ -104,7 +105,7 @@ void	display_scop(t_monitor *monitor)
 		vec3_new(-0.5f,  0.5f,  0.5f),
 		vec3_new(-0.5f,  0.5f, -0.5f)
     };
-
+*/
 	t_shader	shader;
 	t_mesh		mesh;
 	t_transform	transform;
@@ -113,8 +114,8 @@ void	display_scop(t_monitor *monitor)
 	end = 0;
 	count = 0.0f;
 
-	mesh = create_mesh(vertices, sizeof(vertices)/sizeof(vertices[0]),
-			textures, sizeof(textures)/sizeof(textures[0]));
+	if (!create_mesh(filename, &mesh))
+		return ;
 	if (!construct_shader("./res/basicShader", &shader))
 		return ;
 	transform = create_transform();
@@ -143,13 +144,13 @@ void	display_scop(t_monitor *monitor)
 int main(int ac, char **av)
 {
 	init_logger();
-	(void)ac;
-	(void)av;
 	t_monitor	monitor;
 
+	if (ac != 2)
+		return (1); // Usage
 	if (!init_monitor(&monitor))
 		return (1);
-	display_scop(&monitor);
+	display_scop(&monitor, av[1]);
 	destroy_monitor(monitor);
 	quit_logger();
 	return (0);

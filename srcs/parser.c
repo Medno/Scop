@@ -6,13 +6,13 @@
 /*   By: pchadeni <pchadeni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/05 10:25:29 by pchadeni          #+#    #+#             */
-/*   Updated: 2019/11/07 14:46:50 by pchadeni         ###   ########.fr       */
+/*   Updated: 2019/11/07 16:46:49 by pchadeni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser.h"
 
-uint8_t	parse_obj_data(char *data, t_parser_obj *parse)
+uint8_t			parse_obj_data(char *data, t_parser_obj *parse)
 {
 	if (!get_length_arrays_obj(data, parse) || !create_vertices_arrays(parse)
 		|| !get_vertices_values(data, parse))
@@ -20,24 +20,23 @@ uint8_t	parse_obj_data(char *data, t_parser_obj *parse)
 	return (1);
 }
 
-uint8_t	parse_obj_file(const char *obj_name)
+t_parser_obj	*parse_obj_file(const char *obj_name)
 {
 	char			*obj_data_str;
 	t_parser_obj	*parser;
 
 	if (!(parser = init_parser_obj()))
-		return (1);
+		return (NULL);
 	if (!(obj_data_str = read_file(obj_name, "r", &parser->obj_size)))
-		return (0);
-	if (parse_obj_data(obj_data_str, parser))
-		print_parser_data(parser);
+		return (NULL);
+	if (!parse_obj_data(obj_data_str, parser))
+		return (NULL);
+		//print_parser_data(parser);
 	ft_strdel(&obj_data_str);
-	if (parser)
-		destroy_parser_obj(parser);
-	return (1);
+	return (parser);
 }
 
-uint8_t	print_parser_error(t_error_parser error)
+uint8_t			print_parser_error(t_error_parser error)
 {
 	char	buf[512];
 

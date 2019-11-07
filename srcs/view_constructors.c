@@ -6,13 +6,13 @@
 /*   By: pchadeni <pchadeni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/06 13:40:35 by pchadeni          #+#    #+#             */
-/*   Updated: 2019/11/06 13:40:37 by pchadeni         ###   ########.fr       */
+/*   Updated: 2019/11/07 16:54:14 by pchadeni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "view.h"
 
-t_camer	*init_camera(void)
+t_camera	*init_camera(void)
 {
 	t_camera	*camera;
 
@@ -31,7 +31,7 @@ t_camer	*init_camera(void)
 	return (camera);
 }
 
-void	update_delta_time(t_camera *camera)
+void		update_delta_time(t_camera *camera)
 {
 	float	current_frame;
 
@@ -40,7 +40,7 @@ void	update_delta_time(t_camera *camera)
 	camera->last_frame = current_frame;
 }
 
-t_mat4	create_new_axes(t_vec3 position, t_vec3 target, t_vec3 upspace)
+t_mat4		create_new_axes(t_vec3 position, t_vec3 target, t_vec3 upspace)
 {
 	t_mat4	result;
 	t_vec3	direction;
