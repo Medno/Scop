@@ -47,6 +47,7 @@ MAIN_SRCS = main.c		\
 			parse_float.c \
 			init_parser.c
 			
+MAIN_SRCS += parser_logger.c
 
 OBJ += $(addprefix ./$(OBJ_PATH)/, $(MAIN_SRCS:.c=.o))
 
