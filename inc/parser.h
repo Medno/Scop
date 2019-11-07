@@ -6,7 +6,7 @@
 /*   By: pchadeni <pchadeni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/05 10:25:32 by pchadeni          #+#    #+#             */
-/*   Updated: 2019/11/06 13:26:26 by pchadeni         ###   ########.fr       */
+/*   Updated: 2019/11/06 17:03:22 by pchadeni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ typedef struct	s_parse_obj
 	uint8_t				offset_all_data;
 	uint8_t				offset_all_data_normal;
 	int					current_indice;
+	size_t				all_data_size;
 	float				*all_data;
 }				t_parse_obj;
 

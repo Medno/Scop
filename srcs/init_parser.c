@@ -6,7 +6,7 @@
 /*   By: pchadeni <pchadeni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/05 10:25:58 by pchadeni          #+#    #+#             */
-/*   Updated: 2019/11/06 14:27:24 by pchadeni         ###   ########.fr       */
+/*   Updated: 2019/11/06 17:14:29 by pchadeni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ t_parse_obj	*init_parse_obj(void)
 	parser->offset_all_data_normal = 0;
 	parser->current_indice = 0;
 	parser->index_indices = 0;
+	parser->all_data_size = 0;
 	return (parser);
 }
 
@@ -48,10 +49,7 @@ void		define_offset(t_parse_obj *parse)
 		parse->offset_all_data_normal += 3;
 	}
 	if (parse->len_vertices_texture != 0)
-	{
 		parse->offset_all_data += 2;
-		parse->offset_all_data_normal += 2;
-	}
 }
 
 uint8_t		create_vertices_arrays(t_parse_obj *parse)
@@ -65,9 +63,10 @@ uint8_t		create_vertices_arrays(t_parse_obj *parse)
 	if (!(parse->vertices_texture =
 		(t_vec3 *)malloc(sizeof(t_vec3) * parse->len_vertices_texture)))
 		return (print_parser_error(ARRAY_VERTICES_TEXTURE));
-	if (!(parse->all_data = (float *)malloc(sizeof(float) *
-		((3 * parse->len_vertices) + (2 * parse->len_vertices_texture) +
-		(3 * parse->len_vertices_normal)))))
+	parse->all_data_size = (3 * parse->len_vertices) +
+		(2 * parse->len_vertices_texture) + (3 * parse->len_vertices_normal);
+	if (!(parse->all_data = (float *)malloc(
+		sizeof(float) * parse->all_data_size)))
 		return (print_parser_error(ARRAY_ALL_DATA));
 	if (!(parse->indices = (int *)malloc(sizeof(int) * parse->len_faces)))
 		return (print_parser_error(ARRAY_INDICES));
@@ -86,7 +85,6 @@ void		destroy_parse_obj(t_parse_obj *parse)
 	parse = NULL;
 }
 
-/*
 void	print_parser_data(t_parse_obj *parser)
 {
 //	printf("Vertices : ");
@@ -94,16 +92,19 @@ void	print_parser_data(t_parse_obj *parser)
 	printf("Number of normal : %zu\n", parser->len_vertices_normal);
 	printf("Number of texture : %zu\n", parser->len_vertices_texture);
 	printf("Number of faces : %zu\n", parser->len_faces);
+	printf("Number of data : %zu\n", parser->all_data_size);
 	for (size_t i = 0; i < parser->len_vertices; i++)
 		printf("Vertice [%zu] = ( %f, %f, %f )\n", i, parser->vertices[i].x, parser->vertices[i].y, parser->vertices[i].z);
+
 	for (size_t i = 0; i < parser->len_vertices_normal; i++)
 		printf("Vertice normal [%zu] = ( %f, %f, %f )\n", i, parser->vertices_normal[i].x, parser->vertices_normal[i].y,parser->vertices_normal[i].z);
+
 	for (size_t i = 0; i < parser->len_vertices_texture; i++)
 		printf("Vertice texture [%zu] = ( %f, %f, %f )\n", i, parser->vertices_texture[i].x, parser->vertices_texture[i].y, parser->vertices_texture[i].z);
+
 	printf("All Data: \n");
 	for (size_t i = 0; i < (3 * parser->len_vertices) + (2 * parser->len_vertices_texture) + (3 * parser->len_vertices_normal); i++)
 		printf("[%zu]: %f\n", i, parser->all_data[i]);
 	for (size_t i = 0; i < parser->len_faces; i++)
 		printf("Face [%zu] = %d\n", i, parser->indices[i]);
 }
-*/
