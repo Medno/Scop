@@ -6,7 +6,7 @@
 /*   By: pchadeni <pchadeni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/05 10:25:29 by pchadeni          #+#    #+#             */
-/*   Updated: 2019/11/07 11:46:02 by pchadeni         ###   ########.fr       */
+/*   Updated: 2019/11/07 14:30:25 by pchadeni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,15 +38,6 @@ printf("File readed\n");
 destroy_parser_obj(parser);
 	return (1);
 }
-
-int main(int argc, char **argv) {
-	if (argc != 2)
-		return (1);
-	if (!parse_obj_file(argv[1]))
-		return (1);
-	return (0);
-}
-
 
 uint8_t	print_parser_error(t_error_parser error)
 {
