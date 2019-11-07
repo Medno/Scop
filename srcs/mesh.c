@@ -16,30 +16,35 @@ uint8_t	create_mesh(const char *filename, t_mesh *mesh)
 {
 //	float	*merged;
 	t_parser_obj	*parser;
+//	unsigned int EBO;
 	
 	if (!(parser = parse_obj_file(filename)))
 		return (0);
-	mesh->count_draw = parser->len_vertices;
+	mesh->count_draw = parser->len_faces;
 	mesh->len_textures = parser->len_vertices_texture;
 //	merged = merge_coordinates(vertices, textures, len_vertices, len_textures);
 	if (parser)
 	{
 		glGenVertexArrays(1, &mesh->vao);
 		glGenBuffers(NUM_BUFFERS, mesh->vbo);
+//		glGenBuffers(1, &EBO);
 
 		glBindVertexArray(mesh->vao);
 		glBindBuffer(GL_ARRAY_BUFFER, mesh->vbo[POSITION_VB]);
 
-		glBufferData(GL_ARRAY_BUFFER, parser->all_data_size, parser->all_data, GL_STATIC_DRAW);
+		glBufferData(GL_ARRAY_BUFFER, sizeof(float) * parser->all_data_size, parser->all_data, GL_STATIC_DRAW);
 
 		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, parser->offset_all_data * sizeof(float), (void *)0);
+
+//		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
+//		glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(int) * parser->len_faces, parser->indices, GL_STATIC_DRAW); 
+
 		glEnableVertexAttribArray(0);
 		if (parser->len_vertices_texture > 0)
 		{
 			glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, parser->offset_all_data * sizeof(float), (void *)(parser->offset_all_data - 2 * sizeof(float)));
 			glEnableVertexAttribArray(1);
 		}
-
 		glBindVertexArray(0);
 		mesh->texture = create_texture();
 //		free(merged);
@@ -54,6 +59,7 @@ void	draw_mesh(t_mesh mesh)
 {
 	glBindVertexArray(mesh.vao);
 	glDrawArrays(GL_TRIANGLES, 0, mesh.count_draw);
+//	glDrawElements(GL_TRIANGLES, mesh.count_draw, GL_UNSIGNED_INT, 0);
 	glBindVertexArray(0);
 }
 

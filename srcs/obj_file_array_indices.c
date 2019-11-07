@@ -47,6 +47,8 @@ uint8_t	init_indices_splitted(t_parser_obj *parser, char *str, t_token_obj tok)
 	if (i > (unsigned)parser->obj_size)
 		return (print_parser_error(PARSING_NB_FACES));
 	indice = ft_atoi(&str[i]) - 1;
+	if (tok == VERTEX)
+		parser->indices[parser->index_indices] = indice;
 	if (indice < 0 || (unsigned)indice > parser->len_vertices)
 		return (print_parser_error(PARSING_INDEX_OUT_OF_BOUND));
 	assign_data_index(parser, indice, tok);
