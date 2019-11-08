@@ -6,7 +6,7 @@
 /*   By: pchadeni <pchadeni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/06 13:25:52 by pchadeni          #+#    #+#             */
-/*   Updated: 2019/11/07 14:49:58 by pchadeni         ###   ########.fr       */
+/*   Updated: 2019/11/08 11:52:03 by pchadeni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,19 +75,21 @@ uint8_t	initialize_indices_single(t_parser_obj *parser, char *str, int len)
 	return (1);
 }
 
-uint8_t	initialize_indices_triplet(t_parser_obj *parser, char *data, int len)
+uint8_t	init_indices_triplet(t_parser_obj *parser, char *str, int len, int spl)
 {
 	size_t	i;
 	char	*next_sp;
 
 	i = 0;
-	next_sp = ft_strchr(data, ' ');
+	next_sp = ft_strchr(str, ' ');
 	while (i < 3)
 	{
 		if (!initialize_indices_single(parser, next_sp, len))
 			return (0);
 		parser->index_indices++;
 		next_sp = ft_strchr(next_sp + 1, ' ');
+		if (spl && i == 0)
+			next_sp = ft_strchr(next_sp + 1, ' ');
 		i++;
 	}
 	return (1);

@@ -6,7 +6,7 @@
 /*   By: pchadeni <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/17 15:43:12 by pchadeni          #+#    #+#             */
-/*   Updated: 2019/11/07 16:53:57 by pchadeni         ###   ########.fr       */
+/*   Updated: 2019/11/08 11:45:29 by pchadeni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ uint8_t	create_mesh(const char *filename, t_mesh *mesh)
 {
 //	float	*merged;
 	t_parser_obj	*parser;
-//	unsigned int EBO;
 	
 	if (!(parser = parse_obj_file(filename)))
 		return (0);
@@ -27,7 +26,6 @@ uint8_t	create_mesh(const char *filename, t_mesh *mesh)
 	{
 		glGenVertexArrays(1, &mesh->vao);
 		glGenBuffers(NUM_BUFFERS, mesh->vbo);
-//		glGenBuffers(1, &EBO);
 
 		glBindVertexArray(mesh->vao);
 		glBindBuffer(GL_ARRAY_BUFFER, mesh->vbo[POSITION_VB]);
@@ -36,8 +34,8 @@ uint8_t	create_mesh(const char *filename, t_mesh *mesh)
 
 		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, parser->offset_all_data * sizeof(float), (void *)0);
 
-//		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
-//		glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(int) * parser->len_faces, parser->indices, GL_STATIC_DRAW); 
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh->vbo[EBO]);
+		glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(int) * parser->len_faces, parser->indices, GL_STATIC_DRAW); 
 
 		glEnableVertexAttribArray(0);
 		if (parser->len_vertices_texture > 0)
@@ -49,6 +47,7 @@ uint8_t	create_mesh(const char *filename, t_mesh *mesh)
 		mesh->texture = create_texture();
 //		free(merged);
 	}
+print_parser_data(parser);
 	if (parser)
 		destroy_parser_obj(parser);
 //handle_error
@@ -66,5 +65,6 @@ void	draw_mesh(t_mesh mesh)
 void	delete_mesh(t_mesh mesh)
 {
 	glDeleteVertexArrays(1, &mesh.vao);
+	glDeleteBuffers(1, &mesh.vbo[EBO]);
 	glDeleteBuffers(1, &mesh.vbo[POSITION_VB]);
 }
