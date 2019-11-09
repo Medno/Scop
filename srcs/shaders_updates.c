@@ -6,7 +6,7 @@
 /*   By: pchadeni <pchadeni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/08 18:51:43 by pchadeni          #+#    #+#             */
-/*   Updated: 2019/11/09 13:32:02 by pchadeni         ###   ########.fr       */
+/*   Updated: 2019/11/09 14:16:03 by pchadeni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,14 +40,8 @@ void			update_shader(t_shader *s, t_monitor *m)
 	glUniformMatrix4fv(
 			s->uniforms[PROJECTION_U], 1, GL_TRUE, &projection.matrix[0][0]);
 	if (m->enable_texture && s->alpha < 1.0)
-	{
 		s->alpha += 0.001;
-	printf("s->alpha = %f\n", s->alpha);
-	}
 	else if (!m->enable_texture && s->alpha > 0.0)
-	{
 		s->alpha -= 0.001;
-	printf("s->alpha = %f\n", s->alpha);
-	}
 	glUniform1f(s->uniforms[ALPHA_U], s->alpha);
 }

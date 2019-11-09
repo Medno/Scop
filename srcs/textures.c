@@ -6,7 +6,7 @@
 /*   By: pchadeni <pchadeni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/02 17:19:08 by pchadeni          #+#    #+#             */
-/*   Updated: 2019/10/08 19:24:52 by pchadeni         ###   ########.fr       */
+/*   Updated: 2019/11/09 14:11:24 by pchadeni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ t_texture	*tga_read_bits(GLubyte *ptr, t_texture *texture)
 	if (!(texture = (t_texture *)malloc(sizeof(t_texture))))
 		return (NULL);
 	handle_header_tga(texture, ptr);
+print_header(texture->tga_header, 0);
 	ptr += TGA_HEADER_SIZE + (GLubyte)ptr[0];
 	texture->file_data = ptr;
 	if (texture->tga_header.colormap_type)
@@ -81,14 +82,22 @@ GLuint	create_texture(void)
 	i = 0;
 	glGenTextures(1, &id);
 	glBindTexture(GL_TEXTURE_2D, id);
-
+glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);	
+glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+/*
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_MIRRORED_REPEAT);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_MIRRORED_REPEAT);
 //	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 	glTexParameteri(GL_TEXTURE_2D,
 			GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-	define_texture_img("./res/wall_texture.tga");
+	*/
+//	define_texture_img("./res/black_cat.tga");
+//	define_texture_img("./res/cat.tga");
+//	define_texture_img("./res/wall_texture.tga");
+	define_texture_img("./res/unicorn.tga");
 	return (id);
 }
 

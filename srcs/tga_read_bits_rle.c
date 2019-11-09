@@ -6,7 +6,7 @@
 /*   By: pchadeni <pchadeni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/08 14:42:24 by pchadeni          #+#    #+#             */
-/*   Updated: 2019/10/08 14:59:43 by pchadeni         ###   ########.fr       */
+/*   Updated: 2019/11/09 14:31:44 by pchadeni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ void		tga_read_bits_rle(t_texture *texture)
 	j = 0;
 	size = texture->width * texture->height;
 	ptr = texture->data;
-	while (ptr < texture->data + size)
+	while (ptr < texture->data + (size * texture->tga_header.pixel_depth / 8))
 	{
 		packet_header = texture->file_data[j];
 		++j;
