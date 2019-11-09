@@ -6,7 +6,7 @@
 /*   By: pchadeni <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/10 16:37:00 by pchadeni          #+#    #+#             */
-/*   Updated: 2019/11/07 15:46:08 by pchadeni         ###   ########.fr       */
+/*   Updated: 2019/11/09 13:16:30 by pchadeni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,6 +120,7 @@ void	display_scop(t_monitor *monitor, const char *filename)
 		return ;
 	transform = create_transform();
 	monitor->transformation = &transform;
+	monitor->mesh = &mesh;
 	use_shader(shader);
 
 	while (!glfwWindowShouldClose(monitor->win))
@@ -131,7 +132,7 @@ void	display_scop(t_monitor *monitor, const char *filename)
 		glBindTexture(GL_TEXTURE_2D, mesh.texture);
 
 		use_shader(shader);
-		update_shader(shader, monitor);
+		update_shader(&shader, monitor);
 
 		draw_mesh(mesh);
 		end = update_monitor(monitor);
@@ -141,6 +142,7 @@ void	display_scop(t_monitor *monitor, const char *filename)
 	delete_mesh(mesh);
 }
 
+//TODO : Center object with center of window 
 int main(int ac, char **av)
 {
 	init_logger();

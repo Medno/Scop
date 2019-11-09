@@ -6,7 +6,7 @@
 /*   By: pchadeni <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/17 16:29:48 by pchadeni          #+#    #+#             */
-/*   Updated: 2019/10/08 18:58:09 by pchadeni         ###   ########.fr       */
+/*   Updated: 2019/11/09 11:26:25 by pchadeni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,8 @@ uint8_t			construct_shader(const char *file, t_shader *shader)
 		glGetUniformLocation(shader->program, "view");
 	shader->uniforms[PROJECTION_U] =
 		glGetUniformLocation(shader->program, "projection");
+	shader->uniforms[ALPHA_U] =
+		glGetUniformLocation(shader->program, "aAlphaTex");
 	return (1);
 }
 

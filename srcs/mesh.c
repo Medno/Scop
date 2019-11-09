@@ -6,7 +6,7 @@
 /*   By: pchadeni <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/17 15:43:12 by pchadeni          #+#    #+#             */
-/*   Updated: 2019/11/08 11:45:29 by pchadeni         ###   ########.fr       */
+/*   Updated: 2019/11/09 10:45:40 by pchadeni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,12 @@
 
 uint8_t	create_mesh(const char *filename, t_mesh *mesh)
 {
-//	float	*merged;
 	t_parser_obj	*parser;
 	
 	if (!(parser = parse_obj_file(filename)))
 		return (0);
 	mesh->count_draw = parser->len_faces;
 	mesh->len_textures = parser->len_vertices_texture;
-//	merged = merge_coordinates(vertices, textures, len_vertices, len_textures);
 	if (parser)
 	{
 		glGenVertexArrays(1, &mesh->vao);
@@ -45,7 +43,6 @@ uint8_t	create_mesh(const char *filename, t_mesh *mesh)
 		}
 		glBindVertexArray(0);
 		mesh->texture = create_texture();
-//		free(merged);
 	}
 print_parser_data(parser);
 	if (parser)

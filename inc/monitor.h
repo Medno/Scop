@@ -6,7 +6,7 @@
 /*   By: pchadeni <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/10 16:52:33 by pchadeni          #+#    #+#             */
-/*   Updated: 2019/10/08 19:19:09 by pchadeni         ###   ########.fr       */
+/*   Updated: 2019/11/09 11:37:30 by pchadeni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 # include <stdio.h>
 # include "model.h"
 # include "view.h"
+# include "mesh.h"
 # include "logger.h"
 
 # define WIDTH 800
@@ -28,6 +29,8 @@ typedef struct	s_monitor {
 	GLFWwindow	*win;
 	t_transform	*transformation;
 	t_camera	*camera;
+	t_mesh		*mesh;
+	uint8_t		enable_texture;
 }				t_monitor;
 
 uint8_t			init_monitor(t_monitor *monitor);

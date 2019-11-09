@@ -6,7 +6,7 @@
 /*   By: pchadeni <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/10 17:03:00 by pchadeni          #+#    #+#             */
-/*   Updated: 2019/10/08 12:28:15 by pchadeni         ###   ########.fr       */
+/*   Updated: 2019/11/09 13:40:21 by pchadeni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,15 @@ void	edit_front(t_camera *camera, float xoffset, float yoffset)
 	camera->front = new_front;
 }
 
+void	edit_texture(t_monitor *mon)
+{
+printf("Edit texture alpha");
+	if (mon->enable_texture)
+		mon->enable_texture = 0;
+	else
+		mon->enable_texture = 1;
+}
+
 void	key_callback(GLFWwindow *w, int key, int scancode, int act, int mods)
 {
 	t_monitor	*mon;
@@ -90,7 +99,8 @@ void	key_callback(GLFWwindow *w, int key, int scancode, int act, int mods)
 		edit_front(mon->camera, 10.0f, 0.0f);
 
 
-
+	else if (key == GLFW_KEY_T && act == GLFW_PRESS)
+		edit_texture(mon);
 
 	else if (key == GLFW_KEY_W && (act == GLFW_PRESS || act == GLFW_REPEAT)
 		&& mon && mon->camera)
@@ -111,7 +121,7 @@ void	key_callback(GLFWwindow *w, int key, int scancode, int act, int mods)
 
 
 
-
+// TO delete
 	else if (key == GLFW_KEY_K && (act == GLFW_PRESS || act == GLFW_REPEAT)
 		&& mon && mon->transformation)
 		mon->transformation->rotation.y -= 0.01f;
@@ -153,7 +163,11 @@ uint8_t	init_monitor(t_monitor *monitor)
 	glfwSetFramebufferSizeCallback(monitor->win, framebuffer_size_callback);
 	glEnable(GL_MULTISAMPLE);
 	glEnable(GL_DEPTH_TEST);
+	glEnable(GL_BLEND);
+	glBlendFunc( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA );
+
 	monitor->camera = init_camera();
+	monitor->enable_texture = 0;
 	return (1);
 }
 
