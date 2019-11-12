@@ -76,7 +76,7 @@ uint8_t	initialize_indices_single(t_parser_obj *parser, char *str, int len)
 	if (!ft_isdigit(*(next_slash + 1)) && next_next_slash > next_sp)
 		return ((uint8_t)print_error("Error: Parser: Missing index", NULL));
 	if (*(next_slash + 1) != '/')
-		if (next_slash + 1 < str + len && next_slash < next_sp
+		if (next_slash + 1 < str + len
 				&& !init_indices_splitted(parser, next_slash, TEXTURE))
 			return (0);
 	if (!ft_isdigit(*(next_next_slash + 1)) && next_next_slash < next_sp)
