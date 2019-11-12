@@ -19,7 +19,6 @@ t_texture	*tga_read_bits(GLubyte *ptr, t_texture *texture)
 	if (!(texture = (t_texture *)malloc(sizeof(t_texture))))
 		return (NULL);
 	handle_header_tga(texture, ptr);
-print_header(texture->tga_header, 0);
 	ptr += TGA_HEADER_SIZE + (GLubyte)ptr[0];
 	texture->file_data = ptr;
 	if (texture->tga_header.colormap_type)
@@ -95,9 +94,8 @@ glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 	*/
 //	define_texture_img("./res/black_cat.tga");
-//	define_texture_img("./res/cat.tga");
+	define_texture_img("./res/cat.tga");
 //	define_texture_img("./res/wall_texture.tga");
-	define_texture_img("./res/unicorn.tga");
 	return (id);
 }
 

@@ -38,7 +38,6 @@ static void	handle_colored_rle(t_texture *texture, int *j,
 	color = (texture->img_sub_type == IMG_8_BITS_GREY_RLE)
 		? texture->file_data[*j]
 		: texture->file_data[*j] + (texture->file_data[*j] << 8);
-	(*j) += set_new_coord(texture);
 	while (i < loop)
 	{
 		f[texture->tga_header.pixel_depth / 8 - 1](texture, ptr, color,
@@ -46,6 +45,7 @@ static void	handle_colored_rle(t_texture *texture, int *j,
 		ptr += texture->format_nb;
 		i++;
 	}
+	(*j) += set_new_coord(texture);
 }
 
 static void	set_color_alpha(GLubyte *ptr, GLubyte color, GLubyte alpha
@@ -94,9 +94,9 @@ void		tga_read_bits_rle(t_texture *texture)
 	GLubyte	*ptr;
 
 	j = 0;
-	size = texture->width * texture->height;
+	size = texture->width * texture->height * texture->format_nb;
 	ptr = texture->data;
-	while (ptr < texture->data + (size * texture->tga_header.pixel_depth / 8))
+	while (ptr < texture->data + size)
 	{
 		packet_header = texture->file_data[j];
 		++j;
