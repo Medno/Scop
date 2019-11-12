@@ -93,6 +93,7 @@ uint8_t			count_faces(char *str);
 
 uint8_t			init_indices_triplet
 (t_parser_obj *parse, char *data, int len, int split);
+void	center_vertices(t_parser_obj *parser);
 
 void	print_parser_data(t_parser_obj *parser);
 

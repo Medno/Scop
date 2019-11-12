@@ -125,7 +125,7 @@ void	display_scop(t_monitor *monitor, const char *filename)
 
 	while (!glfwWindowShouldClose(monitor->win))
 	{
-		clear_window(0.91f, 0.86f, 0.79f, 1.0f);
+		clear_window(0.25f, 0.25f, 0.25f, 1.0f);
 		update_delta_time(monitor->camera);
 
 		glActiveTexture(GL_TEXTURE0);
@@ -142,7 +142,6 @@ void	display_scop(t_monitor *monitor, const char *filename)
 	delete_mesh(mesh);
 }
 
-//TODO : Center object with center of window 
 int main(int ac, char **av)
 {
 	init_logger();

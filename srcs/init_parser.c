@@ -48,8 +48,7 @@ void			define_offset(t_parser_obj *parser)
 		parser->offset_all_data += 3;
 		parser->offset_all_data_normal += 3;
 	}
-	if (parser->len_vertices_texture != 0)
-		parser->offset_all_data += 2;
+	parser->offset_all_data += 2;
 }
 
 uint8_t			create_vertices_arrays(t_parser_obj *parser)

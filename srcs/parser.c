@@ -18,7 +18,6 @@ void			put_texture_vertices(t_parser_obj *parser)
 
 	if (parser->len_vertices_texture != 0)
 		return ;
-
 	i = 0;
 	while (i < parser->all_data_size)
 	{
@@ -35,6 +34,7 @@ uint8_t			parse_obj_data(char *data, t_parser_obj *parse)
 		|| !get_vertices_values(data, parse))
 		return (0);
 	put_texture_vertices(parse);
+	center_vertices(parse);
 	return (1);
 }
 
@@ -49,7 +49,6 @@ t_parser_obj	*parse_obj_file(const char *obj_name)
 		return (NULL);
 	if (!parse_obj_data(obj_data_str, parser))
 		return (NULL);
-		//print_parser_data(parser);
 	ft_strdel(&obj_data_str);
 	return (parser);
 }

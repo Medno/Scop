@@ -34,9 +34,6 @@ uint8_t	create_mesh(const char *filename, t_mesh *mesh)
 		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE,
 			parser->offset_all_data * sizeof(float), (void *)0);
 
-//		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh->vbo[EBO]);
-//		glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(int) * parser->len_faces, parser->indices, GL_STATIC_DRAW); 
-
 		glEnableVertexAttribArray(0);
 		glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE,
 			parser->offset_all_data * sizeof(float),
@@ -50,7 +47,7 @@ uint8_t	create_mesh(const char *filename, t_mesh *mesh)
 		glBindVertexArray(0);
 		mesh->texture = create_texture();
 	}
-print_parser_data(parser);
+//print_parser_data(parser);
 	if (parser)
 		destroy_parser_obj(parser);
 //handle_error
@@ -61,7 +58,6 @@ void	draw_mesh(t_mesh mesh)
 {
 	glBindVertexArray(mesh.vao);
 	glDrawArrays(GL_TRIANGLES, 0, mesh.count_draw);
-//	glDrawElements(GL_TRIANGLES, mesh.count_draw, GL_UNSIGNED_INT, 0);
 	glBindVertexArray(0);
 }
 

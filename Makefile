@@ -45,6 +45,7 @@ MAIN_SRCS = main.c		\
 			obj_file_array_values.c	\
 			parser.c	\
 			parse_float.c \
+			find_limits.c \
 			init_parser.c
 			
 MAIN_SRCS += parser_logger.c

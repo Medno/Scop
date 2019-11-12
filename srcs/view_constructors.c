@@ -18,7 +18,7 @@ t_camera	*init_camera(void)
 
 	if (!(camera = (t_camera *)malloc(sizeof(t_camera))))
 		return (NULL);
-	camera->position = vec3_new(0.0f, 0.0f, 3.0f);
+	camera->position = vec3_new(0.0f, 0.0f, 8.0f);
 	camera->front = vec3_new(0.0f, 0.0f, -1.0f);
 	camera->up = vec3_new(0.0f, 1.0f, 0.0f);
 	camera->speed = 0.05f;
