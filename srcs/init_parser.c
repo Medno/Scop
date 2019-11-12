@@ -34,7 +34,7 @@ t_parser_obj	*init_parser_obj(void)
 	parser->index_vertices = 0;
 	parser->index_vertices_normal = 0;
 	parser->index_vertices_texture = 0;
-	parser->offset_all_data = 3;
+	parser->offset_all_data = 6;
 	parser->offset_all_data_normal = 0;
 	parser->index_indices = 0;
 	parser->all_data_size = 0;
@@ -66,10 +66,9 @@ uint8_t			create_vertices_arrays(t_parser_obj *parser)
 		if (!(parser->vertices_texture =
 		(t_vec3 *)malloc(sizeof(t_vec3) * parser->len_vertices_texture)))
 		return (print_parser_error(ARRAY_VERTICES_TEXTURE));
-	parser->all_data_size = parser->len_faces * 3;
-	if (parser->len_vertices_texture != 0)
-		parser->all_data_size += parser->len_faces * 2;
-	if (parser->len_vertices_normal != 0)
+	parser->all_data_size = parser->len_faces * 6;
+	parser->all_data_size += parser->len_faces * 2;
+	if (parser->len_vertices_normal > 0)
 		parser->all_data_size += parser->len_faces * 3;
 	if (!(parser->all_data = (float *)malloc(
 		sizeof(float) * parser->all_data_size)))

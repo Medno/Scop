@@ -54,8 +54,6 @@ uint8_t	handle_indices_line(t_parser_obj *parse, char *data, int len)
 	nb_faces = count_faces(data);
 	if (nb_faces == 4)
 	{
-//		next_sp = ft_strchr(&data[i] + 1, ' ');
-//		i += next_sp - &data[i];
 		if (!init_indices_triplet(parse, &data[i], len, 1))
 			return (0);
 	}
@@ -98,17 +96,20 @@ uint8_t	get_vertices_values(char *data, t_parser_obj *parse)
 		get_nl = ft_strchr(&data[i], '\n');
 		if (get_nl == NULL)
 			get_nl = data + parse->obj_size;
-		if (!ft_strncmp(&data[i], "v ", 2))
-			add_vertice(parse->vertices, &data[i], &parse->index_vertices,
-				VERTEX);
-		else if (!ft_strncmp(&data[i], "vt ", 3))
-			add_vertice(parse->vertices_texture, &data[i],
-				&parse->index_vertices_texture, TEXTURE);
-		else if (!ft_strncmp(&data[i], "vn ", 3))
-			add_vertice(parse->vertices_normal, &data[i],
-				&parse->index_vertices_normal, NORMAL);
-		else if (!ft_strncmp(&data[i], "f ", 2))
-			handle_indices_line(parse, &data[i], get_nl - &data[i]);
+		if (!ft_strncmp(&data[i], "v ", 2) && !add_vertice(parse->vertices,
+			&data[i], &parse->index_vertices, VERTEX))
+			return (0);
+		else if (!ft_strncmp(&data[i], "vt ", 3) && !add_vertice(
+			parse->vertices_texture, &data[i], &parse->index_vertices_texture,
+			TEXTURE))
+			return (0);
+		else if (!ft_strncmp(&data[i], "vn ", 3) && !add_vertice(
+			parse->vertices_normal, &data[i], &parse->index_vertices_normal,
+			NORMAL))
+			return (0);
+		else if (!ft_strncmp(&data[i], "f ", 2) && !handle_indices_line(parse,
+			&data[i], get_nl - &data[i]))
+			return (0);
 		i += get_nl - &data[i];
 		i++;
 	}

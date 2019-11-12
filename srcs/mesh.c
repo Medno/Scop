@@ -31,24 +31,26 @@ uint8_t	create_mesh(const char *filename, t_mesh *mesh)
 		glBufferData(GL_ARRAY_BUFFER, sizeof(float) * parser->all_data_size,
 			parser->all_data, GL_STATIC_DRAW);
 
-		glVertexAttribPointer(0, 3, GL_FLOAT, GL_TRUE,
+		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE,
 			parser->offset_all_data * sizeof(float), (void *)0);
 
 //		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh->vbo[EBO]);
 //		glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(int) * parser->len_faces, parser->indices, GL_STATIC_DRAW); 
 
 		glEnableVertexAttribArray(0);
-		if (parser->len_vertices_texture > 0)
-		{
-			glVertexAttribPointer(1, 2, GL_FLOAT, GL_TRUE,
-				parser->offset_all_data * sizeof(float),
-				(void *)((parser->offset_all_data - 2) * sizeof(float)));
-			glEnableVertexAttribArray(1);
-		}
+		glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE,
+			parser->offset_all_data * sizeof(float),
+			(void *)((3) * sizeof(float)));
+		glEnableVertexAttribArray(1);
+	
+		glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE,
+			parser->offset_all_data * sizeof(float),
+			(void *)((parser->offset_all_data - 2) * sizeof(float)));
+		glEnableVertexAttribArray(2);
 		glBindVertexArray(0);
 		mesh->texture = create_texture();
 	}
-//print_parser_data(parser);
+print_parser_data(parser);
 	if (parser)
 		destroy_parser_obj(parser);
 //handle_error

@@ -13,6 +13,9 @@
 #ifndef PARSER_H
 # define PARSER_H
 
+# define GL_SILENCE_DEPRECATION
+# define GLFW_INCLUDE_GLCOREARB
+# include <GLFW/glfw3.h>
 # include "libft.h"
 # include "vec3.h"
 # include "read_file.h"

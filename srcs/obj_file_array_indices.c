@@ -23,13 +23,15 @@ void	assign_vec3(float *array, t_vec3 vect, t_token_obj tok)
 void	assign_data_index(t_parser_obj *parser, int indice, t_token_obj tok)
 {
 	if (tok == VERTEX)
+	{
 		assign_vec3(&parser->all_data[
 			parser->index_indices * parser->offset_all_data],
 			parser->vertices[indice], tok);
+	}
 	else if (tok == NORMAL)
 		assign_vec3(&parser->all_data[
 			(parser->index_indices * parser->offset_all_data)
-			+ 3
+			+ 6
 			], parser->vertices_normal[indice], tok);
 	else if (tok == TEXTURE)
 		assign_vec3(&parser->all_data[
@@ -49,6 +51,7 @@ uint8_t	init_indices_splitted(t_parser_obj *parser, char *str, t_token_obj tok)
 	indice = ft_atoi(&str[i]) - 1;
 	if (tok == VERTEX)
 		parser->indices[parser->index_indices] = indice;
+printf("Indice: %d, token : %d\n", indice, tok);
 	if (indice < 0 || (unsigned)indice > parser->len_vertices)
 		return (print_parser_error(PARSING_INDEX_OUT_OF_BOUND));
 	assign_data_index(parser, indice, tok);
@@ -57,6 +60,7 @@ uint8_t	init_indices_splitted(t_parser_obj *parser, char *str, t_token_obj tok)
 
 uint8_t	initialize_indices_single(t_parser_obj *parser, char *str, int len)
 {
+	char	*next_sp;
 	char	*next_slash;
 	char	*next_next_slash;
 
@@ -65,14 +69,36 @@ uint8_t	initialize_indices_single(t_parser_obj *parser, char *str, int len)
 	if (parser->len_vertices_normal == 0 && parser->len_vertices_texture == 0)
 		return (1);
 	next_slash = ft_strchr(str, '/');
+	next_sp = ft_strchr(str + 1, ' ');
 	if (next_slash > str + len)
 		return (0);
 	next_next_slash = ft_strchr(next_slash + 1, '/');
-	if (!init_indices_splitted(parser, next_slash, TEXTURE))
-		return (0);
-	if (next_next_slash < str + len)
+	if (!ft_isdigit(*(next_slash + 1)) && next_next_slash > next_sp)
+		return ((uint8_t)print_error("Error: Parser: Missing index", NULL));
+	if (*(next_slash + 1) != '/')
+		if (next_slash + 1 < str + len && next_slash < next_sp
+				&& !init_indices_splitted(parser, next_slash, TEXTURE))
+			return (0);
+	if (!ft_isdigit(*(next_next_slash + 1)) && next_next_slash < next_sp)
+		return ((uint8_t)print_error("Error: Parser: Missing index", NULL));
+	if (next_next_slash < str + len && next_next_slash < next_sp)
 		return (init_indices_splitted(parser, next_next_slash, NORMAL));
 	return (1);
+}
+
+void	assign_color(t_parser_obj *parser)
+{
+	t_vec3	color;
+
+	color.x = 0.25f + (0.15f * ((parser->index_indices / 3) % 3));
+	color.y = color.x;
+	color.z = color.x;
+	assign_vec3(&parser->all_data[((parser->index_indices - 1)
+		* parser->offset_all_data) + 3], color, VERTEX);
+	assign_vec3(&parser->all_data[((parser->index_indices - 2)
+		* parser->offset_all_data) + 3], color, VERTEX);
+	assign_vec3(&parser->all_data[((parser->index_indices - 3)
+		* parser->offset_all_data) + 3], color, VERTEX);
 }
 
 uint8_t	init_indices_triplet(t_parser_obj *parser, char *str, int len, int spl)
@@ -92,5 +118,6 @@ uint8_t	init_indices_triplet(t_parser_obj *parser, char *str, int len, int spl)
 			next_sp = ft_strchr(next_sp + 1, ' ');
 		i++;
 	}
+	assign_color(parser);
 	return (1);
 }

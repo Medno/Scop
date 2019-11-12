@@ -12,11 +12,29 @@
 
 #include "parser.h"
 
+void			put_texture_vertices(t_parser_obj *parser)
+{
+	size_t	i;
+
+	if (parser->len_vertices_texture != 0)
+		return ;
+
+	i = 0;
+	while (i < parser->all_data_size)
+	{
+		parser->all_data[i + parser->offset_all_data - 2] = parser->all_data[i];
+		parser->all_data[i + parser->offset_all_data - 1] =
+			parser->all_data[i + 2];
+		i += parser->offset_all_data;
+	}
+}
+
 uint8_t			parse_obj_data(char *data, t_parser_obj *parse)
 {
 	if (!get_length_arrays_obj(data, parse) || !create_vertices_arrays(parse)
 		|| !get_vertices_values(data, parse))
 		return (0);
+	put_texture_vertices(parse);
 	return (1);
 }
 

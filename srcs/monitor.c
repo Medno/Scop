@@ -65,7 +65,6 @@ void	edit_front(t_camera *camera, float xoffset, float yoffset)
 
 void	edit_texture(t_monitor *mon)
 {
-printf("Edit texture alpha");
 	if (mon->enable_texture)
 		mon->enable_texture = 0;
 	else
