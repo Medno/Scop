@@ -6,7 +6,7 @@
 /*   By: pchadeni <pchadeni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/06 13:25:52 by pchadeni          #+#    #+#             */
-/*   Updated: 2019/11/13 15:47:57 by pchadeni         ###   ########.fr       */
+/*   Updated: 2019/11/13 17:52:46 by pchadeni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,8 @@ void	assign_vec3(float *array, t_vec3 vect, t_token_obj tok)
 		*(array + 2) = vect.z;
 }
 
-uint8_t	init_indices_splitted(t_parser_obj *parser, char *str, t_token_obj tok)
+uint8_t	ind_split(t_parser_obj *parser, char *str, t_token_obj tok,
+		size_t max_indice)
 {
 	size_t	i;
 	int		indice;
@@ -31,7 +32,7 @@ uint8_t	init_indices_splitted(t_parser_obj *parser, char *str, t_token_obj tok)
 	indice = ft_atoi(&str[i]) - 1;
 	if (tok == VERTEX)
 		parser->indices[parser->index_indices] = indice;
-	if (indice < 0 || (unsigned)indice > parser->len_vertices)
+	if (indice < 0 || (unsigned)indice > max_indice)
 		return (print_parser_error(PARSING_INDEX_OUT_OF_BOUND));
 	if (tok == VERTEX)
 		assign_vec3(&parser->all_data[
@@ -50,29 +51,28 @@ uint8_t	init_indices_splitted(t_parser_obj *parser, char *str, t_token_obj tok)
 
 uint8_t	initialize_indices_single(t_parser_obj *parser, char *str, int len)
 {
-	char	*next_sp;
-	char	*next_slash;
-	char	*next_next_slash;
+	char	*n_sp;
+	char	*n_sl;
+	char	*n_n_sl;
 
-	if (!init_indices_splitted(parser, str, VERTEX))
+	if (!ind_split(parser, str, VERTEX, parser->len_vertices))
 		return (0);
 	if (parser->len_vertices_normal == 0 && parser->len_vertices_texture == 0)
 		return (1);
-	next_slash = ft_strchr(str, '/');
-	next_sp = ft_strchr(str + 1, ' ');
-	if (next_slash > str + len)
+	n_sl = ft_strchr(str, '/');
+	n_sp = ft_strchr(str + 1, ' ');
+	if (n_sl > str + len)
 		return (0);
-	next_next_slash = ft_strchr(next_slash + 1, '/');
-	if (!ft_isdigit(*(next_slash + 1)) && next_next_slash > next_sp)
+	n_n_sl = ft_strchr(n_sl + 1, '/');
+	if (n_n_sl && !ft_isdigit(*(n_sl + 1)) && n_n_sl > n_sp)
 		return ((uint8_t)print_error("Error: Parser: Missing index", NULL));
-	if (*(next_slash + 1) != '/')
-		if (next_slash + 1 < str + len
-				&& !init_indices_splitted(parser, next_slash, TEXTURE))
-			return (0);
-	if (!ft_isdigit(*(next_next_slash + 1)) && next_next_slash < next_sp)
+	if (*(n_sl + 1) != '/' && n_sl + 1 < str + len && !ind_split(
+		parser, n_sl, TEXTURE, parser->len_vertices_texture))
+		return (0);
+	if (!ft_isdigit(*(n_n_sl + 1)) && n_n_sl < n_sp)
 		return ((uint8_t)print_error("Error: Parser: Missing index", NULL));
-	if (next_next_slash < str + len && next_next_slash < next_sp)
-		return (init_indices_splitted(parser, next_next_slash, NORMAL));
+	if (n_n_sl < str + len && n_n_sl < n_sp)
+		return (ind_split(parser, n_n_sl, NORMAL, parser->len_vertices_normal));
 	return (1);
 }
 

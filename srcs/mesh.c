@@ -6,7 +6,7 @@
 /*   By: pchadeni <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/17 15:43:12 by pchadeni          #+#    #+#             */
-/*   Updated: 2019/11/13 16:07:41 by pchadeni         ###   ########.fr       */
+/*   Updated: 2019/11/13 18:01:35 by pchadeni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ uint8_t	create_mesh(const char *filename, t_mesh *mesh)
 		mesh->texture = create_texture();
 	}
 	if (parser)
-		destroy_parser_obj(parser, 0);
+		destroy_parser_obj(&parser, 0);
 	return (1);
 }
 

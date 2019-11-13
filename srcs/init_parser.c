@@ -6,7 +6,7 @@
 /*   By: pchadeni <pchadeni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/05 10:25:58 by pchadeni          #+#    #+#             */
-/*   Updated: 2019/11/13 13:03:19 by pchadeni         ###   ########.fr       */
+/*   Updated: 2019/11/13 18:07:07 by pchadeni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,16 +74,16 @@ uint8_t			create_vertices_arrays(t_parser_obj *parser)
 	return (1);
 }
 
-uint8_t			destroy_parser_obj(t_parser_obj *parser, uint8_t all)
+uint8_t			destroy_parser_obj(t_parser_obj **parser, uint8_t all)
 {
 	if (all)
-		clean_parser(parser);
-	if (parser->all_data)
-		free(parser->all_data);
-	if (parser)
+		clean_parser(*parser);
+	if ((*parser)->all_data)
+		free((*parser)->all_data);
+	if (*parser)
 	{
-		free(parser);
-		parser = NULL;
+		free(*parser);
+		*parser = NULL;
 	}
 	return (0);
 }

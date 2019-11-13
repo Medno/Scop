@@ -6,7 +6,7 @@
 /*   By: pchadeni <pchadeni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/05 10:25:32 by pchadeni          #+#    #+#             */
-/*   Updated: 2019/11/13 13:03:27 by pchadeni         ###   ########.fr       */
+/*   Updated: 2019/11/13 18:01:49 by pchadeni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ uint8_t			check_float(const char *str, float *fl);
 
 t_parser_obj	*init_parser_obj(void);
 uint8_t			create_vertices_arrays(t_parser_obj *parse);
-uint8_t			destroy_parser_obj(t_parser_obj *parse, uint8_t all);
+uint8_t			destroy_parser_obj(t_parser_obj **parse, uint8_t all);
 void			clean_parser(t_parser_obj *parser);
 uint8_t			print_parser_error(t_error_parser error);
 
