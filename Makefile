@@ -6,7 +6,7 @@
 #    By: pchadeni <pchadeni@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/10/08 18:55:23 by pchadeni          #+#    #+#              #
-#    Updated: 2019/11/13 15:29:39 by pchadeni         ###   ########.fr        #
+#    Updated: 2019/11/13 16:43:00 by pchadeni         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,8 +17,8 @@ NAME = scop
 #------All sources------#
 
 MAIN_SRCS = main.c		\
-			logger.c	\
 			callbacks.c	\
+			input_manager.c	\
 			monitor_constructors.c	\
 			mat4_basic_operations.c		\
 			mat4_constructors.c		\
@@ -50,8 +50,6 @@ MAIN_SRCS = main.c		\
 			find_limits.c \
 			init_parser.c
 			
-MAIN_SRCS += parser_logger.c
-
 OBJ += $(addprefix ./$(OBJ_PATH)/, $(MAIN_SRCS:.c=.o))
 
 #------Includes------#
@@ -62,7 +60,6 @@ CFLAGS += -I$(LIB_PATH)/$(INCLUDES)
 CFLAGS += -I$(HOME)/.brew/include
 
 HEAD = $(INCLUDES)/monitor.h	\
-	   $(INCLUDES)/logger.h		\
 	   $(INCLUDES)/mat4.h		\
 	   $(INCLUDES)/vec3.h		\
 	   $(INCLUDES)/shaders.h	\
@@ -89,10 +86,7 @@ LIB_PATH  = libft
 
 #------Main rules------#
 
-all: delete_logger $(OBJ_PATH) makelib $(NAME)
-
-delete_logger:
-	rm -f .log
+all: $(OBJ_PATH) makelib $(NAME)
 
 $(NAME): $(LIB) $(OBJ)
 	@printf "\33[2KObjects created $(BOLD_GREEN)✓$(EOC)\n"

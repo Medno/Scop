@@ -6,7 +6,7 @@
 /*   By: pchadeni <pchadeni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/08 14:45:34 by pchadeni          #+#    #+#             */
-/*   Updated: 2019/11/13 16:15:25 by pchadeni         ###   ########.fr       */
+/*   Updated: 2019/11/13 16:40:07 by pchadeni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@
 # include <stdio.h>
 # include <libft.h>
 # include "read_file.h"
-# include "logger.h"
 
 # define TGA_HEADER_SIZE 18
 

@@ -6,7 +6,7 @@
 /*   By: pchadeni <pchadeni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/13 15:06:28 by pchadeni          #+#    #+#             */
-/*   Updated: 2019/11/13 15:51:27 by pchadeni         ###   ########.fr       */
+/*   Updated: 2019/11/13 17:10:49 by pchadeni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ uint8_t			init_monitor(t_monitor *monitor)
 		return (destroy_glfw_config(monitor));
 	monitor->enable_texture = 0;
 	monitor->enable_mouse = 0;
+	monitor->enable_rotation = 1;
 	return (1);
 }
 
@@ -64,6 +65,8 @@ uint8_t			init_monitor(t_monitor *monitor)
 
 uint8_t			update_monitor(t_monitor *monitor)
 {
+	if (monitor->enable_rotation)
+		monitor->transformation->rotation.y -= 0.0001f;
 	glfwSwapBuffers(monitor->win);
 	glfwPollEvents();
 	return (0);
