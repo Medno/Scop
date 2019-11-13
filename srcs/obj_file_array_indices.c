@@ -6,7 +6,7 @@
 /*   By: pchadeni <pchadeni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/06 13:25:52 by pchadeni          #+#    #+#             */
-/*   Updated: 2019/11/13 17:52:46 by pchadeni         ###   ########.fr       */
+/*   Updated: 2019/11/13 18:23:15 by pchadeni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,12 +64,12 @@ uint8_t	initialize_indices_single(t_parser_obj *parser, char *str, int len)
 	if (n_sl > str + len)
 		return (0);
 	n_n_sl = ft_strchr(n_sl + 1, '/');
-	if (n_n_sl && !ft_isdigit(*(n_sl + 1)) && n_n_sl > n_sp)
+	if (n_n_sl && !ft_isdigit(*(n_sl + 1)) && n_n_sl > str + len)
 		return ((uint8_t)print_error("Error: Parser: Missing index", NULL));
 	if (*(n_sl + 1) != '/' && n_sl + 1 < str + len && !ind_split(
 		parser, n_sl, TEXTURE, parser->len_vertices_texture))
 		return (0);
-	if (!ft_isdigit(*(n_n_sl + 1)) && n_n_sl < n_sp)
+	if (n_n_sl && !ft_isdigit(*(n_n_sl + 1)) && n_n_sl < n_sp)
 		return ((uint8_t)print_error("Error: Parser: Missing index", NULL));
 	if (n_n_sl < str + len && n_n_sl < n_sp)
 		return (ind_split(parser, n_n_sl, NORMAL, parser->len_vertices_normal));
