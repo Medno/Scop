@@ -6,7 +6,7 @@
 /*   By: pchadeni <pchadeni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/13 15:28:52 by pchadeni          #+#    #+#             */
-/*   Updated: 2019/11/13 16:04:53 by pchadeni         ###   ########.fr       */
+/*   Updated: 2019/11/13 16:21:58 by pchadeni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ void	scroll_callback(GLFWwindow *window, double xoffset, double yoffset)
 		mon->camera->fov = 45.0f;
 }
 
-void	key_callback(GLFWwindow *w, int key, int scancode, int act, int mods)
+void	key_callback(GLFWwindow *w, int key, int scancode, int act)
 {
 	t_monitor	*mon;
 

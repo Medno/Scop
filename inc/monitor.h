@@ -6,7 +6,7 @@
 /*   By: pchadeni <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/10 16:52:33 by pchadeni          #+#    #+#             */
-/*   Updated: 2019/11/13 16:14:08 by pchadeni         ###   ########.fr       */
+/*   Updated: 2019/11/13 16:22:12 by pchadeni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void			clear_window(float r, float g, float b, float a);
 
 uint8_t			update_monitor(t_monitor *monitor);
 
-void			key_callback(GLFWwindow *w, int key, int s, int act, int mods);
+void			key_callback(GLFWwindow *w, int key, int s, int act);
 void			scroll_callback(GLFWwindow *w, double xoffset, double yoffset);
 void			mouse_callback(GLFWwindow *window, double xpos, double ypos);
 void			handle_camera_view(t_monitor *mon, int key, int act);
