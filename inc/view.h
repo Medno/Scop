@@ -17,6 +17,7 @@ typedef struct	s_camera
 	float	last_frame;
 	float	last_x;
 	float	last_y;
+	float	fov;
 	float	yaw;
 	float	pitch;
 }				t_camera;

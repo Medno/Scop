@@ -6,7 +6,7 @@
 /*   By: pchadeni <pchadeni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/05 10:25:58 by pchadeni          #+#    #+#             */
-/*   Updated: 2019/11/07 14:56:43 by pchadeni         ###   ########.fr       */
+/*   Updated: 2019/11/13 13:03:19 by pchadeni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ t_parser_obj	*init_parser_obj(void)
 	parser->vertices_normal = NULL;
 	parser->vertices_texture = NULL;
 	parser->indices = NULL;
-	parser->face_type = V_1;
 	parser->len_vertices = 0;
 	parser->len_vertices_normal = 0;
 	parser->len_vertices_texture = 0;
@@ -53,17 +52,14 @@ void			define_offset(t_parser_obj *parser)
 
 uint8_t			create_vertices_arrays(t_parser_obj *parser)
 {
-	if (parser->len_vertices > 0)
-	if (!(parser->vertices =
-		(t_vec3 *)malloc(sizeof(t_vec3) * parser->len_vertices)))
+	if (parser->len_vertices
+		&& !(parser->vertices = vec3_array(parser->len_vertices)))
 		return (print_parser_error(ARRAY_VERTICES));
-	if (parser->len_vertices_normal > 0)
-		if (!(parser->vertices_normal =
-		(t_vec3 *)malloc(sizeof(t_vec3) * parser->len_vertices_normal)))
+	if (parser->len_vertices_normal && !(parser->vertices_normal = vec3_array(
+		parser->len_vertices_normal)))
 		return (print_parser_error(ARRAY_VERTICES_NORMAL));
-	if (parser->len_vertices_texture > 0)
-		if (!(parser->vertices_texture =
-		(t_vec3 *)malloc(sizeof(t_vec3) * parser->len_vertices_texture)))
+	if (parser->len_vertices_texture && !(parser->vertices_texture =
+		vec3_array(parser->len_vertices_texture)))
 		return (print_parser_error(ARRAY_VERTICES_TEXTURE));
 	parser->all_data_size = parser->len_faces * 6;
 	parser->all_data_size += parser->len_faces * 2;
@@ -78,13 +74,40 @@ uint8_t			create_vertices_arrays(t_parser_obj *parser)
 	return (1);
 }
 
-void			destroy_parser_obj(t_parser_obj *parser)
+uint8_t			destroy_parser_obj(t_parser_obj *parser, uint8_t all)
 {
-	free(parser->vertices);
-	free(parser->vertices_normal);
-	free(parser->vertices_texture);
-//	free(parser->all_data);
-	free(parser->indices);
-	free(parser);
-	parser = NULL;
+	if (all)
+		clean_parser(parser);
+	if (parser->all_data)
+		free(parser->all_data);
+	if (parser)
+	{
+		free(parser);
+		parser = NULL;
+	}
+	return (0);
+}
+
+void			clean_parser(t_parser_obj *parser)
+{
+	if (parser->vertices)
+	{
+		free(parser->vertices);
+		parser->vertices = NULL;
+	}
+	if (parser->vertices_normal)
+	{
+		free(parser->vertices_normal);
+		parser->vertices_normal = NULL;
+	}
+	if (parser->vertices_texture)
+	{
+		free(parser->vertices_texture);
+		parser->vertices_texture = NULL;
+	}
+	if (parser->indices)
+	{
+		free(parser->indices);
+		parser->indices = NULL;
+	}
 }

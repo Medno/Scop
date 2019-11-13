@@ -6,7 +6,7 @@
 /*   By: pchadeni <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/17 15:43:12 by pchadeni          #+#    #+#             */
-/*   Updated: 2019/11/09 13:48:53 by pchadeni         ###   ########.fr       */
+/*   Updated: 2019/11/13 12:56:25 by pchadeni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,9 +47,8 @@ uint8_t	create_mesh(const char *filename, t_mesh *mesh)
 		glBindVertexArray(0);
 		mesh->texture = create_texture();
 	}
-//print_parser_data(parser);
 	if (parser)
-		destroy_parser_obj(parser);
+		destroy_parser_obj(parser, 0);
 //handle_error
 	return (1);
 }

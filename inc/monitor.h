@@ -6,7 +6,7 @@
 /*   By: pchadeni <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/10 16:52:33 by pchadeni          #+#    #+#             */
-/*   Updated: 2019/11/09 11:37:30 by pchadeni         ###   ########.fr       */
+/*   Updated: 2019/11/13 11:04:45 by pchadeni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ typedef struct	s_monitor {
 	t_camera	*camera;
 	t_mesh		*mesh;
 	uint8_t		enable_texture;
+	uint8_t		enable_mouse;
 }				t_monitor;
 
 uint8_t			init_monitor(t_monitor *monitor);

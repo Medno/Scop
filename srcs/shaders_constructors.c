@@ -6,7 +6,7 @@
 /*   By: pchadeni <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/17 16:29:48 by pchadeni          #+#    #+#             */
-/*   Updated: 2019/11/09 11:26:25 by pchadeni         ###   ########.fr       */
+/*   Updated: 2019/11/13 13:04:40 by pchadeni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,18 @@ static uint8_t	create_shader(const char *file, GLenum shader_type)
 	return (shader);
 }
 
+static void		find_uniforms(t_shader *shader)
+{
+	shader->uniforms[MODEL_U] =
+		glGetUniformLocation(shader->program, "model");
+	shader->uniforms[VIEW_U] =
+		glGetUniformLocation(shader->program, "view");
+	shader->uniforms[PROJECTION_U] =
+		glGetUniformLocation(shader->program, "projection");
+	shader->uniforms[ALPHA_U] =
+		glGetUniformLocation(shader->program, "aAlphaTex");
+}
+
 /*
 ** Construction, compilation and linking of vertex and fragment shader
 ** Linking the uniforms matrices corresponding to their utility
@@ -86,14 +98,7 @@ uint8_t			construct_shader(const char *file, t_shader *shader)
 	if (check_shader_error(shader->program, GL_LINK_STATUS, 1,
 		"Error: Program linking failed: "))
 		return (0);
-	shader->uniforms[MODEL_U] =
-		glGetUniformLocation(shader->program, "model");
-	shader->uniforms[VIEW_U] =
-		glGetUniformLocation(shader->program, "view");
-	shader->uniforms[PROJECTION_U] =
-		glGetUniformLocation(shader->program, "projection");
-	shader->uniforms[ALPHA_U] =
-		glGetUniformLocation(shader->program, "aAlphaTex");
+	find_uniforms(shader);
 	return (1);
 }
 

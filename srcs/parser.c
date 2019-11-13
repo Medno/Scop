@@ -6,7 +6,7 @@
 /*   By: pchadeni <pchadeni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/05 10:25:29 by pchadeni          #+#    #+#             */
-/*   Updated: 2019/11/07 16:46:49 by pchadeni         ###   ########.fr       */
+/*   Updated: 2019/11/13 12:56:48 by pchadeni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,9 +32,10 @@ uint8_t			parse_obj_data(char *data, t_parser_obj *parse)
 {
 	if (!get_length_arrays_obj(data, parse) || !create_vertices_arrays(parse)
 		|| !get_vertices_values(data, parse))
-		return (0);
+		return (destroy_parser_obj(parse, 1));
 	put_texture_vertices(parse);
 	center_vertices(parse);
+	clean_parser(parse);
 	return (1);
 }
 
@@ -47,8 +48,7 @@ t_parser_obj	*parse_obj_file(const char *obj_name)
 		return (NULL);
 	if (!(obj_data_str = read_file(obj_name, "r", &parser->obj_size)))
 		return (NULL);
-	if (!parse_obj_data(obj_data_str, parser))
-		return (NULL);
+	parse_obj_data(obj_data_str, parser);
 	ft_strdel(&obj_data_str);
 	return (parser);
 }

@@ -6,7 +6,7 @@
 #    By: pchadeni <pchadeni@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/10/08 18:55:23 by pchadeni          #+#    #+#              #
-#    Updated: 2019/11/08 09:09:06 by pchadeni         ###   ########.fr        #
+#    Updated: 2019/11/13 10:39:35 by pchadeni         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -37,7 +37,6 @@ MAIN_SRCS = main.c		\
 			tga_read_bits_grey.c	\
 			tga_read_bits_rle.c	\
 			tga_header.c	\
-			merge_coordinates.c	\
 			shaders_updates.c	\
 			shaders_constructors.c	\
 			obj_file_array_indices.c	\

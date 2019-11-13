@@ -6,7 +6,7 @@
 /*   By: pchadeni <pchadeni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/05 10:25:32 by pchadeni          #+#    #+#             */
-/*   Updated: 2019/11/08 11:52:35 by pchadeni         ###   ########.fr       */
+/*   Updated: 2019/11/13 13:03:27 by pchadeni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,20 +23,12 @@
 # include <errno.h>
 # include <string.h>
 
-enum	e_face_type
-{
-	V_1,
-	V_2,
-	V_3
-};
-
 typedef struct	s_parser_obj
 {
 	t_vec3				*vertices;
 	t_vec3				*vertices_normal;
 	t_vec3				*vertices_texture;
 	int					*indices;
-	enum e_face_type	face_type;
 	size_t				len_vertices;
 	size_t				len_vertices_normal;
 	size_t				len_vertices_texture;
@@ -83,7 +75,8 @@ uint8_t			check_float(const char *str, float *fl);
 
 t_parser_obj	*init_parser_obj(void);
 uint8_t			create_vertices_arrays(t_parser_obj *parse);
-void 			destroy_parser_obj(t_parser_obj *parse);
+uint8_t			destroy_parser_obj(t_parser_obj *parse, uint8_t all);
+void			clean_parser(t_parser_obj *parser);
 uint8_t			print_parser_error(t_error_parser error);
 
 uint8_t			get_length_arrays_obj(char *data, t_parser_obj *parse);
@@ -93,8 +86,8 @@ uint8_t			count_faces(char *str);
 
 uint8_t			init_indices_triplet
 (t_parser_obj *parse, char *data, int len, int split);
-void	center_vertices(t_parser_obj *parser);
+void			center_vertices(t_parser_obj *parser);
 
-void	print_parser_data(t_parser_obj *parser);
+void			print_parser_data(t_parser_obj *parser);
 
 #endif

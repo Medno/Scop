@@ -6,7 +6,7 @@
 /*   By: pchadeni <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/29 11:08:02 by pchadeni          #+#    #+#             */
-/*   Updated: 2019/03/29 11:23:51 by pchadeni         ###   ########.fr       */
+/*   Updated: 2019/11/13 10:47:17 by pchadeni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,10 @@
 # define LIB_MATHS_H
 
 # include "libft.h"
+
+# ifndef M_PI
+#  define M_PI 3.14159265358979323846
+# endif
 
 typedef struct	s_point
 {
@@ -37,5 +41,6 @@ int				ft_pow(int n, int pow);
 int				ft_sqrt(int nb);
 
 uint8_t			ft_expten(int n);
+float			degree_to_radian(float degree);
 
 #endif

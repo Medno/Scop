@@ -6,7 +6,7 @@
 /*   By: pchadeni <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/23 10:59:23 by pchadeni          #+#    #+#             */
-/*   Updated: 2019/02/25 16:33:04 by pchadeni         ###   ########.fr       */
+/*   Updated: 2019/11/13 10:43:32 by pchadeni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,4 +82,9 @@ int		ft_sqrt(int nb)
 			end = mid - 1;
 	}
 	return (res);
+}
+
+float	degree_to_radian(float degree)
+{
+	return (degree * M_PI / 180.0);
 }

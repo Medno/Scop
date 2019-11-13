@@ -6,7 +6,7 @@
 /*   By: pchadeni <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/10 16:37:00 by pchadeni          #+#    #+#             */
-/*   Updated: 2019/11/09 13:16:30 by pchadeni         ###   ########.fr       */
+/*   Updated: 2019/11/13 09:52:30 by pchadeni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,89 +23,6 @@
 void	display_scop(t_monitor *monitor, const char *filename)
 {
 	uint8_t		end;
-	/*
-	float	textures[] = {
-		0.0f, 0.0f,
-		1.0f, 0.0f,
-		1.0f, 1.0f,
-		1.0f, 1.0f,
-		0.0f, 1.0f,
-		0.0f, 0.0f,
-		0.0f, 0.0f,
-		1.0f, 0.0f,
-		1.0f, 1.0f,
-		1.0f, 1.0f,
-		0.0f, 1.0f,
-		0.0f, 0.0f,
-		1.0f, 0.0f,
-		1.0f, 1.0f,
-		0.0f, 1.0f,
-		0.0f, 1.0f,
-		0.0f, 0.0f,
-		1.0f, 0.0f,
-		1.0f, 0.0f,
-		1.0f, 1.0f,
-		0.0f, 1.0f,
-		0.0f, 1.0f,
-		0.0f, 0.0f,
-		1.0f, 0.0f,
-		0.0f, 1.0f,
-		1.0f, 1.0f,
-		1.0f, 0.0f,
-		1.0f, 0.0f,
-		0.0f, 0.0f,
-		0.0f, 1.0f,
-		0.0f, 1.0f,
-		1.0f, 1.0f,
-		1.0f, 0.0f,
-		1.0f, 0.0f,
-		0.0f, 0.0f,
-		0.0f, 1.0f
-	};
-	t_vec3 vertices[] = {
-		vec3_new(-0.5f, -0.5f, -0.5f),
-		vec3_new( 0.5f, -0.5f, -0.5f),
-		vec3_new( 0.5f,  0.5f, -0.5f),
-		vec3_new( 0.5f,  0.5f, -0.5f),
-		vec3_new(-0.5f,  0.5f, -0.5f),
-		vec3_new(-0.5f, -0.5f, -0.5f),
-
-		vec3_new(-0.5f, -0.5f,  0.5f),
-		vec3_new( 0.5f, -0.5f,  0.5f),
-		vec3_new( 0.5f,  0.5f,  0.5f),
-		vec3_new( 0.5f,  0.5f,  0.5f),
-		vec3_new(-0.5f,  0.5f,  0.5f),
-		vec3_new(-0.5f, -0.5f,  0.5f),
-
-		vec3_new(-0.5f,  0.5f,  0.5f),
-		vec3_new(-0.5f,  0.5f, -0.5f),
-		vec3_new(-0.5f, -0.5f, -0.5f),
-		vec3_new(-0.5f, -0.5f, -0.5f),
-		vec3_new(-0.5f, -0.5f,  0.5f),
-		vec3_new(-0.5f,  0.5f,  0.5f),
-
-		vec3_new( 0.5f,  0.5f,  0.5f),
-		vec3_new( 0.5f,  0.5f, -0.5f),
-		vec3_new( 0.5f, -0.5f, -0.5f),
-		vec3_new( 0.5f, -0.5f, -0.5f),
-		vec3_new( 0.5f, -0.5f,  0.5f),
-		vec3_new( 0.5f,  0.5f,  0.5f),
-
-		vec3_new(-0.5f, -0.5f, -0.5f),
-		vec3_new( 0.5f, -0.5f, -0.5f),
-		vec3_new( 0.5f, -0.5f,  0.5f),
-		vec3_new( 0.5f, -0.5f,  0.5f),
-		vec3_new(-0.5f, -0.5f,  0.5f),
-		vec3_new(-0.5f, -0.5f, -0.5f),
-
-		vec3_new(-0.5f,  0.5f, -0.5f),
-		vec3_new( 0.5f,  0.5f, -0.5f),
-		vec3_new( 0.5f,  0.5f,  0.5f),
-		vec3_new( 0.5f,  0.5f,  0.5f),
-		vec3_new(-0.5f,  0.5f,  0.5f),
-		vec3_new(-0.5f,  0.5f, -0.5f)
-    };
-*/
 	t_shader	shader;
 	t_mesh		mesh;
 	t_transform	transform;
@@ -125,7 +42,7 @@ void	display_scop(t_monitor *monitor, const char *filename)
 
 	while (!glfwWindowShouldClose(monitor->win))
 	{
-		clear_window(0.25f, 0.25f, 0.25f, 1.0f);
+		clear_window(0.2f, 0.2f, 0.2f, 1.0f);
 		update_delta_time(monitor->camera);
 
 		glActiveTexture(GL_TEXTURE0);

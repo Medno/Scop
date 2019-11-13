@@ -6,7 +6,7 @@
 /*   By: pchadeni <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/30 17:19:43 by pchadeni          #+#    #+#             */
-/*   Updated: 2019/11/06 13:37:45 by pchadeni         ###   ########.fr       */
+/*   Updated: 2019/11/13 12:36:19 by pchadeni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,4 +29,13 @@ float	*vec3_assign_coord(t_vec3 *vec, t_v3_coord coord)
 	else if (coord == COORD_Y)
 		return (&vec->y);
 	return (&vec->z);
+}
+
+t_vec3	*vec3_array(size_t size)
+{
+	t_vec3	*array;
+
+	if (!(array = (t_vec3 *)malloc(sizeof(t_vec3) * size)))
+		return (NULL);
+	return (array);
 }

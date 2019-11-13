@@ -6,7 +6,7 @@
 /*   By: pchadeni <pchadeni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/08 18:51:43 by pchadeni          #+#    #+#             */
-/*   Updated: 2019/11/09 14:16:03 by pchadeni         ###   ########.fr       */
+/*   Updated: 2019/11/13 12:16:43 by pchadeni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,8 @@ void			update_shader(t_shader *s, t_monitor *m)
 	glUniformMatrix4fv(
 			s->uniforms[VIEW_U], 1, GL_TRUE, &view.matrix[0][0]);
 	ratio = (float)WIDTH / (float)HEIGHT;
-	projection = projection_mat4(45.0f, ratio, 0.01f, 100.0f);
+	projection = projection_mat4(
+			degree_to_radian(m->camera->fov), ratio, 0.01f, 100.0f);
 	glUniformMatrix4fv(
 			s->uniforms[PROJECTION_U], 1, GL_TRUE, &projection.matrix[0][0]);
 	if (m->enable_texture && s->alpha < 1.0)

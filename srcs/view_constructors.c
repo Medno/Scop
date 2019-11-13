@@ -6,7 +6,7 @@
 /*   By: pchadeni <pchadeni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/06 13:40:35 by pchadeni          #+#    #+#             */
-/*   Updated: 2019/11/07 16:54:14 by pchadeni         ###   ########.fr       */
+/*   Updated: 2019/11/13 12:18:53 by pchadeni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ t_camera	*init_camera(void)
 	camera->last_frame = 0.0f;
 	camera->last_x = WIDTH / 2;
 	camera->last_y = HEIGHT / 2;
+	camera->fov = 45.0f;
 	camera->yaw = -90.0f;
 	camera->pitch = 0.0f;
 	return (camera);
@@ -57,7 +58,7 @@ t_mat4		create_new_axes(t_vec3 position, t_vec3 target, t_vec3 upspace)
 	return (result);
 }
 
-t_mat4	view_look_at(t_vec3 position, t_vec3 target, t_vec3 up)
+t_mat4		view_look_at(t_vec3 position, t_vec3 target, t_vec3 up)
 {
 	t_mat4	perpendicular_axes;
 	t_mat4	opposite_direction;
