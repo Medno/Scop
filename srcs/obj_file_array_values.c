@@ -6,7 +6,7 @@
 /*   By: pchadeni <pchadeni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/05 10:37:09 by pchadeni          #+#    #+#             */
-/*   Updated: 2019/11/08 11:52:45 by pchadeni         ###   ########.fr       */
+/*   Updated: 2019/11/13 16:13:19 by pchadeni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,8 @@ uint8_t	add_vertice(t_vec3 *vec, char *str, size_t *index, t_token_obj type)
 			return (print_parser_error(PARSING_MISSING_SPACE));
 		i += get_esp - &str[i] + 1;
 		if (get_esp - i > 0)
-			check_float(&str[i], vec3_assign_coord(&vec[*index], coord));
+			if (!check_float(&str[i], vec3_assign_coord(&vec[*index], coord)))
+				return (0);
 		coord += 1;
 		if (type == TEXTURE && coord == COORD_Z)
 			break ;
@@ -59,32 +60,23 @@ uint8_t	handle_indices_line(t_parser_obj *parse, char *data, int len)
 	}
 	return (1);
 }
-/*
-uint8_t	add_vertice_all_data(float *array, char *str, size_t *index)
-{
-	int			i;
-	char		*get_esp;
-	char		*get_nl;
-	t_v3_coord	coord;
 
-	i = 0;
-	coord = COORD_X;
-	get_nl = ft_strchr(str, '\n');
-	if (get_nl == NULL)
-		get_nl = str + ft_strlen(str);
-	while (&str[i] < get_nl && coord <= COORD_Z)
+uint8_t	match_vertice_line(char *data, t_parser_obj *parse)
+{
+	if (!ft_strncmp(data, "v ", 2))
+		return (add_vertice(parse->vertices, data, &parse->index_vertices,
+			VERTEX));
+	else if (!ft_strncmp(data, "vt ", 3))
+		return (add_vertice(parse->vertices_texture, data,
+			&parse->index_vertices_texture, TEXTURE));
+	else if (!ft_strncmp(data, "vn ", 3))
 	{
-		if (!(get_esp = ft_strchr(&str[i], ' ')))
-			return (print_parser_error(PARSING_MISSING_SPACE));
-		i += get_esp - &str[i] + 1;
-		if (get_esp - i > 0)
-			check_float(&str[i], &array[((*index) * offset) + coord]);
-		coord += 1;
+		return (add_vertice(parse->vertices_normal, data,
+			&parse->index_vertices_normal, NORMAL));
 	}
-	(*index)++;
 	return (1);
 }
-*/
+
 uint8_t	get_vertices_values(char *data, t_parser_obj *parse)
 {
 	long	i;
@@ -93,21 +85,11 @@ uint8_t	get_vertices_values(char *data, t_parser_obj *parse)
 	i = 0;
 	while (i < parse->obj_size)
 	{
-		get_nl = ft_strchr(&data[i], '\n');
-		if (get_nl == NULL)
+		if (!(get_nl = ft_strchr(&data[i], '\n')))
 			get_nl = data + parse->obj_size;
-		if (!ft_strncmp(&data[i], "v ", 2) && !add_vertice(parse->vertices,
-			&data[i], &parse->index_vertices, VERTEX))
+		if (!match_vertice_line(&data[i], parse))
 			return (0);
-		else if (!ft_strncmp(&data[i], "vt ", 3) && !add_vertice(
-			parse->vertices_texture, &data[i], &parse->index_vertices_texture,
-			TEXTURE))
-			return (0);
-		else if (!ft_strncmp(&data[i], "vn ", 3) && !add_vertice(
-			parse->vertices_normal, &data[i], &parse->index_vertices_normal,
-			NORMAL))
-			return (0);
-		else if (!ft_strncmp(&data[i], "f ", 2) && !handle_indices_line(parse,
+		if (!ft_strncmp(&data[i], "f ", 2) && !handle_indices_line(parse,
 			&data[i], get_nl - &data[i]))
 			return (0);
 		i += get_nl - &data[i];

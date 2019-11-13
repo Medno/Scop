@@ -6,7 +6,7 @@
 #    By: pchadeni <pchadeni@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/10/08 18:55:23 by pchadeni          #+#    #+#              #
-#    Updated: 2019/11/13 10:39:35 by pchadeni         ###   ########.fr        #
+#    Updated: 2019/11/13 15:29:39 by pchadeni         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,8 @@ NAME = scop
 
 MAIN_SRCS = main.c		\
 			logger.c	\
-			monitor.c	\
+			callbacks.c	\
+			monitor_constructors.c	\
 			mat4_basic_operations.c		\
 			mat4_constructors.c		\
 			vec3_basic_operations.c		\
@@ -27,7 +28,9 @@ MAIN_SRCS = main.c		\
 			read_files.c\
 			mesh.c	\
 			handle_error.c	\
+			glfw_constructors.c	\
 			view_constructors.c	\
+			view_updates.c	\
 			model_constructors.c	\
 			model_transformations.c	\
 			textures.c	\

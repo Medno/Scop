@@ -6,7 +6,7 @@
 /*   By: pchadeni <pchadeni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/02 17:09:22 by pchadeni          #+#    #+#             */
-/*   Updated: 2019/10/08 14:57:07 by pchadeni         ###   ########.fr       */
+/*   Updated: 2019/11/13 15:41:48 by pchadeni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,8 +99,6 @@ static void			set_format_tga(t_texture *texture)
 		}
 	}
 }
-
-//UPDATE IT into glTexParameteriv
 
 void				handle_header_tga(t_texture *texture, GLubyte *p)
 {

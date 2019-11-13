@@ -6,19 +6,21 @@
 /*   By: pchadeni <pchadeni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/08 19:07:08 by pchadeni          #+#    #+#             */
-/*   Updated: 2019/10/08 19:07:21 by pchadeni         ###   ########.fr       */
+/*   Updated: 2019/11/13 14:55:28 by pchadeni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "model.h"
 
-t_transform	create_transform(void)
+t_transform	*create_transform(void)
 {
-	t_transform	new_t;
+	t_transform	*new_t;
 
-	new_t.position = vec3_new(0.0f, 0.0f, 0.0f);
-	new_t.rotation = vec3_new(0.0f, 0.0f, 0.0f);
-	new_t.scale = vec3_new(1.0f, 1.0f, 1.0f);
+	if (!(new_t = (t_transform *)malloc(sizeof(t_transform))))
+		return (NULL);
+	new_t->position = vec3_new(0.0f, 0.0f, 0.0f);
+	new_t->rotation = vec3_new(0.0f, 0.0f, 0.0f);
+	new_t->scale = vec3_new(1.0f, 1.0f, 1.0f);
 	return (new_t);
 }
 

@@ -6,7 +6,7 @@
 /*   By: pchadeni <pchadeni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/08 14:45:34 by pchadeni          #+#    #+#             */
-/*   Updated: 2019/10/08 19:21:22 by pchadeni         ###   ########.fr       */
+/*   Updated: 2019/11/13 16:15:25 by pchadeni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,22 +77,23 @@ typedef struct	s_texture
 
 GLuint			create_texture(void);
 
-void	handle_header_tga(t_texture *texture, GLubyte *p);
+void			handle_header_tga(t_texture *texture, GLubyte *p);
 
-void	tga_read_bits_rle(t_texture *texture);
-void	handle_non_rle(t_texture *texture, int *j, int loop, GLubyte *ptr);
+void			tga_read_bits_rle(t_texture *texture);
+void			handle_non_rle(t_texture *texture, int *j, int loop,
+		GLubyte *ptr);
 
-void	tga_read_bits_colored(t_texture *texture);
-void	tga_read_bits_grey(t_texture *texture);
+void			tga_read_bits_colored(t_texture *texture);
+void			tga_read_bits_grey(t_texture *texture);
 
-void	read_8_colored_rle(t_texture *tex, GLubyte *ptr, unsigned short c,
-		GLubyte *data);
-void	read_16_colored_rle(t_texture *tex, GLubyte *ptr, unsigned short c,
-		GLubyte *data);
-void	read_24_colored_rle(t_texture *tex, GLubyte *ptr, unsigned short c,
-		GLubyte *data);
-void	read_32_colored_rle(t_texture *tex, GLubyte *ptr, unsigned short c,
-		GLubyte *data);
+void			read_8_colored_rle(t_texture *tex, GLubyte *ptr,
+		unsigned short c, GLubyte *data);
+void			read_16_colored_rle(t_texture *tex, GLubyte *ptr,
+		unsigned short c, GLubyte *data);
+void			read_24_colored_rle(t_texture *tex, GLubyte *ptr,
+		unsigned short c, GLubyte *data);
+void			read_32_colored_rle(t_texture *tex, GLubyte *ptr,
+		unsigned short c, GLubyte *data);
 
 void			print_texture(t_texture *texture, uint8_t log);
 void			print_header(t_tga_header header, uint8_t log);

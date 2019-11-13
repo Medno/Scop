@@ -6,7 +6,7 @@
 /*   By: pchadeni <pchadeni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/06 13:25:52 by pchadeni          #+#    #+#             */
-/*   Updated: 2019/11/08 11:52:03 by pchadeni         ###   ########.fr       */
+/*   Updated: 2019/11/13 15:47:57 by pchadeni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,26 +18,6 @@ void	assign_vec3(float *array, t_vec3 vect, t_token_obj tok)
 	*(array + 1) = vect.y;
 	if (tok != TEXTURE)
 		*(array + 2) = vect.z;
-}
-
-void	assign_data_index(t_parser_obj *parser, int indice, t_token_obj tok)
-{
-	if (tok == VERTEX)
-	{
-		assign_vec3(&parser->all_data[
-			parser->index_indices * parser->offset_all_data],
-			parser->vertices[indice], tok);
-	}
-	else if (tok == NORMAL)
-		assign_vec3(&parser->all_data[
-			(parser->index_indices * parser->offset_all_data)
-			+ 6
-			], parser->vertices_normal[indice], tok);
-	else if (tok == TEXTURE)
-		assign_vec3(&parser->all_data[
-			((parser->index_indices + 1) * parser->offset_all_data)
-			- 2],
-			parser->vertices_texture[indice], tok);
 }
 
 uint8_t	init_indices_splitted(t_parser_obj *parser, char *str, t_token_obj tok)
@@ -53,7 +33,18 @@ uint8_t	init_indices_splitted(t_parser_obj *parser, char *str, t_token_obj tok)
 		parser->indices[parser->index_indices] = indice;
 	if (indice < 0 || (unsigned)indice > parser->len_vertices)
 		return (print_parser_error(PARSING_INDEX_OUT_OF_BOUND));
-	assign_data_index(parser, indice, tok);
+	if (tok == VERTEX)
+		assign_vec3(&parser->all_data[
+			parser->index_indices * parser->offset_all_data],
+			parser->vertices[indice], tok);
+	else if (tok == NORMAL)
+		assign_vec3(&parser->all_data[
+			(parser->index_indices * parser->offset_all_data) + 6],
+			parser->vertices_normal[indice], tok);
+	else if (tok == TEXTURE)
+		assign_vec3(&parser->all_data[
+			((parser->index_indices + 1) * parser->offset_all_data) - 2],
+			parser->vertices_texture[indice], tok);
 	return (1);
 }
 

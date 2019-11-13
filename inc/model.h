@@ -6,7 +6,7 @@
 /*   By: pchadeni <pchadeni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/08 19:08:55 by pchadeni          #+#    #+#             */
-/*   Updated: 2019/10/08 19:17:46 by pchadeni         ###   ########.fr       */
+/*   Updated: 2019/11/13 14:58:22 by pchadeni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ typedef struct	s_transform
 	t_vec3	scale;
 }				t_transform;
 
-t_transform		create_transform(void);
+t_transform		*create_transform(void);
 t_mat4			get_model(t_transform t);
 
 t_mat4			translate(t_mat4 mat4, t_vec3 vec3);
