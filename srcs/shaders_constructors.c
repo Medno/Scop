@@ -6,7 +6,7 @@
 /*   By: pchadeni <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/17 16:29:48 by pchadeni          #+#    #+#             */
-/*   Updated: 2019/11/15 19:10:40 by pchadeni         ###   ########.fr       */
+/*   Updated: 2019/11/15 19:43:48 by pchadeni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,10 @@ static void		find_uniforms(t_shader *shader)
 	shader->uniforms[PROJECTION_U] =
 		glGetUniformLocation(shader->program, "projection");
 	shader->uniforms[ALPHA_U] =
+		glGetUniformLocation(shader->program, "aAlphaTex");
+	shader->uniforms[OBJ_COLOR_U] =
+		glGetUniformLocation(shader->program, "aAlphaTex");
+	shader->uniforms[LIGHT_COLOR_U] =
 		glGetUniformLocation(shader->program, "aAlphaTex");
 }
 

@@ -6,7 +6,7 @@
 /*   By: pchadeni <pchadeni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/08 18:51:43 by pchadeni          #+#    #+#             */
-/*   Updated: 2019/11/15 19:12:48 by pchadeni         ###   ########.fr       */
+/*   Updated: 2019/11/15 19:43:52 by pchadeni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void			use_shader(t_shader *shader)
 ** Send matrices (MVP) to the vertex shader
 */
 
-void			update_shader(t_monitor *m)
+void			update_obj_shader(t_monitor *m)
 {
 	t_mat4	model;
 	t_mat4	view;
@@ -45,4 +45,14 @@ void			update_shader(t_monitor *m)
 	else if (!m->enable_texture && m->obj_shader->alpha > 0.0)
 		m->obj_shader->alpha -= 0.001;
 	glUniform1f(m->obj_shader->uniforms[ALPHA_U], m->obj_shader->alpha);
+}
+
+void			set_light_uniforms(t_shader *shader)
+{
+	
+}
+
+void			update_light_shader(t_monitor *m)
+{
+
 }

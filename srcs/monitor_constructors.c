@@ -6,7 +6,7 @@
 /*   By: pchadeni <pchadeni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/13 15:06:28 by pchadeni          #+#    #+#             */
-/*   Updated: 2019/11/15 19:12:32 by pchadeni         ###   ########.fr       */
+/*   Updated: 2019/11/15 19:35:18 by pchadeni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,13 +27,18 @@ static uint8_t	init_monitor_heap(t_monitor *monitor, const char *filename)
 	monitor->transformation = NULL;
 	monitor->camera = NULL;
 	monitor->mesh = NULL;
+	monitor->light = NULL;
 	monitor->obj_shader = NULL;
+	monitor->light_shader = NULL;
+	monitor->lamp_shader = NULL;
 	if (!(monitor->mesh = create_mesh(filename))
 		|| !(monitor->obj_shader = construct_shader("./res/basicShader"))
+		|| !(monitor->light = create_mesh("./res/cube.obj"))
+		|| !(monitor->light_shader = construct_shader("./res/lightShader"))
 		|| !(monitor->camera = init_camera())
 		|| !(monitor->transformation = create_transform()))
 		return (destroy_monitor(*monitor));
-printf("Monitor's heap initialized\n");
+	printf("Monitor's heap initialized\n");
 	return (1);
 }
 
@@ -64,8 +69,11 @@ uint8_t			init_monitor(t_monitor *monitor, const char *filename)
 uint8_t			update_monitor(t_monitor *monitor)
 {
 	use_shader(monitor->obj_shader);
-	update_shader(monitor);
+	update_obj_shader(monitor);
 	draw_mesh(*monitor->mesh);
+	use_shader(monitor->light_shader);
+	update_light_shader(monitor);
+	draw_mesh(*monitor->light);
 	if (monitor->enable_rotation)
 		monitor->transformation->rotation.y -= 0.0001f;
 	glfwSwapBuffers(monitor->win);
@@ -77,12 +85,18 @@ uint8_t			destroy_monitor(t_monitor monitor)
 {
 	if (monitor.win)
 		destroy_glfw_config(&monitor);
+	if (monitor.light_shader)
+		delete_shader(monitor.light_shader);
+	if (monitor.lamp_shader)
+		delete_shader(monitor.lamp_shader);
 	if (monitor.obj_shader)
 		delete_shader(monitor.obj_shader);
 	if (monitor.transformation)
 		free(monitor.transformation);
 	if (monitor.mesh)
 		delete_mesh(monitor.mesh);
+	if (monitor.light)
+		delete_mesh(monitor.light);
 	if (monitor.camera)
 		free(monitor.camera);
 	return (0);
