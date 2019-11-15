@@ -6,7 +6,7 @@
 /*   By: pchadeni <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/10 16:52:33 by pchadeni          #+#    #+#             */
-/*   Updated: 2019/11/13 16:42:29 by pchadeni         ###   ########.fr       */
+/*   Updated: 2019/11/15 16:34:20 by pchadeni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,4 +54,5 @@ void			edit_rasterization(int key, int act);
 void			edit_texture(t_monitor *mon, int key, int act);
 void			edit_mouse_activation(t_monitor *mon, int key, int act);
 void			edit_rotation_activation(t_monitor *mon, int key, int act);
+void			edit_speed(t_monitor *mon, int key, int act);
 #endif

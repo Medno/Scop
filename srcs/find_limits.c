@@ -6,7 +6,7 @@
 /*   By: pchadeni <pchadeni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/13 10:10:47 by pchadeni          #+#    #+#             */
-/*   Updated: 2019/11/13 10:42:15 by pchadeni         ###   ########.fr       */
+/*   Updated: 2019/11/15 16:31:37 by pchadeni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,16 +56,16 @@ void	center_vertices(t_parser_obj *parser)
 	i = 0;
 	size = find_center(parser);
 	theta = degree_to_radian(90.0f);
-	while (i < parser->all_data_size)
+	while (i < parser->data_size)
 	{
-		parser->all_data[i] -= size.x;
-		parser->all_data[i + 1] -= size.y;
-		parser->all_data[i + 2] -= size.z;
-		tmp = parser->all_data[i] * cosf(theta)
-			- parser->all_data[i + 2] * sinf(theta);
-		parser->all_data[i + 2] = parser->all_data[i] * sinf(theta)
-			+ parser->all_data[i + 2] * cosf(theta);
-		parser->all_data[i] = tmp;
-		i += parser->offset_all_data;
+		parser->data[i] -= size.x;
+		parser->data[i + 1] -= size.y;
+		parser->data[i + 2] -= size.z;
+		tmp = parser->data[i] * cosf(theta)
+			- parser->data[i + 2] * sinf(theta);
+		parser->data[i + 2] = parser->data[i] * sinf(theta)
+			+ parser->data[i + 2] * cosf(theta);
+		parser->data[i] = tmp;
+		i += parser->offset_data;
 	}
 }

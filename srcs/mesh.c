@@ -6,7 +6,7 @@
 /*   By: pchadeni <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/17 15:43:12 by pchadeni          #+#    #+#             */
-/*   Updated: 2019/11/13 18:01:35 by pchadeni         ###   ########.fr       */
+/*   Updated: 2019/11/15 15:25:10 by pchadeni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,19 +26,19 @@ uint8_t	create_mesh(const char *filename, t_mesh *mesh)
 	if (!(parser = parse_obj_file(filename)))
 		return (0);
 	mesh->count_draw = parser->len_faces;
-	mesh->len_textures = parser->len_vertices_texture;
+	mesh->len_textures = parser->len_textures;
 	if (parser)
 	{
 		glGenVertexArrays(1, &mesh->vao);
 		glGenBuffers(NUM_BUFFERS, mesh->vbo);
 		glBindVertexArray(mesh->vao);
 		glBindBuffer(GL_ARRAY_BUFFER, mesh->vbo[POSITION_VB]);
-		glBufferData(GL_ARRAY_BUFFER, sizeof(float) * parser->all_data_size,
-			parser->all_data, GL_STATIC_DRAW);
-		enable_buffer(0, 3, parser->offset_all_data, 0);
-		enable_buffer(1, 3, parser->offset_all_data, 3);
-		enable_buffer(2, 2, parser->offset_all_data,
-				parser->offset_all_data - 2);
+		glBufferData(GL_ARRAY_BUFFER, sizeof(float) * parser->data_size,
+			parser->data, GL_STATIC_DRAW);
+		enable_buffer(0, 3, parser->offset_data, 0);
+		enable_buffer(1, 3, parser->offset_data, 3);
+		enable_buffer(2, 2, parser->offset_data,
+				parser->offset_data - 2);
 		glBindVertexArray(0);
 		mesh->texture = create_texture();
 	}

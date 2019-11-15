@@ -6,7 +6,7 @@
 /*   By: pchadeni <pchadeni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/05 10:25:32 by pchadeni          #+#    #+#             */
-/*   Updated: 2019/11/13 18:01:49 by pchadeni         ###   ########.fr       */
+/*   Updated: 2019/11/15 16:28:08 by pchadeni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,23 +25,24 @@
 
 typedef struct	s_parser_obj
 {
-	t_vec3				*vertices;
-	t_vec3				*vertices_normal;
-	t_vec3				*vertices_texture;
-	int					*indices;
-	size_t				len_vertices;
-	size_t				len_vertices_normal;
-	size_t				len_vertices_texture;
-	size_t				len_faces;
-	size_t				index_vertices;
-	size_t				index_vertices_normal;
-	size_t				index_vertices_texture;
-	size_t				index_indices;
-	long				obj_size;
-	uint8_t				offset_all_data;
-	uint8_t				offset_all_data_normal;
-	size_t				all_data_size;
-	float				*all_data;
+	t_vec3	*vertices;
+	size_t	len_vertices;
+	size_t	index_vertices;
+	t_vec3	*normals;
+	size_t	len_normals;
+	size_t	index_normals;
+	t_vec3	*textures;
+	size_t	len_textures;
+	size_t	index_textures;
+	t_list	*faces;
+	size_t	len_faces;
+	size_t	index_indices;
+	long	obj_size;
+	uint8_t	offset_data;
+	uint8_t	offset_data_normal;
+	size_t	data_size;
+	float	*data;
+	int		garbage[12];
 }				t_parser_obj;
 
 typedef enum	e_token_obj
@@ -65,7 +66,7 @@ typedef enum	e_error_parser
 	ARRAY_INDICES,
 	PARSING_NO_NEWLINE,
 	PARSING_NB_FACES,
-	PARSING_MISSING_SPACE,
+	PARSING_WRONG_FORMAT,
 	PARSING_INDEX_OUT_OF_BOUND
 }				t_error_parser;
 
@@ -77,17 +78,16 @@ t_parser_obj	*init_parser_obj(void);
 uint8_t			create_vertices_arrays(t_parser_obj *parse);
 uint8_t			destroy_parser_obj(t_parser_obj **parse, uint8_t all);
 void			clean_parser(t_parser_obj *parser);
-uint8_t			print_parser_error(t_error_parser error);
+
+uint8_t			add_faces_into_data(t_parser_obj *parser);
+uint8_t			handle_faces(t_parser_obj *parser, char *str);
 
 uint8_t			get_length_arrays_obj(char *data, t_parser_obj *parse);
 uint8_t			get_vertices_values(char *data, t_parser_obj *parse);
 
-uint8_t			count_faces(char *str);
-
-uint8_t			init_indices_triplet
-(t_parser_obj *parse, char *data, int len, int split);
 void			center_vertices(t_parser_obj *parser);
 
 void			print_parser_data(t_parser_obj *parser);
+uint8_t			print_parser_error(t_error_parser error);
 
 #endif

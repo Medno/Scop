@@ -6,7 +6,7 @@
 #    By: pchadeni <pchadeni@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/10/08 18:55:23 by pchadeni          #+#    #+#              #
-#    Updated: 2019/11/13 16:43:00 by pchadeni         ###   ########.fr        #
+#    Updated: 2019/11/15 16:29:13 by pchadeni         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,36 +19,44 @@ NAME = scop
 MAIN_SRCS = main.c		\
 			callbacks.c	\
 			input_manager.c	\
-			monitor_constructors.c	\
-			mat4_basic_operations.c		\
-			mat4_constructors.c		\
-			vec3_basic_operations.c		\
-			vec3_constructors.c		\
-			vec3_geometry.c		\
-			read_files.c\
-			mesh.c	\
-			handle_error.c	\
+\
 			glfw_constructors.c	\
+			monitor_constructors.c	\
+			mesh.c	\
 			view_constructors.c	\
 			view_updates.c	\
 			model_constructors.c	\
 			model_transformations.c	\
 			textures.c	\
+			shaders_updates.c	\
+			shaders_constructors.c	\
+\
+			mat4_basic_operations.c		\
+			mat4_constructors.c		\
+\
+			vec3_basic_operations.c		\
+			vec3_constructors.c		\
+			vec3_geometry.c		\
+\
 			tga_read_bits.c	\
 			tga_read_bits_colored_nrle.c	\
 			tga_read_bits_colored_rle.c	\
 			tga_read_bits_grey.c	\
 			tga_read_bits_rle.c	\
 			tga_header.c	\
-			shaders_updates.c	\
-			shaders_constructors.c	\
-			obj_file_array_indices.c	\
-			obj_file_array_length.c \
+\
 			obj_file_array_values.c	\
-			parser.c	\
-			parse_float.c \
+			obj_handle_faces.c	\
+\
+			parser_constructors.c	\
+			parser_errors.c	\
+			parser_obj_file.c	\
+			parser_convert_faces.c	\
 			find_limits.c \
-			init_parser.c
+\
+			handle_error.c	\
+			read_files.c\
+			parse_float.c
 			
 OBJ += $(addprefix ./$(OBJ_PATH)/, $(MAIN_SRCS:.c=.o))
 
@@ -68,6 +76,7 @@ HEAD = $(INCLUDES)/monitor.h	\
 	   $(INCLUDES)/read_file.h	\
 	   $(INCLUDES)/handle_error.h	\
 	   $(INCLUDES)/textures.h	\
+	   $(INCLUDES)/parser.h	\
 	   $(INCLUDES)/mesh.h
 
 #------Libraries------#
