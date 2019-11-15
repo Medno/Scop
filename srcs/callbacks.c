@@ -6,7 +6,7 @@
 /*   By: pchadeni <pchadeni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/13 15:28:52 by pchadeni          #+#    #+#             */
-/*   Updated: 2019/11/13 16:45:19 by pchadeni         ###   ########.fr       */
+/*   Updated: 2019/11/15 17:21:32 by pchadeni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,18 +42,6 @@ void	move_obj(t_monitor *mon, int key, int act)
 	else if (key == GLFW_KEY_PERIOD && (act == GLFW_PRESS || act == GLFW_REPEAT)
 		&& mon && mon->transformation)
 		mon->transformation->position.y -= 0.01f;
-}
-
-void	edit_speed(t_monitor *mon, int key, int act)
-{
-	if (key == GLFW_KEY_LEFT_BRACKET && (act == GLFW_PRESS
-		|| act == GLFW_REPEAT)
-		&& mon && mon->camera && mon->camera->speed < 1.0f)
-		mon->camera->speed += 0.02;
-	else if (key == GLFW_KEY_RIGHT_BRACKET && (act == GLFW_PRESS
-		|| act == GLFW_REPEAT)
-		&& mon && mon->camera && mon->camera->speed > 0.05f)
-		mon->camera->speed -= 0.02;
 }
 
 void	key_callback(GLFWwindow *w, int key, int scancode, int act, int mods)
