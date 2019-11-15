@@ -6,7 +6,7 @@
 /*   By: pchadeni <pchadeni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/08 19:15:38 by pchadeni          #+#    #+#             */
-/*   Updated: 2019/11/09 11:42:40 by pchadeni         ###   ########.fr       */
+/*   Updated: 2019/11/15 19:10:56 by pchadeni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@
 # include <GLFW/glfw3.h>
 # include <stdio.h>
 # include "libft.h"
-# include "monitor.h"
 # include "mat4.h"
 # include "view.h"
 # include "read_file.h"
@@ -43,11 +42,9 @@ typedef struct	s_shader
 	GLfloat	alpha;
 }				t_shader;
 
-uint8_t			construct_shader(const char *file, t_shader *new_shader);
-void			delete_shader(t_shader shader);
-void			use_shader(t_shader shader);
-
-void			update_shader(t_shader *s, t_monitor *m);
+t_shader		*construct_shader(const char *file);
+t_shader		*delete_shader(t_shader *shader);
+void			use_shader(t_shader *shader);
 
 char			*read_shader_file(const char *filename);
 

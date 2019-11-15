@@ -6,7 +6,7 @@
 /*   By: pchadeni <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/17 15:43:20 by pchadeni          #+#    #+#             */
-/*   Updated: 2019/11/08 09:11:53 by pchadeni         ###   ########.fr       */
+/*   Updated: 2019/11/15 18:38:42 by pchadeni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@
 enum
 {
 	POSITION_VB,
-	EBO,
 
 	NUM_BUFFERS
 };
@@ -39,8 +38,8 @@ typedef struct	s_mesh
 	unsigned int	len_textures;
 }				t_mesh;
 
-uint8_t			create_mesh(const char *filename, t_mesh *mesh);
-void			delete_mesh(t_mesh mesh);
+t_mesh			*create_mesh(const char *filename);
+void			delete_mesh(t_mesh *mesh);
 void			draw_mesh(t_mesh mesh);
 float			*merge_coordinates(t_vec3 vertices[], float texture[],
 		unsigned int l_ver, unsigned int l_tex);

@@ -6,7 +6,7 @@
 /*   By: pchadeni <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/17 16:29:48 by pchadeni          #+#    #+#             */
-/*   Updated: 2019/11/13 13:04:40 by pchadeni         ###   ########.fr       */
+/*   Updated: 2019/11/15 19:10:40 by pchadeni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,15 +79,18 @@ static void		find_uniforms(t_shader *shader)
 **			  and id of shader objects
 */
 
-uint8_t			construct_shader(const char *file, t_shader *shader)
+t_shader		*construct_shader(const char *file)
 {
-	int	i;
+	int			i;
+	t_shader	*shader;
 
 	i = 0;
+	if (!(shader = (t_shader *)malloc(sizeof(t_shader))))
+		return (NULL);
 	shader->id_so[0] = create_shader(file, GL_VERTEX_SHADER);
 	shader->id_so[1] = create_shader(file, GL_FRAGMENT_SHADER);
 	if (!shader->id_so[0] || !shader->id_so[1])
-		return (0);
+		return (delete_shader(shader));
 	shader->program = glCreateProgram();
 	while (i < NUM_SHADERS)
 	{
@@ -97,21 +100,27 @@ uint8_t			construct_shader(const char *file, t_shader *shader)
 	glLinkProgram(shader->program);
 	if (check_shader_error(shader->program, GL_LINK_STATUS, 1,
 		"Error: Program linking failed: "))
-		return (0);
+		return (delete_shader(shader));
 	find_uniforms(shader);
-	return (1);
+	return (shader);
 }
 
-void			delete_shader(t_shader shader)
+t_shader		*delete_shader(t_shader *shader)
 {
 	int	i;
 
 	i = 0;
 	while (i < NUM_SHADERS)
 	{
-		glDetachShader(shader.program, shader.id_so[i]);
-		glDeleteShader(shader.id_so[i]);
+		if (shader->id_so[i] != 0)
+		{
+			glDetachShader(shader->program, shader->id_so[i]);
+			glDeleteShader(shader->id_so[i]);
+		}
 		i++;
 	}
-	glDeleteProgram(shader.program);
+	if (shader->program)
+		glDeleteProgram(shader->program);
+	free(shader);
+	return (NULL);
 }
