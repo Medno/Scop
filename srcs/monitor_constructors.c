@@ -6,7 +6,7 @@
 /*   By: pchadeni <pchadeni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/13 15:06:28 by pchadeni          #+#    #+#             */
-/*   Updated: 2019/11/16 18:15:37 by pchadeni         ###   ########.fr       */
+/*   Updated: 2019/11/16 18:54:31 by pchadeni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,7 @@ uint8_t			init_monitor(t_monitor *monitor, const char *filename)
 	monitor->enable_mouse = 0;
 	monitor->enable_light = 0;
 	monitor->enable_rotation = 1;
+	monitor->mode = OBJ_MODE;
 	return (1);
 }
 

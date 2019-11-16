@@ -6,7 +6,7 @@
 /*   By: pchadeni <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/10 16:52:33 by pchadeni          #+#    #+#             */
-/*   Updated: 2019/11/16 17:31:22 by pchadeni         ###   ########.fr       */
+/*   Updated: 2019/11/16 18:54:47 by pchadeni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@
 
 # define WIDTH 800
 # define HEIGHT 600
+# define OBJ_MODE 0
+# define LIGHT_MODE 1
 
 typedef struct	s_monitor {
 	GLFWwindow	*win;
@@ -38,6 +40,7 @@ typedef struct	s_monitor {
 	uint8_t		enable_mouse;
 	uint8_t		enable_rotation;
 	uint8_t		enable_light;
+	uint8_t		mode;
 }				t_monitor;
 
 uint8_t			init_glfw_config(t_monitor *monitor);
@@ -64,5 +67,6 @@ void			edit_mouse_activation(t_monitor *mon, int key, int act);
 void			edit_rotation_activation(t_monitor *mon, int key, int act);
 void			edit_speed(t_monitor *mon, int key, int act);
 void			edit_light_activation(t_monitor *mon, int key, int act);
+void			edit_mode(t_monitor *mon, int key, int act);
 
 #endif

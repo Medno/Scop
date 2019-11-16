@@ -6,7 +6,7 @@
 /*   By: pchadeni <pchadeni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/13 15:28:52 by pchadeni          #+#    #+#             */
-/*   Updated: 2019/11/16 17:34:27 by pchadeni         ###   ########.fr       */
+/*   Updated: 2019/11/16 18:54:02 by pchadeni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,18 +30,28 @@ void	scroll_callback(GLFWwindow *window, double xoffset, double yoffset)
 
 void	move_obj(t_monitor *mon, int key, int act)
 {
-	if (key == GLFW_KEY_K && (act == GLFW_PRESS || act == GLFW_REPEAT)
-		&& mon && mon->transformation)
-		mon->transformation->rotation.y -= 0.01f;
-	else if (key == GLFW_KEY_L && (act == GLFW_PRESS || act == GLFW_REPEAT)
-		&& mon && mon->transformation)
-		mon->transformation->rotation.y += 0.01f;
-	else if (key == GLFW_KEY_O && (act == GLFW_PRESS || act == GLFW_REPEAT)
-		&& mon && mon->transformation)
-		mon->transformation->position.y += 0.01f;
-	else if (key == GLFW_KEY_PERIOD && (act == GLFW_PRESS || act == GLFW_REPEAT)
-		&& mon && mon->transformation)
-		mon->transformation->position.y -= 0.01f;
+	t_transform	*trans;
+
+	trans = (mon->mode == LIGHT_MODE && mon->light_trans)
+		? mon->light_trans : mon->transformation;
+	if (key == GLFW_KEY_Y && (act == GLFW_PRESS || act == GLFW_REPEAT)
+		&& trans)
+		trans->position.x -= 0.02f;
+	else if (key == GLFW_KEY_U && (act == GLFW_PRESS || act == GLFW_REPEAT)
+		&& trans)
+		trans->position.x += 0.02f;
+	else if (key == GLFW_KEY_H && (act == GLFW_PRESS || act == GLFW_REPEAT)
+		&& trans)
+		trans->position.y += 0.02f;
+	else if (key == GLFW_KEY_J && (act == GLFW_PRESS || act == GLFW_REPEAT)
+		&& trans)
+		trans->position.y -= 0.02f;
+	else if (key == GLFW_KEY_B && (act == GLFW_PRESS || act == GLFW_REPEAT)
+		&& trans)
+		trans->position.z += 0.02f;
+	else if (key == GLFW_KEY_N && (act == GLFW_PRESS || act == GLFW_REPEAT)
+		&& trans)
+		trans->position.z -= 0.02f;
 }
 
 void	key_callback(GLFWwindow *w, int key, int scancode, int act, int mods)
@@ -51,15 +61,19 @@ void	key_callback(GLFWwindow *w, int key, int scancode, int act, int mods)
 	(void)scancode;
 	(void)mods;
 	mon = (t_monitor *)glfwGetWindowUserPointer(w);
-	handle_camera_view(mon, key, act);
-	handle_camera_position(mon, key, act);
-	edit_mouse_activation(mon, key, act);
-	edit_rasterization(key, act);
-	edit_texture(mon, key, act);
-	edit_rotation_activation(mon, key, act);
-	edit_speed(mon, key, act);
-	edit_light_activation(mon, key, act);
-	move_obj(mon, key, act);
+	if (mon)
+	{
+		handle_camera_view(mon, key, act);
+		handle_camera_position(mon, key, act);
+		edit_mouse_activation(mon, key, act);
+		edit_rasterization(key, act);
+		edit_texture(mon, key, act);
+		edit_rotation_activation(mon, key, act);
+		edit_speed(mon, key, act);
+		edit_light_activation(mon, key, act);
+		edit_mode(mon, key, act);
+		move_obj(mon, key, act);
+	}
 	if (key == GLFW_KEY_ESCAPE && act == GLFW_PRESS)
 		glfwSetWindowShouldClose(w, GLFW_TRUE);
 }
