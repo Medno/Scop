@@ -6,7 +6,7 @@
 /*   By: pchadeni <pchadeni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/08 19:15:38 by pchadeni          #+#    #+#             */
-/*   Updated: 2019/11/16 17:28:10 by pchadeni         ###   ########.fr       */
+/*   Updated: 2019/11/16 19:07:08 by pchadeni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ enum
 	LIGHT_POS_U,
 	CAMERA_POS_U,
 	ENABLE_LIGHT_U,
+	NORMAL_COLORS_U,
 
 	NUM_UNIFORMS
 };

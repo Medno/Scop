@@ -10,6 +10,7 @@ uniform mat4 view;
 uniform mat4 projection;
 uniform float aAlphaTex;
 uniform int enableLight;
+uniform int normalColors;
 
 out vec3 normal;
 out vec3 colors;
@@ -21,7 +22,10 @@ void main()
   gl_Position = projection * view * model * vec4(position, 1.0);
   TexCoord = aTexCoord;
   alphaTex = aAlphaTex;
-  colors = aColors;
+  if (normalColors == 1)
+	colors = aNormal;
+  else
+  	colors = aColors;
   if (enableLight == 1)
   {
 	  FragPos = vec3(model * vec4(position, 1.0));

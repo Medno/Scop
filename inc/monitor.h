@@ -6,7 +6,7 @@
 /*   By: pchadeni <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/10 16:52:33 by pchadeni          #+#    #+#             */
-/*   Updated: 2019/11/16 18:54:47 by pchadeni         ###   ########.fr       */
+/*   Updated: 2019/11/16 19:06:10 by pchadeni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ typedef struct	s_monitor {
 	uint8_t		enable_rotation;
 	uint8_t		enable_light;
 	uint8_t		mode;
+	uint8_t		normal_colors;
 }				t_monitor;
 
 uint8_t			init_glfw_config(t_monitor *monitor);
