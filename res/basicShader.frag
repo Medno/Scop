@@ -14,13 +14,13 @@ uniform sampler2D texture1;
 uniform vec3 viewPos;
 uniform int enableLight;
 
-
 void main()
 {
 	vec3 result;
 	vec2 flipped_texcoord = vec2(TexCoord.x, 1.0 - TexCoord.y);
 
-	if (enableLight == 1) {
+	if (enableLight == 1)
+	{
 		float ambientStrength = 0.1;
 		vec3 ambient = ambientStrength * lightColor;
 
@@ -37,7 +37,7 @@ void main()
 
 		result = (ambient + diffuse + specular) * colors;
 	}
-	else
+	else if (enableLight == 0)
 		result = colors;
 
 	if (alphaTex >= 1.0)

@@ -6,7 +6,7 @@
 /*   By: pchadeni <pchadeni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/08 18:51:43 by pchadeni          #+#    #+#             */
-/*   Updated: 2019/11/16 17:41:16 by pchadeni         ###   ########.fr       */
+/*   Updated: 2019/11/16 18:19:42 by pchadeni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,24 +42,30 @@ void	update_shader_mvp(t_shader *shader, t_transform *trans, t_camera *cam)
 			&projection.matrix[0][0]);
 }
 
-void	update_obj_shader(t_monitor *m)
+void	link_light_obj(t_monitor *m)
 {
 	t_vec3	light_color;
 
+	if (!m->light)
+		return ;
 	light_color = vec3_new(1.0f, 1.0f, 1.0f);
 	glUniform3fv(m->obj_shader->uniforms[LIGHT_COLOR_U], 1, &light_color.x);
 	glUniform3fv(m->obj_shader->uniforms[LIGHT_POS_U], 1,
 			&m->light_trans->position.x);
 	glUniform3fv(m->obj_shader->uniforms[CAMERA_POS_U], 1,
 			&m->camera->position.x);
+}
+
+void	update_obj_shader(t_monitor *m)
+{
+	link_light_obj(m);
 	update_shader_mvp(m->obj_shader, m->transformation, m->camera);
 	if (m->enable_texture && m->obj_shader->alpha < 1.0)
 		m->obj_shader->alpha += 0.001;
 	else if (!m->enable_texture && m->obj_shader->alpha > 0.0)
 		m->obj_shader->alpha -= 0.001;
 	glUniform1f(m->obj_shader->uniforms[ALPHA_U], m->obj_shader->alpha);
-	if (m->mesh->len_normals > 0)
-		glUniform1i(m->obj_shader->uniforms[ENABLE_LIGHT_U], m->enable_light);
+	glUniform1i(m->obj_shader->uniforms[ENABLE_LIGHT_U], m->enable_light);
 }
 
 void	update_light_shader(t_monitor *m)

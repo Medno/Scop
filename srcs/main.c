@@ -6,7 +6,7 @@
 /*   By: pchadeni <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/10 16:37:00 by pchadeni          #+#    #+#             */
-/*   Updated: 2019/11/16 17:41:00 by pchadeni         ###   ########.fr       */
+/*   Updated: 2019/11/16 18:04:14 by pchadeni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ void	display_scop(t_monitor *monitor)
 
 	end = 0;
 	count = 0.0f;
+	use_shader(monitor->obj_shader);
 	while (!glfwWindowShouldClose(monitor->win))
 	{
 		clear_window(0.2f, 0.2f, 0.2f, 1.0f);

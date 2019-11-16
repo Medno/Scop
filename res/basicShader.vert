@@ -9,6 +9,7 @@ uniform mat4 model;
 uniform mat4 view;
 uniform mat4 projection;
 uniform float aAlphaTex;
+uniform int enableLight;
 
 out vec3 normal;
 out vec3 colors;
@@ -21,6 +22,9 @@ void main()
   TexCoord = aTexCoord;
   alphaTex = aAlphaTex;
   colors = aColors;
-  FragPos = vec3(model * vec4(position, 1.0));
-  normal = mat3(transpose(inverse(model))) * aNormal;
+  if (enableLight == 1)
+  {
+	  FragPos = vec3(model * vec4(position, 1.0));
+	  normal = mat3(transpose(inverse(model))) * aNormal;
+  }
 }
