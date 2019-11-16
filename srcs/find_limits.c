@@ -6,47 +6,47 @@
 /*   By: pchadeni <pchadeni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/13 10:10:47 by pchadeni          #+#    #+#             */
-/*   Updated: 2019/11/15 16:31:37 by pchadeni         ###   ########.fr       */
+/*   Updated: 2019/11/16 15:46:09 by pchadeni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser.h"
 
-void	find_limits_obj(t_parser_obj *parser, t_vec3 *min, t_vec3 *max)
+void	find_limits_obj(t_vec3 *vert, size_t len, t_vec3 *min, t_vec3 *max)
 {
 	size_t	i;
 
 	i = 1;
-	*min = parser->vertices[0];
-	*max = parser->vertices[0];
-	while (i < parser->len_vertices)
+	*min = vert[0];
+	*max = vert[0];
+	while (i < len)
 	{
-		if (max->x < parser->vertices[i].x)
-			max->x = parser->vertices[i].x;
-		if (max->y < parser->vertices[i].y)
-			max->y = parser->vertices[i].y;
-		if (max->z < parser->vertices[i].z)
-			max->z = parser->vertices[i].z;
-		if (min->x > parser->vertices[i].x)
-			min->x = parser->vertices[i].x;
-		if (min->y > parser->vertices[i].y)
-			min->y = parser->vertices[i].y;
-		if (min->z > parser->vertices[i].z)
-			min->z = parser->vertices[i].z;
+		if (max->x < vert[i].x)
+			max->x = vert[i].x;
+		if (max->y < vert[i].y)
+			max->y = vert[i].y;
+		if (max->z < vert[i].z)
+			max->z = vert[i].z;
+		if (min->x > vert[i].x)
+			min->x = vert[i].x;
+		if (min->y > vert[i].y)
+			min->y = vert[i].y;
+		if (min->z > vert[i].z)
+			min->z = vert[i].z;
 		i++;
 	}
 }
 
-t_vec3	find_center(t_parser_obj *parser)
+t_vec3	find_center(t_vec3 *vertices, size_t len)
 {
 	t_vec3	min;
 	t_vec3	max;
 
-	find_limits_obj(parser, &min, &max);
+	find_limits_obj(vertices, len, &min, &max);
 	return (vec3_mul_scalar(vec3_add(min, max), 0.5f));
 }
 
-void	center_vertices(t_parser_obj *parser)
+void	center_vertices(t_vec3 *vertices, size_t len)
 {
 	size_t	i;
 	t_vec3	size;
@@ -54,18 +54,18 @@ void	center_vertices(t_parser_obj *parser)
 	float	tmp;
 
 	i = 0;
-	size = find_center(parser);
+	size = find_center(vertices, len);
 	theta = degree_to_radian(90.0f);
-	while (i < parser->data_size)
+	while (i < len)
 	{
-		parser->data[i] -= size.x;
-		parser->data[i + 1] -= size.y;
-		parser->data[i + 2] -= size.z;
-		tmp = parser->data[i] * cosf(theta)
-			- parser->data[i + 2] * sinf(theta);
-		parser->data[i + 2] = parser->data[i] * sinf(theta)
-			+ parser->data[i + 2] * cosf(theta);
-		parser->data[i] = tmp;
-		i += parser->offset_data;
+		vertices[i].x -= size.x;
+		vertices[i].y -= size.y;
+		vertices[i].z -= size.z;
+		tmp = vertices[i].x * cosf(theta)
+			- vertices[i].z * sinf(theta);
+		vertices[i].z = vertices[i].x * sinf(theta)
+			+ vertices[i].z * cosf(theta);
+		vertices[i].x = tmp;
+		i++;
 	}
 }

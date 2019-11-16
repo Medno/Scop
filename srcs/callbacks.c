@@ -6,7 +6,7 @@
 /*   By: pchadeni <pchadeni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/13 15:28:52 by pchadeni          #+#    #+#             */
-/*   Updated: 2019/11/15 17:21:32 by pchadeni         ###   ########.fr       */
+/*   Updated: 2019/11/16 17:34:27 by pchadeni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@ void	key_callback(GLFWwindow *w, int key, int scancode, int act, int mods)
 	edit_texture(mon, key, act);
 	edit_rotation_activation(mon, key, act);
 	edit_speed(mon, key, act);
+	edit_light_activation(mon, key, act);
 	move_obj(mon, key, act);
 	if (key == GLFW_KEY_ESCAPE && act == GLFW_PRESS)
 		glfwSetWindowShouldClose(w, GLFW_TRUE);

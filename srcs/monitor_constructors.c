@@ -6,7 +6,7 @@
 /*   By: pchadeni <pchadeni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/13 15:06:28 by pchadeni          #+#    #+#             */
-/*   Updated: 2019/11/16 11:42:26 by pchadeni         ###   ########.fr       */
+/*   Updated: 2019/11/16 17:39:28 by pchadeni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,6 @@ static uint8_t	init_monitor_heap(t_monitor *monitor, const char *filename)
 		return (destroy_monitor(*monitor));
 	monitor->light_trans->position = vec3_new(1.2f, 1.0f, 2.0f);
 	monitor->light_trans->scale = vec3_new(0.2f, 0.2f, 0.2f);
-	printf("Monitor's heap initialized\n");
 	return (1);
 }
 
@@ -57,6 +56,7 @@ uint8_t			init_monitor(t_monitor *monitor, const char *filename)
 		return (0);
 	monitor->enable_texture = 0;
 	monitor->enable_mouse = 0;
+	monitor->enable_light = 0;
 	monitor->enable_rotation = 1;
 	return (1);
 }
@@ -73,9 +73,12 @@ uint8_t			update_monitor(t_monitor *monitor)
 	use_shader(monitor->obj_shader);
 	update_obj_shader(monitor);
 	draw_mesh(*monitor->mesh);
-	use_shader(monitor->light_shader);
-	update_light_shader(monitor);
-	draw_mesh(*monitor->light);
+	if (monitor->enable_light)
+	{
+		use_shader(monitor->light_shader);
+		update_light_shader(monitor);
+		draw_mesh(*monitor->light);
+	}
 	if (monitor->enable_rotation)
 		monitor->transformation->rotation.y -= 0.0001f;
 	glfwSwapBuffers(monitor->win);
@@ -87,6 +90,8 @@ uint8_t			destroy_monitor(t_monitor monitor)
 {
 	if (monitor.win)
 		destroy_glfw_config(&monitor);
+	if (monitor.light_trans)
+		free(monitor.light_trans);
 	if (monitor.light_shader)
 		delete_shader(monitor.light_shader);
 	if (monitor.obj_shader)

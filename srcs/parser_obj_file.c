@@ -6,7 +6,7 @@
 /*   By: pchadeni <pchadeni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/15 16:20:24 by pchadeni          #+#    #+#             */
-/*   Updated: 2019/11/15 16:33:00 by pchadeni         ###   ########.fr       */
+/*   Updated: 2019/11/16 16:46:43 by pchadeni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,10 +57,14 @@ static void		put_texture_vertices(t_parser_obj *parser)
 static uint8_t	parse_obj_data(char *data, t_parser_obj *parser)
 {
 	if (!get_length_arrays_obj(data, parser) || !create_vertices_arrays(parser)
-		|| !get_vertices_values(data, parser) || !add_faces_into_data(parser))
+		|| !get_vertices_values(data, parser) || !parser->len_vertices)
 		return (0);
 	put_texture_vertices(parser);
-	center_vertices(parser);
+	center_vertices(parser->vertices, parser->len_vertices);
+	if (parser->len_normals > 0)
+		center_vertices(parser->normals, parser->len_normals);
+	if (!add_faces_into_data(parser))
+		return (0);
 	clean_parser(parser);
 	return (1);
 }

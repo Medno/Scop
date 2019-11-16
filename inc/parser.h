@@ -6,7 +6,7 @@
 /*   By: pchadeni <pchadeni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/05 10:25:32 by pchadeni          #+#    #+#             */
-/*   Updated: 2019/11/15 17:22:38 by pchadeni         ###   ########.fr       */
+/*   Updated: 2019/11/16 15:51:05 by pchadeni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ uint8_t			handle_faces(t_parser_obj *parser, char *str);
 
 uint8_t			get_vertices_values(char *data, t_parser_obj *parse);
 
-void			center_vertices(t_parser_obj *parser);
+void			center_vertices(t_vec3 *vertices, size_t len);
 
 void			print_parser_data(t_parser_obj *parser);
 uint8_t			print_parser_error(t_error_parser error);

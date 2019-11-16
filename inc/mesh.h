@@ -6,7 +6,7 @@
 /*   By: pchadeni <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/17 15:43:20 by pchadeni          #+#    #+#             */
-/*   Updated: 2019/11/15 18:38:42 by pchadeni         ###   ########.fr       */
+/*   Updated: 2019/11/16 17:24:47 by pchadeni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ typedef struct	s_mesh
 	unsigned int	count_draw;
 	unsigned int	texture;
 	unsigned int	len_textures;
+	unsigned int	len_normals;
 }				t_mesh;
 
 t_mesh			*create_mesh(const char *filename);

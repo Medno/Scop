@@ -6,7 +6,7 @@
 /*   By: pchadeni <pchadeni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/15 16:19:36 by pchadeni          #+#    #+#             */
-/*   Updated: 2019/11/15 16:19:37 by pchadeni         ###   ########.fr       */
+/*   Updated: 2019/11/16 17:03:27 by pchadeni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,5 +102,8 @@ void			clean_parser(t_parser_obj *parser)
 		parser->textures = NULL;
 	}
 	if (parser->faces)
+	{
 		ft_lstdel(&parser->faces, ft_lstclean);
+		parser->faces = NULL;
+	}
 }

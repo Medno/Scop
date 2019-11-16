@@ -6,7 +6,7 @@
 /*   By: pchadeni <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/10 16:37:00 by pchadeni          #+#    #+#             */
-/*   Updated: 2019/11/16 11:16:47 by pchadeni         ###   ########.fr       */
+/*   Updated: 2019/11/16 17:41:00 by pchadeni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,21 +15,15 @@
 #include "vec3.h"
 #include "shaders.h"
 #include "model.h"
+#include "parser.h"
 
 void	display_scop(t_monitor *monitor)
 {
 	uint8_t	end;
 	float	count;
-	t_vec3	light_color;
 
 	end = 0;
 	count = 0.0f;
-	use_shader(monitor->obj_shader);
-	light_color = vec3_new(1.0f, 1.0f, 1.0f);
-	glUniform3fv(monitor->obj_shader->uniforms[LIGHT_COLOR_U], 1, &light_color.x);
-	use_shader(monitor->light_shader);
-//	set_light_uniforms(monitor->light_shader);
-//Use light monitor->obj_shader iif normal coordinates
 	while (!glfwWindowShouldClose(monitor->win))
 	{
 		clear_window(0.2f, 0.2f, 0.2f, 1.0f);
@@ -48,15 +42,23 @@ uint8_t	scop_usage(void)
 	return (1);
 }
 
-int		main(int ac, char **av)
+uint8_t	launch(const char *filename)
 {
 	t_monitor	monitor;
 
-	if (ac != 2)
-		return (scop_usage());
-	if (!init_monitor(&monitor, av[1]))
+	if (!init_monitor(&monitor, filename))
 		return (1);
 	display_scop(&monitor);
 	destroy_monitor(monitor);
 	return (0);
+}
+
+int		main(int ac, char **av)
+{
+	uint8_t		exit_code;
+
+	if (ac != 2)
+		return (scop_usage());
+	exit_code = launch(av[1]);
+	return (exit_code);
 }

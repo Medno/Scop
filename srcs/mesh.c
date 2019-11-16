@@ -6,7 +6,7 @@
 /*   By: pchadeni <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/17 15:43:12 by pchadeni          #+#    #+#             */
-/*   Updated: 2019/11/15 19:03:22 by pchadeni         ###   ########.fr       */
+/*   Updated: 2019/11/16 17:40:46 by pchadeni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,13 +22,14 @@ void	enable_buffer(GLuint index, GLint size, GLsizei stride, size_t pointer)
 t_mesh	*create_mesh(const char *filename)
 {
 	t_parser_obj	*parser;
-	t_mesh 			*mesh;
+	t_mesh			*mesh;
 
 	if (!(parser = parse_obj_file(filename))
 		|| !(mesh = (t_mesh *)malloc(sizeof(t_mesh))))
 		return (NULL);
 	mesh->count_draw = parser->len_faces;
 	mesh->len_textures = parser->len_textures;
+	mesh->len_normals = parser->len_normals;
 	glGenVertexArrays(1, &(mesh->vao));
 	glGenBuffers(NUM_BUFFERS, mesh->vbo);
 	glBindVertexArray(mesh->vao);
@@ -38,6 +39,8 @@ t_mesh	*create_mesh(const char *filename)
 	enable_buffer(0, 3, parser->offset_data, 0);
 	enable_buffer(1, 3, parser->offset_data, 3);
 	enable_buffer(2, 2, parser->offset_data, parser->offset_data - 2);
+	if (parser->len_normals > 0)
+		enable_buffer(3, 3, parser->offset_data, parser->offset_data - 5);
 	glBindVertexArray(0);
 	mesh->texture = create_texture();
 	destroy_parser_obj(&parser, 0);

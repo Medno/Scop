@@ -6,7 +6,7 @@
 /*   By: pchadeni <pchadeni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/02 17:19:08 by pchadeni          #+#    #+#             */
-/*   Updated: 2019/11/13 15:52:14 by pchadeni         ###   ########.fr       */
+/*   Updated: 2019/11/16 17:08:23 by pchadeni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,11 +64,14 @@ static void	define_texture_img(char const *filename)
 	texture = read_texture_file(filename);
 	if (texture && texture->data)
 	{
-		glTexImage2D(GL_TEXTURE_2D, 0, texture->format, texture->width,
-			texture->height, 0, texture->format,
-			GL_UNSIGNED_BYTE, texture->data);
+		if (texture->data)
+		{
+			glTexImage2D(GL_TEXTURE_2D, 0, texture->format, texture->width,
+				texture->height, 0, texture->format,
+				GL_UNSIGNED_BYTE, texture->data);
+			free(texture->data);
+		}
 		glGenerateMipmap(GL_TEXTURE_2D);
-		free(texture->data);
 		free(texture);
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: pchadeni <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/17 16:29:48 by pchadeni          #+#    #+#             */
-/*   Updated: 2019/11/16 11:12:01 by pchadeni         ###   ########.fr       */
+/*   Updated: 2019/11/16 17:23:05 by pchadeni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,12 @@ static void		find_uniforms(t_shader *shader)
 		glGetUniformLocation(shader->program, "aAlphaTex");
 	shader->uniforms[LIGHT_COLOR_U] =
 		glGetUniformLocation(shader->program, "lightColor");
+	shader->uniforms[LIGHT_POS_U] =
+		glGetUniformLocation(shader->program, "lightPos");
+	shader->uniforms[CAMERA_POS_U] =
+		glGetUniformLocation(shader->program, "viewPos");
+	shader->uniforms[ENABLE_LIGHT_U] =
+		glGetUniformLocation(shader->program, "enableLight");
 }
 
 /*

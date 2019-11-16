@@ -6,7 +6,7 @@
 #    By: pchadeni <pchadeni@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/10/08 18:55:23 by pchadeni          #+#    #+#              #
-#    Updated: 2019/11/15 16:29:13 by pchadeni         ###   ########.fr        #
+#    Updated: 2019/11/16 17:32:48 by pchadeni         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,6 +19,7 @@ NAME = scop
 MAIN_SRCS = main.c		\
 			callbacks.c	\
 			input_manager.c	\
+			input_manager_2.c	\
 \
 			glfw_constructors.c	\
 			monitor_constructors.c	\
