@@ -65,6 +65,7 @@ uint8_t			init_monitor(t_monitor *monitor, const char *filename)
 	monitor->enable_light = 0;
 	monitor->enable_rotation = 1;
 	monitor->mode = OBJ_MODE;
+	monitor->color_mode = COLOR_GREY;
 	return (1);
 }
 

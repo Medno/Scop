@@ -77,8 +77,8 @@ static void		find_uniforms(t_shader *shader)
 		glGetUniformLocation(shader->program, "viewPos");
 	shader->uniforms[ENABLE_LIGHT_U] =
 		glGetUniformLocation(shader->program, "enableLight");
-	shader->uniforms[NORMAL_COLORS_U] =
-		glGetUniformLocation(shader->program, "normalColors");
+	shader->uniforms[COLORS_MODE_U] =
+		glGetUniformLocation(shader->program, "colorMode");
 }
 
 /*

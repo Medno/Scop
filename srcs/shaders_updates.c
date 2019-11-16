@@ -66,6 +66,7 @@ void	update_obj_shader(t_monitor *m)
 		m->obj_shader->alpha -= 0.001;
 	glUniform1f(m->obj_shader->uniforms[ALPHA_U], m->obj_shader->alpha);
 	glUniform1i(m->obj_shader->uniforms[ENABLE_LIGHT_U], m->enable_light);
+	glUniform1i(m->obj_shader->uniforms[COLORS_MODE_U], m->color_mode);
 }
 
 void	update_light_shader(t_monitor *m)

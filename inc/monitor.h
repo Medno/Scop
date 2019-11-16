@@ -27,6 +27,15 @@
 # define OBJ_MODE 0
 # define LIGHT_MODE 1
 
+typedef enum	e_color_mode
+{
+	COLOR_GREY,
+	COLOR_NORMAL,
+	COLOR_POSITION,
+	
+	NUM_COLOR_MODE
+}				t_color_mod;
+
 typedef struct	s_monitor {
 	GLFWwindow	*win;
 	t_transform	*transformation;
@@ -41,7 +50,7 @@ typedef struct	s_monitor {
 	uint8_t		enable_rotation;
 	uint8_t		enable_light;
 	uint8_t		mode;
-	uint8_t		normal_colors;
+	t_color_mod	color_mode;
 }				t_monitor;
 
 uint8_t			init_glfw_config(t_monitor *monitor);
@@ -69,5 +78,6 @@ void			edit_rotation_activation(t_monitor *mon, int key, int act);
 void			edit_speed(t_monitor *mon, int key, int act);
 void			edit_light_activation(t_monitor *mon, int key, int act);
 void			edit_mode(t_monitor *mon, int key, int act);
+void			edit_color_display(t_monitor *mon, int key, int act);
 
 #endif

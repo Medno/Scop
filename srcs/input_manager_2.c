@@ -34,3 +34,13 @@ void	edit_mode(t_monitor *mon, int key, int act)
 	else if (mon->mode == LIGHT_MODE && mon->enable_light == 0)
 		mon->mode = OBJ_MODE;
 }
+
+void	edit_color_display(t_monitor *mon, int key, int act)
+{
+	if (key == GLFW_KEY_C && act == GLFW_PRESS)
+	{
+		mon->color_mode = (mon->color_mode + 1) % NUM_COLOR_MODE;
+		if (mon->color_mode == COLOR_NORMAL && !mon->mesh->len_normals)
+			mon->color_mode = (mon->color_mode + 1) % NUM_COLOR_MODE;
+	}
+}

@@ -72,6 +72,7 @@ void	key_callback(GLFWwindow *w, int key, int scancode, int act, int mods)
 		edit_speed(mon, key, act);
 		edit_light_activation(mon, key, act);
 		edit_mode(mon, key, act);
+		edit_color_display(mon, key, act);
 		move_obj(mon, key, act);
 	}
 	if (key == GLFW_KEY_ESCAPE && act == GLFW_PRESS)
