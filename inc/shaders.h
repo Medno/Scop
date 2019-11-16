@@ -6,7 +6,7 @@
 /*   By: pchadeni <pchadeni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/08 19:15:38 by pchadeni          #+#    #+#             */
-/*   Updated: 2019/11/15 19:10:56 by pchadeni         ###   ########.fr       */
+/*   Updated: 2019/11/16 11:12:32 by pchadeni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ enum
 	VIEW_U,
 	PROJECTION_U,
 	ALPHA_U,
+	LIGHT_COLOR_U,
 
 	NUM_UNIFORMS
 };

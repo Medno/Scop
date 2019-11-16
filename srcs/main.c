@@ -6,7 +6,7 @@
 /*   By: pchadeni <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/10 16:37:00 by pchadeni          #+#    #+#             */
-/*   Updated: 2019/11/15 19:37:18 by pchadeni         ###   ########.fr       */
+/*   Updated: 2019/11/16 11:16:47 by pchadeni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,14 +18,17 @@
 
 void	display_scop(t_monitor *monitor)
 {
-	uint8_t		end;
-	float		count;
+	uint8_t	end;
+	float	count;
+	t_vec3	light_color;
 
 	end = 0;
 	count = 0.0f;
 	use_shader(monitor->obj_shader);
+	light_color = vec3_new(1.0f, 1.0f, 1.0f);
+	glUniform3fv(monitor->obj_shader->uniforms[LIGHT_COLOR_U], 1, &light_color.x);
 	use_shader(monitor->light_shader);
-	set_light_uniforms(monitor->light_shader);
+//	set_light_uniforms(monitor->light_shader);
 //Use light monitor->obj_shader iif normal coordinates
 	while (!glfwWindowShouldClose(monitor->win))
 	{

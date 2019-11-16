@@ -6,7 +6,7 @@
 /*   By: pchadeni <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/10 16:52:33 by pchadeni          #+#    #+#             */
-/*   Updated: 2019/11/15 19:34:50 by pchadeni         ###   ########.fr       */
+/*   Updated: 2019/11/16 11:42:41 by pchadeni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ typedef struct	s_monitor {
 	t_shader	*obj_shader;
 	t_mesh		*light;
 	t_shader	*light_shader;
-	t_shader	*lamp_shader;
+	t_transform	*light_trans;
 	uint8_t		enable_texture;
 	uint8_t		enable_mouse;
 	uint8_t		enable_rotation;
@@ -48,6 +48,7 @@ void			clear_window(float r, float g, float b, float a);
 
 uint8_t			update_monitor(t_monitor *monitor);
 void			update_obj_shader(t_monitor *m);
+void			update_light_shader(t_monitor *m);
 
 void			key_callback(GLFWwindow *w, int key, int s, int act, int mods);
 void			scroll_callback(GLFWwindow *w, double xoffset, double yoffset);

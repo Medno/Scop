@@ -6,7 +6,7 @@
 /*   By: pchadeni <pchadeni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/13 15:06:28 by pchadeni          #+#    #+#             */
-/*   Updated: 2019/11/15 19:35:18 by pchadeni         ###   ########.fr       */
+/*   Updated: 2019/11/16 11:42:26 by pchadeni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,14 +30,16 @@ static uint8_t	init_monitor_heap(t_monitor *monitor, const char *filename)
 	monitor->light = NULL;
 	monitor->obj_shader = NULL;
 	monitor->light_shader = NULL;
-	monitor->lamp_shader = NULL;
 	if (!(monitor->mesh = create_mesh(filename))
 		|| !(monitor->obj_shader = construct_shader("./res/basicShader"))
 		|| !(monitor->light = create_mesh("./res/cube.obj"))
 		|| !(monitor->light_shader = construct_shader("./res/lightShader"))
 		|| !(monitor->camera = init_camera())
-		|| !(monitor->transformation = create_transform()))
+		|| !(monitor->transformation = create_transform())
+		|| !(monitor->light_trans = create_transform()))
 		return (destroy_monitor(*monitor));
+	monitor->light_trans->position = vec3_new(1.2f, 1.0f, 2.0f);
+	monitor->light_trans->scale = vec3_new(0.2f, 0.2f, 0.2f);
 	printf("Monitor's heap initialized\n");
 	return (1);
 }
@@ -52,7 +54,7 @@ uint8_t			init_monitor(t_monitor *monitor, const char *filename)
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	if (!init_monitor_heap(monitor, filename))
-		return (destroy_monitor(*monitor));
+		return (0);
 	monitor->enable_texture = 0;
 	monitor->enable_mouse = 0;
 	monitor->enable_rotation = 1;
@@ -87,8 +89,6 @@ uint8_t			destroy_monitor(t_monitor monitor)
 		destroy_glfw_config(&monitor);
 	if (monitor.light_shader)
 		delete_shader(monitor.light_shader);
-	if (monitor.lamp_shader)
-		delete_shader(monitor.lamp_shader);
 	if (monitor.obj_shader)
 		delete_shader(monitor.obj_shader);
 	if (monitor.transformation)
