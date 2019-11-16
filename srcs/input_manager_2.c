@@ -6,7 +6,7 @@
 /*   By: pchadeni <pchadeni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/16 17:31:40 by pchadeni          #+#    #+#             */
-/*   Updated: 2019/11/16 18:48:35 by pchadeni         ###   ########.fr       */
+/*   Updated: 2019/11/16 19:01:19 by pchadeni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,4 +31,6 @@ void	edit_mode(t_monitor *mon, int key, int act)
 	{
 		mon->mode = OBJ_MODE;
 	}
+	else if (mon->mode == LIGHT_MODE && mon->enable_light == 0)
+		mon->mode = OBJ_MODE;
 }
