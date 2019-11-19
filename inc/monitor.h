@@ -6,7 +6,7 @@
 /*   By: pchadeni <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/10 16:52:33 by pchadeni          #+#    #+#             */
-/*   Updated: 2019/11/16 19:06:10 by pchadeni         ###   ########.fr       */
+/*   Updated: 2019/11/19 16:11:36 by pchadeni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ typedef enum	e_color_mode
 	COLOR_GREY,
 	COLOR_NORMAL,
 	COLOR_POSITION,
-	
+
 	NUM_COLOR_MODE
 }				t_color_mod;
 
