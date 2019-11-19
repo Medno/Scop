@@ -6,7 +6,7 @@
 /*   By: pchadeni <pchadeni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/15 16:19:36 by pchadeni          #+#    #+#             */
-/*   Updated: 2019/11/16 17:03:27 by pchadeni         ###   ########.fr       */
+/*   Updated: 2019/11/19 15:53:30 by pchadeni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ t_parser_obj	*init_parser_obj(void)
 	parser->offset_data = 6;
 	parser->offset_data_normal = 0;
 	parser->index_indices = 0;
+	parser->data = NULL;
 	parser->data_size = 0;
 	return (parser);
 }
