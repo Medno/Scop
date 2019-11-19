@@ -49,7 +49,7 @@ static void		put_texture_vertices(t_parser_obj *parser)
 	{
 		parser->data[i + parser->offset_data - 2] = parser->data[i];
 		parser->data[i + parser->offset_data - 1] =
-			parser->data[i + 2];
+			parser->data[i + 1];
 		i += parser->offset_data;
 	}
 }
