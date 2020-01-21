@@ -1,6 +1,9 @@
 # Scop
 42 school project: 3D modeler of .obj files
 
+![](new_maya_demo.gif)
+
+
 ## Setup
 Launch the Makefile command in the root repository : `make`
 
