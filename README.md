@@ -1,9 +1,10 @@
 # Scop
 42 school project: 3D modeler of .obj files
 
+![Lotus normals](lotus_normals.png)
+
 ![newmaya.obj](new_maya_demo.gif)
 
-![Lotus normals](lotus_normals.png)
 
 
 ## Setup
