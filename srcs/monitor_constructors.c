@@ -37,7 +37,7 @@ static uint8_t	init_monitor_heap(t_monitor *monitor, const char *filename)
 		|| !(monitor->transformation = create_transform()))
 		return (destroy_monitor(*monitor));
 	if (monitor->mesh->len_normals > 0
-		&& (!(monitor->light = create_mesh("./res/cube.obj"))
+		&& (!(monitor->light = create_mesh("./res/obj_files/cube.obj"))
 		|| !(monitor->light_shader = construct_shader("./res/lightShader"))
 		|| !(monitor->light_trans = create_transform())))
 		return (destroy_monitor(*monitor));
